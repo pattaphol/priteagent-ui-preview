@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="th" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>PriteAgent — UI-03 Dashboard R1 · DEMO ONLY</title>
+<script>
+try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}
+</script>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--side:#0b1c2e;--panel:#0f2437;--panel2:#123149;--surface:#0c1c2d;--line:#24435d;--line2:#345876;--text:#eef7ff;--muted:#9bb2c6;--accent:#39adfa;--cyan:#83e4ff;--teal:#58ded2;--soft:rgba(57,173,250,.14);--shadow:rgba(0,0,0,.26);--notice:#ffe29a}
+html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;--panel2:#edf5fb;--surface:#fff;--line:#dce6ef;--line2:#c6dae9;--text:#172f45;--muted:#627a8c;--accent:#117acc;--cyan:#096ca5;--teal:#087e82;--soft:#e6f3fc;--shadow:rgba(41,73,105,.13)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:var(--bg);color:var(--text);font-size:14px;line-height:1.55}button,a{font:inherit}button{cursor:pointer;background:none;border:0;color:inherit}a{text-decoration:none;color:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #36aef4;outline-offset:2px}button:disabled{opacity:.5;cursor:default}svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.tinyIcon{width:17px;height:17px}
+.app{display:flex;height:100dvh;padding-bottom:26px;min-height:0}.sidebar{width:238px;flex:0 0 238px;border-right:1px solid var(--line);background:var(--side);display:flex;flex-direction:column;min-height:0;transition:width .18s,flex-basis .18s}.brand{display:flex;align-items:center;gap:10px;min-height:69px;padding:0 18px}.brandMark{display:grid;place-items:center;width:35px;height:35px;border-radius:11px;background:linear-gradient(130deg,#18b8f6,#2f69fa);color:white;font-size:20px;font-weight:900}.brandText strong{font-size:19px;letter-spacing:-.5px}.brandText small{display:block;font-size:10px;letter-spacing:.08em;color:var(--muted)}.sideLinks{flex:1;overflow-y:auto;padding:12px 10px}.sideLabel{font-size:10px;letter-spacing:.09em;color:var(--muted);font-weight:800;padding:16px 12px 6px}.sideItem{display:flex;align-items:center;gap:11px;border-radius:11px;padding:11px 12px;min-height:44px;width:100%;text-align:left;color:var(--muted);font-weight:650;font-size:12px}.sideItem:hover,.sideItem.active{color:var(--cyan);background:var(--soft)}.sideItem .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sideFoot{border-top:1px solid var(--line);padding:12px;color:var(--muted);font-size:11px}.sideFoot strong{color:var(--text)}.mobileClose{display:none;margin-left:auto}.app.rail .sidebar{width:72px;flex-basis:72px}.app.rail .brandText,.app.rail .sideLabel,.app.rail .sideItem .txt,.app.rail .sideFoot{display:none}.app.rail .brand{padding:0 18px}.app.rail .sideItem{justify-content:center}.app.rail .sideLinks{padding:10px 8px}
+.frame{flex:1;min-width:0;display:flex;flex-direction:column}.top{height:69px;min-height:69px;display:flex;align-items:center;gap:13px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--surface)}.iconButton{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;color:var(--muted);flex:0 0 auto}.iconButton:hover{background:var(--soft);color:var(--cyan)}.topTitle{flex:1;min-width:110px}.topTitle small{display:block;color:var(--muted);font-size:10px}.topTitle strong{font-size:17px;display:block;line-height:1.35}.mobileBrand{display:none}.modeToggle{display:flex;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:3px;gap:2px;flex-shrink:0}.modeToggle button{min-width:105px;padding:6px 10px;min-height:33px;font-size:12px;font-weight:750;color:var(--muted);border-radius:9px;white-space:nowrap}.modeToggle button.active{background:#147aca;color:#fff}.topActions{display:flex;gap:5px;align-items:center}.searchButton{border:1px solid var(--line);background:var(--panel);border-radius:10px;min-width:152px;height:37px;padding:0 12px;text-align:left;color:var(--muted);font-size:12px;display:flex;gap:9px;align-items:center}.searchIconOnly{display:none}.avatar{height:34px;width:34px;border-radius:10px;background:linear-gradient(130deg,#278aca,#135b96);color:#fff;font-size:11px;font-weight:800}
+.content{overflow-y:auto;min-height:0;flex:1;padding:22px clamp(17px,3vw,35px) 70px;scrollbar-width:thin}.inner{max-width:1170px;margin:0 auto}.lead{display:flex;gap:14px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}.eyebrow{font-size:11px;color:var(--cyan);letter-spacing:.08em;font-weight:850}.lead h1{font-size:clamp(25px,3.1vw,33px);line-height:1.2;letter-spacing:-.65px;margin:5px 0}.lead p{margin:0;color:var(--muted);font-size:12px}.demoStamp{border:1px solid var(--line2);background:var(--panel);border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800;color:var(--cyan);white-space:nowrap}
+.tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}.period{display:inline-flex;gap:4px;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.period button{padding:8px 14px;border-radius:9px;font-size:12px;font-weight:760;color:var(--muted)}.period button.active{background:#167dcc;color:#fff}.hint{font-size:11px;color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:19px}.metric{border:1px solid var(--line);border-radius:17px;background:var(--panel);padding:17px;text-align:left;min-width:0;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .15s,transform .15s}.metric:hover{border-color:var(--accent);transform:translateY(-2px)}.metric .mTop{display:flex;justify-content:space-between;align-items:center;gap:8px}.metric .mLabel{color:var(--muted);font-size:12px;font-weight:700}.metric .mIcon{width:32px;height:32px;display:grid;place-items:center;background:var(--soft);color:var(--cyan);border-radius:10px}.metric .mValue{font-size:30px;line-height:1.2;letter-spacing:-.8px;font-weight:850}.metric .mSub{font-size:10px;color:var(--muted)}
+.mainGrid{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(280px,.9fr);gap:16px}.panel{border:1px solid var(--line);border-radius:18px;background:var(--panel);min-width:0;overflow:hidden}.panelHead{display:flex;align-items:flex-start;justify-content:space-between;padding:18px 18px 12px;gap:10px}.panelHead h2{font-size:17px;margin:0 0 3px}.panelHead p{margin:0;color:var(--muted);font-size:11px}.pillBtn{border:1px solid var(--line2);padding:7px 10px;border-radius:9px;font-size:11px;color:var(--cyan);font-weight:750;white-space:nowrap}.pillBtn:hover{background:var(--soft)}
+.filters{display:flex;gap:6px;padding:0 18px 12px;flex-wrap:wrap}.filters button{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:11px;font-weight:700}.filters button.active{background:var(--soft);border-color:var(--accent);color:var(--cyan)}.taskList{padding:0 12px 12px}.task{display:flex;gap:9px;align-items:center;min-height:65px;padding:8px 7px;border-top:1px solid var(--line)}.task:first-child{border-top:0}.taskCheck{width:37px;height:37px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:10px;color:var(--muted);flex-shrink:0}.taskCheck.done{background:#0d765c;border-color:#0d765c;color:white}.taskOpen{display:flex;min-width:0;flex:1;justify-content:space-between;align-items:center;gap:12px;padding:6px 4px;text-align:left;border-radius:8px}.taskOpen:hover{background:var(--soft)}.taskCopy{min-width:0}.taskCopy strong{font-size:12px;display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.taskCopy small{font-size:10px;color:var(--muted)}.task.done .taskCopy strong{text-decoration:line-through;opacity:.7}.tag{border-radius:999px;background:var(--soft);padding:4px 8px;font-size:10px;color:var(--cyan);white-space:nowrap}.tag.high{background:rgba(237,169,77,.14);color:#efb35d}.empty{padding:34px 17px 42px;text-align:center;color:var(--muted);font-size:12px}.empty strong{display:block;color:var(--text);font-size:14px;margin-bottom:6px}
+.sideCol{display:flex;flex-direction:column;gap:16px}.quickGrid{display:grid;gap:8px;padding:0 15px 16px}.quick{width:100%;display:flex;align-items:center;gap:11px;text-align:left;background:var(--panel2);padding:12px;border:1px solid var(--line);border-radius:12px;min-height:59px}.quick:hover{border-color:var(--accent)}.quickIcon{width:37px;height:37px;display:grid;place-items:center;background:var(--soft);border-radius:11px;color:var(--cyan)}.quickText{flex:1;min-width:0}.quickText strong{display:block;font-size:12px}.quickText small{display:block;color:var(--muted);font-size:10px}.timeline{padding:0 18px 19px}.event{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.event:first-child{border:0}.eventDot{width:9px;height:9px;margin-top:6px;border:2px solid var(--accent);border-radius:50%;flex-shrink:0}.event strong{display:block;font-size:12px}.event span{font-size:10px;color:var(--muted)}
+.foot{margin:18px 0 0;padding:13px 15px;border:1px dashed var(--line2);border-radius:12px;color:var(--muted);font-size:11px}.foot strong{color:var(--text)}
+.notice{position:fixed;bottom:0;left:0;right:0;z-index:85;min-height:26px;display:grid;place-items:center;text-align:center;background:var(--notice);color:#263542;border-top:1px solid #d5b36c;padding:3px 8px calc(3px + env(safe-area-inset-bottom,0px));font-size:10px;font-weight:800;pointer-events:none}
+.mobileBottom{display:none}.shade{display:none}.subMenu{display:none}.dialogShade{display:none;position:fixed;inset:0;z-index:110;align-items:center;justify-content:center;background:rgba(2,15,28,.76);padding:16px}.dialogShade.open{display:flex}.dialog{width:min(100%,450px);max-height:85dvh;overflow-y:auto;background:var(--side);border:1px solid var(--line2);border-radius:20px;padding:20px;box-shadow:0 24px 90px #0005}.dialogTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.dialogTop h2{margin:0;font-size:19px}.dialog p{font-size:13px;color:var(--muted);line-height:1.7}.dialog .primary{width:100%;padding:11px;border-radius:11px;font-weight:800;background:#177ecc;color:#fff;margin-top:10px}.dialog .secondary{width:100%;padding:10px;border:1px solid var(--line2);border-radius:11px;margin-top:8px;font-weight:700}.dialog input{border:1px solid var(--line2);padding:12px;color:var(--text);background:var(--panel);width:100%;border-radius:12px;margin:12px 0;font-size:14px}.searchResults{display:grid;gap:6px}.searchResults button{padding:11px;text-align:left;border:1px solid var(--line);border-radius:10px}.searchResults button:hover{background:var(--soft)}.searchResults small{display:block;color:var(--muted)}.toast{position:fixed;z-index:120;bottom:100px;left:50%;transform:translateX(-50%);border:1px solid var(--line2);background:var(--side);color:var(--text);padding:10px 16px;border-radius:12px;box-shadow:0 13px 35px var(--shadow);font-size:12px;white-space:nowrap;max-width:calc(100vw - 30px);pointer-events:none}
+@media(max-width:1180px){.sidebar{width:74px;flex-basis:74px}.brandText,.sideLabel,.sideItem .txt,.sideFoot{display:none}.brand{padding:0 19px}.sideLinks{padding:10px 9px}.sideItem{justify-content:center}.top{gap:10px;padding:0 16px}.modeToggle button{min-width:88px;font-size:11px;padding:6px}.searchButton{display:none}.searchIconOnly{display:grid}.metrics{gap:10px}.mainGrid{grid-template-columns:minmax(0,1.4fr) minmax(240px,.85fr)}}
+@media(max-width:900px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.mainGrid{grid-template-columns:1fr}.sideCol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.topTitle strong{font-size:15px}}
+@media(max-width:720px){
+ .app{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}.sidebar{position:fixed;left:0;top:0;bottom:0;width:min(300px,84vw)!important;transform:translateX(-103%);z-index:72;box-shadow:6px 0 40px #0005;transition:transform .2s}.app.drawerOpen .sidebar{transform:translateX(0)}.sidebar .brandText,.sidebar .sideLabel,.sidebar .sideItem .txt,.sidebar .sideFoot{display:block}.sidebar .sideItem{justify-content:flex-start}.sidebar .brand{padding:0 18px}.sidebar .sideLinks{padding:10px}.mobileClose{display:grid}.shade:not([hidden]){display:block;position:fixed;inset:0;background:#0008;z-index:70}
+ .top{height:59px;min-height:59px;gap:6px;padding:0 12px}.mobileBrand{display:flex;align-items:center;gap:7px;font-size:17px;font-weight:850}.mobileBrand .brandMark{width:29px;height:29px;border-radius:9px;font-size:16px}.topTitle,.modeToggle{display:none}.topActions{margin-left:auto;gap:0}.top .iconButton{width:36px;height:36px}.avatar{height:31px;width:31px}
+ .content{padding:17px 13px 24px}.lead{align-items:flex-start}.lead h1{font-size:25px}.demoStamp{font-size:9px;padding:5px 8px}.lead p{font-size:11px}.tools{gap:7px}.period button{font-size:11px;padding:7px 12px}.hint{font-size:10px}.metrics{gap:9px;margin-bottom:14px}.metric{min-height:105px;border-radius:14px;padding:13px}.metric .mValue{font-size:27px}.metric .mLabel{font-size:11px}.metric .mIcon{width:29px;height:29px}
+ .mainGrid{gap:13px}.panel{border-radius:15px}.panelHead{padding:14px 14px 10px}.filters{padding:0 12px 9px}.taskList{padding:0 8px 10px}.sideCol{grid-template-columns:1fr;gap:13px}.quickGrid{grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 13px}.quick{padding:9px;min-height:62px}.quickIcon{width:30px;height:30px}.quickText strong{font-size:11px}.quickText small{font-size:9px}
+ .mobileBottom{display:grid;position:fixed;z-index:90;bottom:26px;left:0;right:0;min-height:58px;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);background:var(--side);padding:3px 4px}.mobileBottom button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:9px;font-size:10px;color:var(--muted)}.mobileBottom button.active,.mobileBottom button[aria-expanded=true]{color:var(--cyan);background:var(--soft)}.mobileBottom svg{width:20px;height:20px}
+ .subMenu:not([hidden]){display:block;position:fixed;z-index:87;left:10px;right:10px;bottom:calc(90px + env(safe-area-inset-bottom,0px));max-height:62dvh;overflow:hidden;background:var(--side);border:1px solid var(--line2);border-radius:17px;box-shadow:0 12px 42px #0005}.subHead{padding:11px 13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.subHead strong{font-size:14px}.subLinks{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:49dvh;overflow-y:auto}.subLinks button{display:flex;gap:8px;align-items:center;padding:10px 8px;min-height:44px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;font-size:11px}.subScrim:not([hidden]){display:block;position:fixed;inset:0;z-index:80;background:#0005}
+ .notice{font-size:9px}.toast{bottom:102px}
+}
+@media(max-width:355px){.demoStamp{display:none}.quickGrid{grid-template-columns:1fr}.subLinks{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<symbol id="menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3zM9 21v-8h6v8"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21c0-4 2-7 6-7s6 3 6 7M17 4c4 0 4 7 0 7M17 15c3 0 4 3 4 6"/></symbol>
+<symbol id="car" viewBox="0 0 24 24"><path d="M5 15l2-8h10l2 8M4 15h16v4H4zM7 19v2M17 19v2M7 12h.1M17 12h.1"/></symbol>
+<symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h4"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20 13A8 8 0 0 1 11 4a8 8 0 1 0 9 9"/></symbol>
+<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9M10 21h4"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-5"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+<symbol id="reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1-1 6M4 4v6h6"/></symbol>
+<symbol id="receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+</svg>
+<div class="app" id="app">
+ <aside class="sidebar" id="sidebar" aria-label="เมนูนำทาง">
+  <div class="brand"><span class="brandMark">P</span><span class="brandText"><strong>PriteAgent</strong><small>UI-03 DASHBOARD</small></span><button class="iconButton mobileClose" id="drawerClose" aria-label="ปิดเมนู"><svg><use href="#close"/></svg></button></div>
+  <div class="sideLinks" id="sideLinks"></div>
+  <div class="sideFoot"><strong>DEMO ONLY</strong><div>ไม่มีบัญชีหรือข้อมูลจริง</div></div>
+ </aside>
+ <div class="shade" id="drawerShade" hidden></div>
+ <div class="frame">
+  <header class="top">
+   <button class="iconButton" id="menuBtn" aria-label="เปิดหรือย่อเมนู" aria-expanded="false"><svg><use href="#menu"/></svg></button>
+   <div class="mobileBrand"><span class="brandMark">P</span>PriteAgent</div>
+   <div class="topTitle"><small>หลังบ้าน / UI Preview</small><strong>Dashboard</strong></div>
+   <div class="modeToggle" role="group" aria-label="เลือกพื้นที่ทำงาน"><button id="topAgent" class="active" aria-pressed="true">งานตัวแทน</button><button id="topCustomer" aria-pressed="false">งานลูกค้า</button></div>
+   <div class="topActions">
+    <button class="searchButton" id="searchWide"><svg class="tinyIcon"><use href="#search"/></svg> ค้นหาเมนูและงาน...</button>
+    <button class="iconButton searchIconOnly" id="searchSmall" aria-label="ค้นหาเมนูและงาน"><svg><use href="#search"/></svg></button>
+    <button class="iconButton" id="themeBtn" aria-label="เปลี่ยนธีม" aria-pressed="false"><svg><use id="themeIcon" href="#moon"/></svg></button>
+    <button class="iconButton" id="notifyBtn" aria-label="ดูการแจ้งเตือนตัวอย่าง"><svg><use href="#bell"/></svg></button>
+    <button class="avatar" id="profileBtn" aria-label="บัญชีสาธิต">DE</button>
+   </div>
+  </header>
+  <main class="content" id="content" tabindex="-1">
+   <div class="inner">
+    <div class="lead"><div><div class="eyebrow">UI-03 · INTERACTIVE SYNTHETIC PREVIEW</div><h1 id="heroTitle">ภาพรวมงานตัวแทน</h1><p>ติดตามงานสำคัญในที่เดียว · ไม่มีการเชื่อมต่อระบบหรือข้อมูลจริง</p></div><div class="demoStamp">ข้อมูลสมมติ 100%</div></div>
+    <div class="tools"><div class="period" role="group" aria-label="ช่วงเวลาที่แสดง"><button class="active" data-period="today" aria-pressed="true">วันนี้</button><button data-period="week" aria-pressed="false">7 วัน</button><button data-period="month" aria-pressed="false">เดือนนี้</button></div><div class="hint">กดการ์ดหรือรายการงานเพื่อทดลองโต้ตอบ</div></div>
+    <section class="metrics" id="metrics" aria-label="สรุปงานตัวอย่าง"></section>
+    <div class="mainGrid">
+     <section class="panel" aria-labelledby="taskHead"><div class="panelHead"><div><h2 id="taskHead">งานในรายการ</h2><p id="taskSubtitle">เลือกสถานะแล้วเปิดรายละเอียดงานตัวอย่างได้</p></div><button class="pillBtn" id="resetBtn"><svg class="tinyIcon" style="vertical-align:middle"><use href="#reset"/></svg> รีเซ็ตสาธิต</button></div>
+      <div class="filters" role="group" aria-label="กรองสถานะงาน"><button class="active" data-filter="all" aria-pressed="true">ทั้งหมด</button><button data-filter="pending" aria-pressed="false">รอดำเนินการ</button><button data-filter="done" aria-pressed="false">เสร็จแล้ว</button></div>
+      <div class="taskList" id="taskList" aria-live="polite"></div>
+     </section>
+     <div class="sideCol">
+      <section class="panel" aria-labelledby="quickHead"><div class="panelHead"><div><h2 id="quickHead">ทางลัดที่ใช้งานบ่อย</h2><p>กดได้ในโหมดสาธิตเท่านั้น</p></div></div><div class="quickGrid" id="quickActions"></div></section>
+      <section class="panel" aria-labelledby="activityHead"><div class="panelHead"><div><h2 id="activityHead">ความเคลื่อนไหวตัวอย่าง</h2><p>เหตุการณ์จำลองเพื่อทดสอบรูปแบบการแสดงผล</p></div></div><div class="timeline" id="timeline"></div></section>
+     </div>
+    </div>
+    <div class="foot"><strong>ขอบเขต UI-03:</strong> Dashboard นี้เป็นตัวอย่างสำหรับเลือกหน้าตาและการโต้ตอบเท่านั้น ตัวเลขและงานเป็นข้อมูลสมมติ เปลี่ยนสถานะได้ชั่วคราวในหน้านี้ ไม่มีการบันทึกหรือส่งข้อมูลไปยัง Server, API, Customer Database, CRM หรือระบบคำนวณเบี้ยประกัน</div>
+   </div>
+  </main>
+ </div>
+</div>
+<div class="subScrim" id="subScrim" hidden></div>
+<section class="subMenu" id="subMenu" aria-label="เมนูย่อยมือถือ" hidden>
+ <div class="subHead"><strong id="subTitle">เมนูย่อย</strong><button class="iconButton" id="subClose" aria-label="ปิดเมนูย่อย"><svg><use href="#close"/></svg></button></div><div class="subLinks" id="subLinks"></div>
+</section>
+<nav class="mobileBottom" aria-label="เมนูหลักมือถือ">
+ <button id="bottomHome"><svg><use href="#home"/></svg>หน้าแรก</button>
+ <button id="bottomAgent" class="active" aria-controls="subMenu" aria-expanded="false"><svg><use href="#grid"/></svg>งานตัวแทน</button>
+ <button id="bottomCustomer" aria-controls="subMenu" aria-expanded="false"><svg><use href="#users"/></svg>งานลูกค้า</button>
+ <button id="bottomMore"><svg><use href="#menu"/></svg>เพิ่มเติม</button>
+</nav>
+<div class="notice" role="note">UI PROTOTYPE R1 · DEMO ONLY · NO REAL DATA OR LOGIN</div>
+<div class="dialogShade" id="dialogShade" role="presentation">
+ <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+  <div class="dialogTop"><h2 id="dialogTitle">รายละเอียดตัวอย่าง</h2><button class="iconButton" id="dialogClose" aria-label="ปิดหน้าต่าง"><svg><use href="#close"/></svg></button></div>
+  <div id="dialogBody"></div>
+  <button class="primary" id="dialogPrimary">เข้าใจแล้ว</button><button class="secondary" id="dialogSecondary" hidden>กลับ</button>
+ </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script>
+(function(){
+'use strict';
+const el=id=>document.getElementById(id);
+const icon=(name,cls='')=>'<svg'+(cls?' class="'+cls+'"':'')+' aria-hidden="true"><use href="#'+name+'"/></svg>';
+const root=document.documentElement;
+const themeKey='priteagent.ui.theme.v1';
+const raw={
+ agent:[
+ {id:'a1',title:'ตรวจรายการคันรถสาธิต',kind:'คันรถ',due:0,priority:true,done:false,details:'ทดลองตรวจรายการคันรถและสมาชิกสมมติ ไม่มีทะเบียนหรือข้อมูลรถจริง',glyph:'car'},
+ {id:'a2',title:'เตรียมรายการงานตัวแทน',kind:'งานทั่วไป',due:0,priority:false,done:true,details:'รายการจำลองที่ทำเสร็จแล้วเพื่อแสดงสถานะ',glyph:'check'},
+ {id:'a3',title:'ทบทวนค่าใช้จ่ายตัวอย่าง',kind:'ค่าใช้จ่าย',due:1,priority:true,done:false,details:'ไม่มีเงินหรือสูตรแบ่งเงินจริง ใช้ตรวจ UX ของรายการงานเท่านั้น',glyph:'receipt'},
+ {id:'a4',title:'ทดสอบนัดหมายจำลอง',kind:'นัดหมาย',due:2,priority:false,done:false,details:'ไม่มีข้อมูลผู้ติดต่อและไม่ได้สร้างนัดหมายจริง',glyph:'calendar'},
+ {id:'a5',title:'ตรวจรายการผลงานตัวอย่าง',kind:'งานทั่วไป',due:5,priority:false,done:true,details:'ไม่ใช้ยอด FYC, เบี้ยประกัน หรือค่าคอมมิชชันจริง',glyph:'grid'},
+ {id:'a6',title:'เตรียมการติดตามงานเดือนนี้',kind:'นัดหมาย',due:14,priority:false,done:false,details:'เป็นงานจำลองของเดือนนี้เท่านั้น',glyph:'calendar'}],
+ customer:[
+ {id:'c1',title:'ตรวจคิวติดตามลูกค้าจำลอง',kind:'ติดตาม',due:0,priority:true,done:false,details:'ไม่แสดงรายชื่อ หมายเลขโทรศัพท์ หรือข้อมูลลูกค้าจริง',glyph:'users'},
+ {id:'c2',title:'ทดสอบปฏิทินนัดหมาย',kind:'นัดหมาย',due:0,priority:false,done:false,details:'นัดหมายตัวอย่าง ไม่มีระบบแจ้งเตือนจริง',glyph:'calendar'},
+ {id:'c3',title:'สรุปบันทึกการติดตามตัวอย่าง',kind:'ติดตาม',due:1,priority:false,done:true,details:'ไม่เชื่อม CRM และไม่บันทึกข้อมูลบุคคล',glyph:'check'},
+ {id:'c4',title:'ตรวจรายการกรมธรรม์จำลอง',kind:'กรมธรรม์',due:3,priority:true,done:false,details:'ไม่ใช่กรมธรรม์จริง ไม่มีวันครบกำหนดหรือรายละเอียดสัญญา',glyph:'receipt'},
+ {id:'c5',title:'เตรียมงานติดต่อตัวอย่าง',kind:'นัดหมาย',due:6,priority:false,done:false,details:'ใช้ทดลองเลย์เอาต์และสถานะงานเท่านั้น',glyph:'calendar'},
+ {id:'c6',title:'ทบทวนงานประจำเดือนสาธิต',kind:'งานทั่วไป',due:22,priority:false,done:true,details:'ข้อมูลสมมติและยังไม่ได้เชื่อมระบบ CRM',glyph:'grid'}]
+};
+const sections={
+ agent:[['dashboard','Dashboard','grid'],['car','คันรถ','car'],['expense','ค่าใช้จ่าย','receipt'],['holding','ถือครอง','grid'],['performance','ผลงาน','grid'],['premium','ระบบคำนวณเบี้ยประกัน (ล็อก)','shield']],
+ customer:[['dashboard','Dashboard','grid'],['customers','ลูกค้าทั้งหมด','users'],['followup','ติดตามลูกค้า','clock'],['calendar','ปฏิทินงาน','calendar'],['policies','กรมธรรม์','receipt']]
+};
+let tasks=JSON.parse(JSON.stringify(raw)),mode='agent',period='today',filter='all',fakeNum=0,lastFocus=null,activeTask=null,dialogAction=null;
+const periodDays={today:0,week:6,month:30};
+const inPeriod=t=>t.due<=periodDays[period];
+const currentTasks=()=>tasks[mode].filter(inPeriod);
+const dueText=x=>x===0?'วันนี้':x===1?'พรุ่งนี้':x<=6?'ภายใน 7 วัน':'ภายในเดือนนี้';
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function setTheme(val,persist){
+ const t=val==='light'?'light':'dark';root.dataset.theme=t;
+ el('themeBtn').setAttribute('aria-pressed',String(t==='light'));
+ el('themeBtn').setAttribute('aria-label',t==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');
+ el('themeIcon').setAttribute('href',t==='light'?'#sun':'#moon');
+ if(persist){try{localStorage.setItem(themeKey,t)}catch(_){}}
+}
+function showToast(s){el('toast').textContent=s;el('toast').hidden=false}
+function closeToast(){el('toast').hidden=true}
+function openDialog(title,body,primaryLabel,action,secondaryLabel){
+ closeSubmenu();closeDrawer();closeToast();lastFocus=document.activeElement;dialogAction=action||null;
+ el('dialogTitle').textContent=title;el('dialogBody').innerHTML='<p>'+esc(body)+'</p>';
+ el('dialogPrimary').textContent=primaryLabel||'เข้าใจแล้ว';
+ el('dialogSecondary').hidden=!secondaryLabel;el('dialogSecondary').textContent=secondaryLabel||'กลับ';
+ el('dialogShade').classList.add('open');el('dialogClose').focus();
+}
+function closeDialog(){el('dialogShade').classList.remove('open');dialogAction=null;if(lastFocus&&lastFocus.focus)lastFocus.focus();lastFocus=null}
+function showInfo(label,detail){openDialog(label,detail,'ปิด')}
+function closeDrawer(){el('app').classList.remove('drawerOpen');el('drawerShade').hidden=true;el('menuBtn').setAttribute('aria-expanded','false')}
+function toggleDrawer(){closeSubmenu();const open=el('app').classList.toggle('drawerOpen');el('drawerShade').hidden=!open;el('menuBtn').setAttribute('aria-expanded',String(open));if(open)el('drawerClose').focus()}
+function closeSubmenu(){el('subMenu').hidden=true;el('subScrim').hidden=true;el('bottomAgent').setAttribute('aria-expanded','false');el('bottomCustomer').setAttribute('aria-expanded','false')}
+function toggleSubmenu(m){
+ if(!matchMedia('(max-width:720px)').matches)return;
+ const b=el(m==='agent'?'bottomAgent':'bottomCustomer');
+ const isOpen=!el('subMenu').hidden&&b.getAttribute('aria-expanded')==='true';
+ if(isOpen){closeSubmenu();return}
+ closeSubmenu();closeDrawer();closeToast();
+ el('subTitle').textContent=m==='agent'?'เมนูงานตัวแทน':'เมนูงานลูกค้า';
+ el('subLinks').innerHTML=sections[m].map(row=>'<button data-sub-mode="'+m+'" data-sub-key="'+row[0]+'">'+icon(row[2])+'<span>'+esc(row[1])+'</span></button>').join('');
+ el('subMenu').hidden=false;el('subScrim').hidden=false;b.setAttribute('aria-expanded','true');
+}
+function routeMenu(key,nextMode){
+ closeSubmenu();closeDrawer();
+ if(nextMode&&nextMode!==mode){mode=nextMode;filter='all';render()}
+ if(key==='dashboard'){el('content').scrollTo({top:0,behavior:'smooth'});return}
+ if(key==='premium'){showInfo('ระบบคำนวณเบี้ยประกัน — ไม่ได้รับสิทธิ์','DEMO ONLY · โมดูลนี้ต้องผ่านสิทธิ์ Owner/Admin ในระบบจริง ไม่ได้เปิดสูตรหรือข้อมูลเบี้ยใน Public Preview');return}
+ const row=(sections[mode]||[]).find(x=>x[0]===key);
+ showInfo(row?row[1]:'เมนูสาธิต','เมนูนี้เป็นตำแหน่งนำทางจำลองใน UI-03 และยังไม่มีฟังก์ชันหรือข้อมูลจริง หน้าที่เกี่ยวข้องจะออกแบบและตรวจรับแยกกัน')
+}
+function setMode(m){mode=m;filter='all';closeSubmenu();render();el('content').scrollTop=0}
+function renderSide(){
+ const rows=sections[mode];
+ el('sideLinks').innerHTML='<div class="sideLabel">ภาพรวม</div>'+
+ '<button class="sideItem active" data-side="dashboard">'+icon('grid')+'<span class="txt">Dashboard</span></button>'+
+ '<a class="sideItem" href="../backoffice/" title="กลับ Back-office R1.6">'+icon('home')+'<span class="txt">Back-office R1.6</span></a>'+
+ '<div class="sideLabel">'+(mode==='agent'?'งานตัวแทน':'งานลูกค้า')+'</div>'+
+ rows.filter(r=>r[0]!=='dashboard').map(row=>'<button class="sideItem" title="'+esc(row[1])+'" data-side="'+row[0]+'">'+icon(row[2])+'<span class="txt">'+esc(row[1])+'</span></button>').join('')+
+ '<div class="sideLabel">ตัวอย่าง</div><a class="sideItem" href="../" title="Login Preview">'+icon('home')+'<span class="txt">หน้า Login</span></a>';
+ for(const b of el('sideLinks').querySelectorAll('[data-side]'))b.addEventListener('click',()=>routeMenu(b.dataset.side));
+}
+function renderMetrics(){
+ const a=currentTasks(),done=a.filter(t=>t.done).length,pending=a.length-done,meeting=a.filter(t=>t.kind==='นัดหมาย').length;
+ const cells=[
+ ['ทั้งหมด',a.length,'งานตัวอย่างในช่วงที่เลือก','grid','all'],
+ ['รอดำเนินการ',pending,'กดเพื่อกรองงานค้าง','clock','pending'],
+ ['เสร็จแล้ว',done,'เปลี่ยนสถานะงานได้','check','done'],
+ ['นัดหมาย',meeting,'จำนวนรายการนัดหมายสมมติ','calendar','meeting']
+ ];
+ el('metrics').innerHTML=cells.map(c=>'<button class="metric" data-metric="'+c[4]+'"><span class="mTop"><span class="mLabel">'+c[0]+'</span><span class="mIcon">'+icon(c[3])+'</span></span><strong class="mValue">'+c[1]+'</strong><span class="mSub">'+c[2]+'</span></button>').join('');
+ for(const btn of el('metrics').querySelectorAll('[data-metric]'))btn.onclick=()=>{
+   const m=btn.dataset.metric;
+   if(m==='meeting'){filter='all';render();const t=currentTasks().find(x=>x.kind==='นัดหมาย');if(t)openTask(t.id);else showInfo('นัดหมายตัวอย่าง','ไม่มีรายการนัดหมายในช่วงที่เลือก');return}
+   filter=m;render();el('taskHead').scrollIntoView({behavior:'smooth',block:'nearest'});
+ };
+}
+function renderTasks(){
+ el('taskSubtitle').textContent='รายการ '+currentTasks().length+' งาน (ข้อมูลสมมติ) · แตะรายการเพื่อดูรายละเอียด';
+ const a=currentTasks().filter(t=>filter==='all'||(filter==='done'?t.done:!t.done));
+ el('taskList').innerHTML=a.length?a.map(t=>
+ '<div class="task'+(t.done?' done':'')+'">'+
+ '<button class="taskCheck'+(t.done?' done':'')+'" aria-label="'+(t.done?'เปลี่ยนเป็นยังไม่เสร็จ: ':'ทำเครื่องหมายเสร็จ: ')+esc(t.title)+'" data-check="'+t.id+'">'+(t.done?icon('check'):icon('clock'))+'</button>'+
+ '<button class="taskOpen" data-open="'+t.id+'"><span class="taskCopy"><strong>'+esc(t.title)+'</strong><small>'+esc(t.kind)+' · '+dueText(t.due)+(t.done?' · เสร็จแล้ว':' · ยังไม่เสร็จ')+'</small></span><span class="tag'+(t.priority&&!t.done?' high':'')+'">'+(t.done?'สำเร็จ':t.priority?'สำคัญ':'ทั่วไป')+'</span></button></div>').join(''):
+ '<div class="empty"><strong>ไม่มีรายการในตัวกรองนี้</strong>ลองเปลี่ยนช่วงเวลา/สถานะ หรือกดรีเซ็ตข้อมูลสาธิต</div>';
+ for(const b of el('taskList').querySelectorAll('[data-check]'))b.onclick=()=>toggleTask(b.dataset.check);
+ for(const b of el('taskList').querySelectorAll('[data-open]'))b.onclick=()=>openTask(b.dataset.open);
+}
+function renderQuick(){
+ const agent=mode==='agent';
+ const actions=[
+ ['pending','งานที่ยังไม่เสร็จ','กรองรายการค้าง','clock'],
+ ['add','เพิ่มงานสาธิต','เพิ่มข้อมูลสมมติหนึ่งรายการ','plus'],
+ [agent?'premium':'customers',agent?'ระบบคำนวณเบี้ยประกัน':'รายชื่อลูกค้า',agent?'สิทธิ์จำลอง: ปิดไว้':'เปิดตัวอย่างเมนูเท่านั้น',agent?'shield':'users'],
+ ['backoffice','กลับ Back-office','ย้อนดู UI-02 R1.6','home']
+ ];
+ el('quickActions').innerHTML=actions.map(a=>'<button class="quick" data-quick="'+a[0]+'"><span class="quickIcon">'+icon(a[3])+'</span><span class="quickText"><strong>'+a[1]+'</strong><small>'+a[2]+'</small></span>'+icon('arrow','tinyIcon')+'</button>').join('');
+ for(const b of el('quickActions').querySelectorAll('[data-quick]'))b.onclick=()=>{
+  const k=b.dataset.quick;
+  if(k==='pending'){filter='pending';render();el('taskHead').scrollIntoView({behavior:'smooth',block:'nearest'})}
+  else if(k==='add'){fakeNum++;tasks[mode].push({id:'new'+fakeNum,title:'งานทดลองที่เพิ่มในหน้านี้ #'+fakeNum,kind:'งานทั่วไป',due:0,priority:false,done:false,details:'รายการจำลองสร้างชั่วคราวในหน้านี้ ไม่บันทึก ไม่ส่งข้อมูล และจะหายเมื่อโหลดใหม่',glyph:'plus'});period='today';filter='all';render();showToast('เพิ่มงานสาธิตแล้ว — ไม่บันทึกข้อมูลจริง')}
+  else if(k==='backoffice')location.href='../backoffice/';
+  else routeMenu(k);
+ };
+}
+function renderTimeline(){
+ const a=mode==='agent'?
+ [['จัดเรียงรายการงาน','เพื่อทดสอบ Dashboard'],['ข้อมูลคันรถจำลอง','ไม่มีข้อมูลรถจริง'],['ตัวอย่างสถานะงาน','ไม่ได้เชื่อมระบบหลัก']]:
+ [['ตัวอย่างงานติดตาม','ไม่มีข้อมูลบุคคล'],['ปฏิทินนัดหมายจำลอง','ยังไม่สร้างการแจ้งเตือน'],['ตัวอย่างข้อมูลกรมธรรม์','ไม่มีกรมธรรม์จริง']];
+ el('timeline').innerHTML=a.map(x=>'<div class="event"><span class="eventDot"></span><div><strong>'+x[0]+'</strong><span>'+x[1]+'</span></div></div>').join('');
+}
+function render(){
+ el('heroTitle').textContent=mode==='agent'?'ภาพรวมงานตัวแทน':'ภาพรวมงานลูกค้า';
+ el('topAgent').classList.toggle('active',mode==='agent');
+ el('topCustomer').classList.toggle('active',mode==='customer');
+ el('topAgent').setAttribute('aria-pressed',String(mode==='agent'));
+ el('topCustomer').setAttribute('aria-pressed',String(mode==='customer'));
+ el('bottomAgent').classList.toggle('active',mode==='agent');
+ el('bottomCustomer').classList.toggle('active',mode==='customer');
+ for(const b of document.querySelectorAll('[data-period]')){b.classList.toggle('active',b.dataset.period===period);b.setAttribute('aria-pressed',String(b.dataset.period===period))}
+ for(const b of document.querySelectorAll('[data-filter]')){b.classList.toggle('active',b.dataset.filter===filter);b.setAttribute('aria-pressed',String(b.dataset.filter===filter))}
+ renderMetrics();renderTasks();renderQuick();renderTimeline();renderSide();
+}
+function toggleTask(id){
+ const t=tasks[mode].find(x=>x.id===id);if(!t)return;
+ t.done=!t.done;render();showToast(t.done?'เปลี่ยนเป็นเสร็จแล้ว (สาธิต)':'เปลี่ยนเป็นรอดำเนินการ (สาธิต)');
+}
+function openTask(id){
+ const t=tasks[mode].find(x=>x.id===id);if(!t)return;
+ activeTask={mode,id};
+ openDialog(t.title,t.details+' · '+dueText(t.due)+' · '+(t.done?'เสร็จแล้ว':'รอดำเนินการ'),t.done?'เปลี่ยนเป็นรอดำเนินการ':'ทำเครื่องหมายเสร็จ',()=>{const pair=activeTask;closeDialog();if(pair&&tasks[pair.mode]){mode=pair.mode;filter='all';toggleTask(pair.id)}},'ปิดรายละเอียด');
+}
+function showSearch(){
+ closeDrawer();closeSubmenu();openDialog('ค้นหางานและเมนู','เลือกจากตัวอย่างด้านล่าง ไม่ค้นข้อมูลจริง','ปิด');
+ const body=el('dialogBody');body.innerHTML='<label for="searchInput" style="font-size:12px;color:var(--muted)">ค้นหาภายในข้อมูลจำลอง</label><input id="searchInput" type="search" placeholder="เช่น คันรถ ติดตาม ปฏิทิน" autocomplete="off"><div class="searchResults" id="searchResults"></div>';
+ function update(){
+  const q=el('searchInput').value.trim().toLocaleLowerCase('th');
+  const choices=[...tasks[mode].map(t=>({title:t.title,kind:'task',key:t.id})),...sections[mode].map(row=>({title:row[1],kind:'menu',key:row[0]}))].filter(x=>!q||x.title.toLocaleLowerCase('th').includes(q)).slice(0,12);
+  el('searchResults').innerHTML=choices.length?choices.map(x=>'<button data-search-kind="'+x.kind+'" data-search-key="'+esc(x.key)+'">'+esc(x.title)+'<small>'+(x.kind==='task'?'งานตัวอย่าง':'เมนูสาธิต')+'</small></button>').join(''):'<p style="font-size:12px;color:var(--muted)">ไม่พบรายการสมมติ</p>';
+  for(const b of el('searchResults').querySelectorAll('[data-search-kind]'))b.onclick=()=>{const k=b.dataset.searchKey,type=b.dataset.searchKind;closeDialog();if(type==='task')openTask(k);else routeMenu(k)};
+ }
+ el('searchInput').oninput=update;update();el('searchInput').focus();
+}
+el('themeBtn').onclick=()=>setTheme(root.dataset.theme==='light'?'dark':'light',true);
+el('notifyBtn').onclick=()=>showInfo('การแจ้งเตือนตัวอย่าง','ใน Preview นี้ยังไม่มีระบบแจ้งเตือนหรือบัญชีจริง');
+el('profileBtn').onclick=()=>showInfo('บัญชีสาธิต','DEMO ONLY · ไม่มีการเข้าสู่ระบบจริง กรุณาอย่ากรอกข้อมูลส่วนตัว');
+el('topAgent').onclick=()=>setMode('agent');el('topCustomer').onclick=()=>setMode('customer');
+el('searchWide').onclick=showSearch;el('searchSmall').onclick=showSearch;
+el('menuBtn').onclick=()=>{if(matchMedia('(max-width:720px)').matches)toggleDrawer();else el('app').classList.toggle('rail')};
+el('drawerClose').onclick=closeDrawer;el('drawerShade').onclick=closeDrawer;
+el('bottomHome').onclick=()=>location.href='../backoffice/';
+el('bottomAgent').onclick=()=>toggleSubmenu('agent');
+el('bottomCustomer').onclick=()=>toggleSubmenu('customer');
+el('bottomMore').onclick=toggleDrawer;
+el('subClose').onclick=closeSubmenu;el('subScrim').onclick=closeSubmenu;
+el('subLinks').onclick=e=>{const b=e.target.closest('[data-sub-key]');if(!b)return;routeMenu(b.dataset.subKey,b.dataset.subMode)};
+for(const b of document.querySelectorAll('[data-period]'))b.onclick=()=>{period=b.dataset.period;filter='all';render()};
+for(const b of document.querySelectorAll('[data-filter]'))b.onclick=()=>{filter=b.dataset.filter;render()};
+el('resetBtn').onclick=()=>{tasks=JSON.parse(JSON.stringify(raw));fakeNum=0;filter='all';period='today';render();showToast('รีเซ็ตงานสมมติเรียบร้อยแล้ว')};
+el('dialogClose').onclick=closeDialog;el('dialogSecondary').onclick=closeDialog;
+el('dialogPrimary').onclick=()=>{const action=dialogAction;if(action)action();else closeDialog()};
+el('dialogShade').onclick=e=>{if(e.target===el('dialogShade'))closeDialog()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(el('dialogShade').classList.contains('open'))closeDialog();else if(!el('subMenu').hidden)closeSubmenu();else if(el('app').classList.contains('drawerOpen'))closeDrawer();else closeToast()}});
+window.addEventListener('resize',()=>{if(!matchMedia('(max-width:720px)').matches){closeSubmenu();closeDrawer()}});
+window.addEventListener('pageshow',()=>{try{setTheme(localStorage.getItem(themeKey),false)}catch(_){setTheme('dark',false)}});
+window.addEventListener('storage',e=>{if(e.key===themeKey)setTheme(e.newValue,false)});
+setTheme(root.dataset.theme,false);render();
+})();
+</script>
+</body>
+</html>
