@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark" />
-<title>PriteAgent — Login R3 · Interactive Prototype</title>
+<title>PriteAgent — Login R4 · Interactive Prototype</title>
 <style>
 :root{
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
@@ -28,12 +28,12 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opac
 .form{display:grid;gap:16px}.field{display:grid;gap:7px}.fieldrow{display:flex;justify-content:space-between;gap:12px;align-items:center}.field label{font-size:13px;color:#d9e7f1;font-weight:750}.hint{font-size:11px;color:#88a5b8}.control{height:54px;position:relative}.control input{border:1.5px solid var(--line);background:#091927;border-radius:13px;padding:0 46px 0 16px;width:100%;height:100%;color:var(--text);font-size:16px;font-weight:600;letter-spacing:.2px;outline:0;transition:border .16s,box-shadow .16s,background .16s}.control input::placeholder{font-size:13px;font-weight:400;color:#6e8ba0;letter-spacing:0}.control input:focus{border-color:#3abfe3;box-shadow:0 0 0 4px rgba(58,191,227,.14);background:#0b1f30}.control input[aria-invalid="true"]{border-color:var(--danger);background:#1c1216}.control .eye{position:absolute;right:5px;top:5px;border:0;background:none;width:44px;height:44px;border-radius:10px;color:#9eb8ca;font-size:13px;font-weight:650}.control .eye:hover{background:#143046}
 .fieldError{color:#ff92a1;font-size:12px;line-height:1.45;min-height:0}.fieldError:empty{display:none}.help{border:0;color:#86dbf0;font-size:12px;background:none;font-weight:750;padding:4px 0}.status{border-radius:12px;padding:11px 13px;border:1px solid transparent;font-size:12px;line-height:1.65;display:none}.status.show{display:block}.status.error{background:var(--dangerbg);border-color:#6f3140;color:#ffb4c0}.status.ok{background:var(--okbg);border-color:#225748;color:#8be7c6}.status.info{background:var(--infobg);border-color:#24506f;color:#aadffc}
 .primary{width:100%;height:52px;background:linear-gradient(110deg,#2e6fff,#27b6e1 70%,#36d5cb);border:0;border-radius:13px;color:white;font-size:15px;font-weight:780;box-shadow:0 14px 24px rgba(35,123,211,.22);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:10px}.primary:not(:disabled):hover{filter:brightness(1.06)}.spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:white;border-radius:50%;animation:spin .75s linear infinite}.loading .spinner{display:inline-block}
-.demo{border:1px dashed #2a5677;background:#0a1f2e;border-radius:14px;padding:15px;margin-top:24px}.demoHeader{display:flex;align-items:center;justify-content:space-between;gap:8px}.demoHeader strong{font-size:12px;color:#8fe7ff}.demo p{color:#89aabd;font-size:12px;margin:5px 0 10px}.credentials{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.credentials code{font-size:12px;font-weight:700;color:#d9f7ff;background:#0d2a3c;border:1px solid #244f6f;padding:5px 8px;border-radius:7px}.filldemo{padding:8px 13px;border-radius:9px;border:1px solid #2a5e7a;background:#0e2433;color:#a2ebff;font-size:12px;font-weight:750;min-height:38px;white-space:nowrap}.legal{margin:23px 0 0;color:#7e9aaf;font-size:11px;text-align:center}.legal strong{color:#bdd2e0;font-weight:750}.footbar{font-size:11px;color:#7490a7;margin:14px auto 20px;text-align:center;padding:0 12px}
+.demoHeader strong{font-size:12px;color:#8fe7ff}.credentials code{font-size:12px;font-weight:700;color:#d9f7ff;background:#0d2a3c;border:1px solid #244f6f;padding:5px 8px;border-radius:7px}.legal{margin:23px 0 0;color:#7e9aaf;font-size:11px;text-align:center}.legal strong{color:#bdd2e0;font-weight:750}.footbar{font-size:11px;color:#7490a7;margin:14px auto 20px;text-align:center;padding:0 12px}
 #desk{display:none;background:linear-gradient(180deg,#071521,#0a1826);min-height:100dvh;color:var(--text)}.deskTop{display:flex;align-items:center;justify-content:space-between;background:#0b1f2e;border-bottom:1px solid #173b55;padding:14px 28px;gap:14px}.deskBrand{display:flex;align-items:center;gap:10px;font-weight:800;color:#f0f8ff}.deskBrand .brandmark{width:34px;height:34px;font-size:22px}.deskUser{font-size:12px;color:#88a4b8}.deskMain{max-width:1040px;margin:0 auto;padding:35px 24px}.deskHeader{display:flex;justify-content:space-between;align-items:start;gap:14px;margin-bottom:25px}.deskHeader p{font-size:12px;color:#89a6bb;margin:0 0 6px}.deskHeader h2{font-size:clamp(24px,4vw,33px);color:#eff8ff;margin:0 0 8px;letter-spacing:-.6px}.deskHeader .back{border:1px solid #214964;border-radius:10px;background:#0d2434;padding:10px 14px;color:#9ee7ff;white-space:nowrap;font-weight:650;font-size:12px}.deskNotice{background:#0f3044;border:1px solid #20536e;color:#a9e6ff;padding:13px 15px;border-radius:12px;font-size:12px;margin-bottom:22px}.deskStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.deskCard{background:#0b1f2f;border:1px solid #163a54;border-radius:15px;padding:21px;min-height:148px}.deskCard small{font-size:12px;color:#8da7bb;display:block}.deskCard b{font-size:33px;color:#f2f8ff;display:block;margin-top:6px}.deskCard p{font-size:11px;color:#7cdad1;margin:7px 0 0}.deskBlock{background:#0b1f2e;border:1px solid #163a54;border-radius:16px;padding:24px;margin-top:18px}.deskBlock h3{margin:0 0 8px;color:#eef8ff}.deskBlock p{font-size:13px;color:#96aebf;margin:0}.deskLinks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.deskLink{padding:17px;border:1px solid #173954;background:#0d2434;border-radius:11px;text-align:left;display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#a7bed0}.deskLink b{font-size:13px;color:#eef8ff}.deskLink small{font-size:11px;color:#87a3b7}.deskLink:hover{background:#103049}.modalWrap{position:fixed;inset:0;background:#030b1490;z-index:10;display:none;align-items:center;justify-content:center;padding:22px}.modalWrap.open{display:flex}.modal{width:min(100%,390px);background:#0d2434;border:1px solid #1c4764;border-radius:18px;padding:23px;box-shadow:0 24px 80px rgba(0,0,0,.45)}.modal h3{margin:0 0 10px;color:#eef8ff}.modal p{color:#a4bbcb;font-size:13px;margin:0 0 16px}.modal button{border:0;background:linear-gradient(110deg,#2e6fff,#27b6e1);color:white;font-weight:700;border-radius:10px;padding:10px 18px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (max-width:900px){.layout{max-width:100%;min-height:calc(100dvh - 44px);border-radius:0;box-shadow:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.story{padding:38px 27px}.panel{padding:30px 29px}.storycopy h1{font-size:30px}.storyfeatures{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){.layout{display:block;min-height:calc(100dvh - 40px)}.story{display:none}.panel{padding:max(28px,env(safe-area-inset-top)) 24px max(22px,env(safe-area-inset-bottom));max-width:480px;margin:auto;min-height:calc(100dvh - 40px);justify-content:flex-start;background:transparent}.smallbrand{display:flex;align-items:center;gap:11px;margin-bottom:42px}.smallbrand .brandmark{width:42px;height:42px}.smallbrand .brandname{color:#f5faff}.smallbrand .brandlabel{color:#819db1}.panelHead{margin-bottom:26px}.panel h2{font-size:31px}.demo{margin-top:24px}.legal{margin-top:auto;padding-top:22px}.footbar{display:none}.deskTop{padding:13px 17px}.deskMain{padding:25px 16px 90px}.deskHeader{align-items:flex-start}.deskStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.deskStats .deskCard:last-child{grid-column:1/-1}.deskCard{min-height:130px;padding:16px}.deskCard b{font-size:28px}.deskBlock{padding:19px}.deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:360px){.panel{padding-inline:17px}.smallbrand{margin-bottom:30px}.panel h2{font-size:27px}.control{height:50px}.demo{padding:12px}.credentials{gap:6px}.filldemo{padding-inline:9px}.deskLink{padding:12px}}
+@media (max-width:700px){.layout{display:block;min-height:calc(100dvh - 40px)}.story{display:none}.panel{padding:max(28px,env(safe-area-inset-top)) 24px max(22px,env(safe-area-inset-bottom));max-width:480px;margin:auto;min-height:calc(100dvh - 40px);justify-content:flex-start;background:transparent}.smallbrand{display:flex;align-items:center;gap:11px;margin-bottom:42px}.smallbrand .brandmark{width:42px;height:42px}.smallbrand .brandname{color:#f5faff}.smallbrand .brandlabel{color:#819db1}.panelHead{margin-bottom:26px}.panel h2{font-size:31px}.legal{margin-top:auto;padding-top:22px}.footbar{display:none}.deskTop{padding:13px 17px}.deskMain{padding:25px 16px 90px}.deskHeader{align-items:flex-start}.deskStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.deskStats .deskCard:last-child{grid-column:1/-1}.deskCard{min-height:130px;padding:16px}.deskCard b{font-size:28px}.deskBlock{padding:19px}.deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:360px){.panel{padding-inline:17px}.smallbrand{margin-bottom:30px}.panel h2{font-size:27px}.control{height:50px}.deskLink{padding:12px}}
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
 /* Login R3 focused viewport correction: initial login fills screen without page scroll.
@@ -47,7 +47,7 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
 #loginApp .panel{min-height:0;justify-content:center;padding-top:clamp(18px,3vh,46px);padding-bottom:clamp(18px,3vh,46px)}
 #loginApp .panelHead{margin-bottom:clamp(18px,2.6vh,26px)}
 #loginApp .panelHead h2{margin-bottom:0}
-#loginApp .demo{margin-top:clamp(15px,2.6vh,24px)}
+
 #loginApp .legal{margin-top:clamp(12px,1.8vh,22px)}
 @media (max-width:900px){
  #loginApp .layout{height:100dvh;max-height:100dvh;border-radius:0}
@@ -66,27 +66,27 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
  #loginApp .control{height:clamp(45px,6.2vh,53px)}
  #loginApp .control .eye{top:3px;height:calc(100% - 6px)}
  #loginApp .primary{height:clamp(45px,6.2vh,52px)}
- #loginApp .demo{padding:clamp(10px,1.7vh,14px);margin-top:clamp(11px,2vh,19px)}
- #loginApp .demo p,#loginApp .credentials{display:none}
- #loginApp .demoHeader{gap:8px}
+ 
+ #loginApp .demo p,
+ 
  #loginApp .demoHeader strong{font-size:11px}
- #loginApp .filldemo{min-height:34px}
+ 
  #loginApp .legal{margin:clamp(8px,1.5vh,14px) 0 0;padding:0;font-size:10px}
 }
 @media (max-width:360px){
  #loginApp .panel{padding-inline:15px}
  #loginApp .smallbrand{margin-bottom:clamp(11px,2.4vh,18px)}
  #loginApp .demoHeader strong{font-size:10px}
- #loginApp .filldemo{padding:6px 9px;font-size:11px}
+ 
 }
 @media (max-width:700px) and (max-height:700px){
  #loginApp .smallbrand{margin-bottom:14px}
  #loginApp .panelHead{margin-bottom:13px}
  #loginApp .form{gap:9px}
  #loginApp .field{gap:3px}
- #loginApp .demo{margin-top:11px;padding:8px 11px}
+ 
  #loginApp .demoHeader strong{display:none}
- #loginApp .filldemo{width:100%}
+ 
  #loginApp .legal{margin-top:9px}
 }
 @media (max-width:700px) and (max-height:560px){
@@ -98,7 +98,7 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
  #loginApp .form{gap:6px}
  #loginApp .control{height:43px}
  #loginApp .primary{height:43px}
- #loginApp .demo{margin-top:7px}
+ 
  #loginApp .legal{display:none}
 }
 /* Landscape phones and tablets with a shallow viewport: only the login panel.
@@ -114,7 +114,7 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
  #loginApp .field{gap:3px}
  #loginApp .control{height:41px}
  #loginApp .primary{height:42px}
- #loginApp .demo{display:none}
+ 
  #loginApp .legal{display:none}
 }
 /* Small-device soft keyboard can reduce visual viewport below what fits a form.
@@ -126,15 +126,68 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
  #loginApp .panel:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh}
 }
 
-/* PUBLIC PREVIEW SAFETY DELTA — always visible even when R3 hides its own prototype bar */
+/* PUBLIC STATIC PREVIEW, no real authentication. Sticky safety notice */
 #publicPreviewNotice{position:fixed;inset:auto 0 0 0;z-index:9999;box-sizing:border-box;background:#ffe5a0;color:#172b37;border-top:1px solid #d9b65c;box-shadow:0 -4px 16px rgba(0,0,0,.15);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));font:700 12px/1.35 system-ui,-apple-system,sans-serif;text-align:center;pointer-events:none}
 #publicPreviewNotice strong{font-weight:900;letter-spacing:.03em}
+/* R4: preserve the R3 palette, center hero content/cards and login heading */
+#loginApp .story{position:relative;justify-content:center}
+#loginApp .story>.brand{position:absolute;top:clamp(20px,5vh,44px);left:clamp(22px,4vw,48px)}
+#loginApp .storyfoot{position:absolute;bottom:clamp(25px,5vh,38px);left:clamp(22px,4vw,48px);margin:0}
+#loginApp .storycopy{margin:0 0 24px}
+#loginApp .panelHead{text-align:center;margin-bottom:clamp(19px,3vh,26px)}
+#loginApp .panelHead h2{text-align:center}
+/* R4: independent recovery and sign-up interaction surfaces */
+#loginApp .signupPrompt{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:19px;color:#a5c0d3;font-size:13px;flex-wrap:wrap}
+#loginApp .textAction{border:0;background:none;color:#8ce8ff;padding:8px 6px;font:750 13px/1.3 inherit;cursor:pointer}
+#loginApp .textAction:focus-visible,.modal button:focus-visible{outline:3px solid #72defd;outline-offset:3px}
+#loginApp .signupView{display:none}
+#loginApp.signupMode .signupView{display:block}
+#loginApp.signupMode .panelHead,#loginApp.signupMode #loginForm,#loginApp.signupMode .signupPrompt,#loginApp.signupMode .legal{display:none}
+#loginApp.signupMode .panel{justify-content:center}
+#loginApp.signupMode{height:auto;min-height:100dvh;overflow:visible}
+#loginApp.signupMode .layout{height:auto;max-height:none;min-height:100dvh;overflow:visible}
+#loginApp.signupMode .panel{height:auto;max-height:none;min-height:100dvh;padding-top:28px;padding-bottom:calc(45px + env(safe-area-inset-bottom))}
+body:has(#loginApp.signupMode){overflow-y:auto}
+#loginApp .signupView h2{text-align:center;margin:0 0 6px;font-size:27px}
+#loginApp .signupView .signupSub{text-align:center;color:#a0b8ca;font-size:12px;line-height:1.6;margin:0 0 20px}
+#loginApp .signupView form{display:grid;gap:12px}
+#loginApp .signupView .field{gap:5px}
+#loginApp .signupView .control{height:49px}
+#loginApp .signupView .control input{padding-right:16px}
+#loginApp .signupReturn{text-align:center;margin-top:13px}
+#loginApp .signupReturn button{color:#9feaff;font-size:13px;padding:9px;border:0;background:none}
+#loginApp .signupStatus{border:1px solid #285473;background:#123448;border-radius:10px;font-size:12px;color:#bceaff;line-height:1.65;display:none;padding:10px 12px}
+#loginApp .signupStatus.show{display:block}
+#loginApp .signupStatus.bad{background:#3b1d2b;border-color:#713447;color:#ffc0ce}
+.modal .choiceGroup{display:grid;gap:10px;margin-top:15px}
+.modal .choice{width:100%;padding:12px 13px;background:#102d43;border:1px solid #28516b;border-radius:11px;text-align:left;color:#e1f4fd;display:flex;flex-direction:column;gap:2px}
+.modal .choice strong{font-size:13px}
+.modal .choice small{font-size:11px;color:#a1bed1}
+.modal .recoveryForm{display:none;margin-top:12px}
+.modal .recoveryForm label{color:#e6f7ff;font-size:12px;display:block;margin-bottom:7px}
+.modal .recoveryForm input{width:100%;height:45px;min-height:45px;border:1px solid #315775;border-radius:10px;background:#091d2b;color:white;padding:0 12px;font-size:16px;outline:none}
+.modal .recoveryForm .modalPrimary{width:100%;margin-top:11px;background:linear-gradient(105deg,#2e6fff,#26b7df);color:white;border:0}
+.modal .recoveryForm .recoveryBack{margin-top:9px;background:#183c54;color:#b4e9fb}
+.modal .recoveryMsg{font-size:12px;line-height:1.7;padding:10px 12px;background:#12394a;color:#b5ebf5;border:1px solid #285c72;border-radius:10px;margin:12px 0 0;display:none}
+.modal .recoveryMsg.show{display:block}
+.modal .recoveryMsg.bad{background:#3b1b2a;color:#ffbccb;border-color:#723448}
+.modal .recoveryMsg.ok{background:#10392e;color:#91efcd;border-color:#255d46}
+@media(max-width:900px){#loginApp .story>.brand{left:27px;top:26px}#loginApp .storyfoot{left:27px;bottom:23px}}
+@media(max-width:700px){
+ #loginApp .signupPrompt{margin-top:clamp(10px,2vh,19px);font-size:12px;gap:5px}
+ #loginApp .signupPrompt .textAction{font-size:12px}
+ #loginApp.signupMode .panel{padding-top:25px;padding-bottom:calc(52px + env(safe-area-inset-bottom))}
+ #loginApp.signupMode .smallbrand{margin-bottom:18px}
+ #loginApp.signupMode .signupView .control{height:47px}
+}
+@media(max-width:700px) and (max-height:600px){#loginApp .signupPrompt{margin-top:6px}}
+@media(min-width:701px) and (max-height:550px){#loginApp .signupPrompt{margin-top:8px}#loginApp .legal{display:none}}
 </style>
 </head>
 <body>
 <div id="publicPreviewNotice" role="note" aria-label="ประกาศเว็บไซต์ทดลอง"><strong>DEMO ONLY</strong> · ไม่มีระบบล็อกอินจริง · ห้ามกรอกรหัสผ่านจริง</div>
 <div id="loginApp" class="app">
- <div class="previewbar"><b>UI DESIGN R3</b> · ต้นแบบทดลองเท่านั้น · ไม่มีการเข้าสู่ระบบจริง</div>
+ <div class="previewbar"><b>UI DESIGN R4</b> · ต้นแบบทดลองเท่านั้น · ไม่มีการเข้าสู่ระบบจริง</div>
  <main class="layout">
   <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
    <div class="brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
@@ -151,8 +204,20 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
     <div id="formStatus" class="status" role="status" aria-live="polite"></div>
     <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
    </form>
-   <div class="demo"><div class="demoHeader"><strong>✦ ทดลองใช้งานด้วยข้อมูลจำลอง</strong><button type="button" class="filldemo" id="fillDemo">กรอกให้ทดลอง</button></div><p>ใช้บัญชีนี้เพื่อดู Validation, Loading และหน้าหลังล็อกอินตัวอย่าง</p><div class="credentials"><code>รหัสตัวแทน 123456</code><code>รหัสผ่าน 246810</code></div></div>
-   <p class="legal"><strong>UI Prototype R3</strong> · ไม่มีการส่งข้อมูลหรือบันทึกรหัสผ่าน</p>
+   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction">สมัครสมาชิก</button></div>
+   <p class="legal"><strong>UI Prototype R4</strong> · ไม่มีการส่งข้อมูลหรือบันทึกรหัสผ่าน</p>
+   <section id="signupView" class="signupView" aria-label="สมัครสมาชิกจำลอง">
+    <h2 id="signupTitle">สมัครสมาชิก</h2><p class="signupSub">แบบฟอร์มทดลองเท่านั้น · ไม่มีการสร้างบัญชีหรือส่งข้อมูลจริง</p>
+    <form id="signupForm" novalidate autocomplete="off">
+     <div class="field"><label for="regAgent">รหัสตัวแทน</label><div class="control"><input id="regAgent" type="text" inputmode="numeric" maxlength="6" placeholder="ตัวเลข 6 หลัก" autocomplete="off" aria-describedby="regAgentError"></div><div id="regAgentError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regEmail">อีเมล</label><div class="control"><input id="regEmail" type="email" placeholder="ตัวอย่าง: name@example.com" autocomplete="off" aria-describedby="regEmailError"></div><div id="regEmailError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regPass">รหัสผ่าน</label><div class="control"><input id="regPass" type="password" placeholder="อย่างน้อย 8 ตัวอักษร" autocomplete="new-password" aria-describedby="regPassError"></div><div id="regPassError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regConfirm">ยืนยันรหัสผ่าน</label><div class="control"><input id="regConfirm" type="password" placeholder="กรอกรหัสผ่านอีกครั้ง" autocomplete="new-password" aria-describedby="regConfirmError"></div><div id="regConfirmError" class="fieldError" role="alert"></div></div>
+     <div id="signupStatus" class="signupStatus" role="status" aria-live="polite"></div>
+     <button id="signupSubmit" type="submit" class="primary">สมัครสมาชิก (จำลอง)</button>
+    </form>
+    <div class="signupReturn"><button id="returnLogin" type="button">← กลับไปเข้าสู่ระบบ</button></div>
+   </section>
   </section>
  </main>
  <div class="footbar">PriteAgent © 2026 · Login UI Design Review · ไม่ใช่ระบบ Production</div>
@@ -166,7 +231,14 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
   <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="ตั้งค่าธีม"><span>☾</span><b>ตั้งค่าธีม</b><small>จะเริ่มใช้หลัง Login</small></button></div></div>
  </main>
 </section>
-<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p><button id="modalClose" type="button">เข้าใจแล้ว</button></section></div>
+<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p>
+ <div id="recoveryChoices" class="choiceGroup" hidden>
+  <button id="recoveryPasskey" type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ทดลองขั้นตอน · ไม่เรียก WebAuthn จริง</small></button>
+  <button id="recoveryEmailChoice" type="button" class="choice"><strong>กู้คืนด้วยอีเมล</strong><small>ตรวจฟอร์มจำลอง · ไม่ส่งอีเมลจริง</small></button>
+ </div>
+ <form id="recoveryEmailForm" class="recoveryForm" novalidate><label for="recoveryEmail">อีเมลสำหรับกู้คืน (ตัวอย่าง)</label><input id="recoveryEmail" type="email" placeholder="name@example.com" autocomplete="off"/><button id="recoveryEmailSubmit" type="submit" class="modalPrimary">ทดลองดำเนินการ</button><button id="recoveryBack" type="button" class="recoveryBack">← เลือกวิธีอื่น</button></form>
+ <div id="recoveryStatus" class="recoveryMsg" role="status" aria-live="polite"></div>
+ <button id="modalClose" type="button">ปิดหน้าต่าง</button></section></div>
 <script>
 (()=>{
 'use strict';
@@ -175,15 +247,15 @@ const form=$('loginForm'),u=$('username'),p=$('password'),status=$('formStatus')
 let pending=false,timer=null,lastFocus=null;
 function message(text='',type='error'){status.textContent=text;status.className='status'+(text?' show '+type:'');}
 function errors(user='',pass=''){ $('userError').textContent=user; $('passError').textContent=pass;u.setAttribute('aria-invalid',String(!!user));p.setAttribute('aria-invalid',String(!!pass));}
-function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('fillDemo').disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูลตัวอย่าง…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
+function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูลตัวอย่าง…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
 function openModal(t,desc){lastFocus=document.activeElement;$('modalTitle').textContent=t;$('modalText').textContent=desc;$('modalWrap').classList.add('open');$('modalClose').focus();}
 function closeModal(){$('modalWrap').classList.remove('open');lastFocus?.focus?.();}
 $('modalClose').addEventListener('click',closeModal);
 $('modalWrap').addEventListener('click',e=>{if(e.target===$('modalWrap'))closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modalWrap').classList.contains('open'))closeModal();});
-$('help').addEventListener('click',()=>openModal('ลืมรหัสผ่าน?', 'Prototype นี้ไม่มีบัญชีหรือการกู้คืนรหัสจริง สำหรับการทดลองให้กด “กรอกให้ทดลอง” เพื่อใช้ข้อมูลจำลอง ระบบกู้คืนบัญชีและการตั้งค่าโหมดการแสดงผลจริงจะออกแบบและเชื่อมต่อในงานที่ได้รับอนุมัติภายหลัง'));
+$('help').addEventListener('click',showRecoveryChoice);
 $('eye').addEventListener('click',()=>{const next=p.type==='password'?'text':'password';p.type=next;$('eye').textContent=next==='text'?'ซ่อน':'แสดง';$('eye').setAttribute('aria-label',next==='text'?'ซ่อนรหัสผ่าน':'แสดงรหัสผ่าน');$('eye').setAttribute('aria-pressed',String(next==='text'));p.focus();});
-$('fillDemo').addEventListener('click',()=>{u.value='123456';p.value='246810';errors();message('กรอกข้อมูลทดลองแล้ว กด “เข้าสู่ระบบ” เพื่อดูขั้นตอนถัดไป','info');u.focus();});
+
 [u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
 form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
 if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
@@ -192,8 +264,32 @@ errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
 loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='246810'){errors();message();$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);$('logout').focus();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
 });
 $('logout').addEventListener('click',()=>{$('desk').style.display='none';$('loginApp').style.display='flex';p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');errors();message('กลับมาหน้าล็อกอินทดลองแล้ว','info');window.scrollTo(0,0);u.focus();});
-document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R3 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
-function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='demo'){u.value='123456';p.value='246810'; errors(); message('กรอกข้อมูลทดลองแล้ว กด “เข้าสู่ระบบ” เพื่อดูขั้นตอนถัดไป','info');} else if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){ $('loginApp').style.display='none'; $('desk').style.display='block'; }}
+document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R4 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
+
+/* UI-01 R4 — no storage, network, email, passkey or real registration */
+let recoveryTimer=null,signupTimer=null;
+function recoveryMessage(text='',type=''){const out=$('recoveryStatus');out.textContent=text;out.className='recoveryMsg'+(text?' show':'')+(type?' '+type:'');}
+function recoveryReset(){clearTimeout(recoveryTimer);$('recoveryEmail').value='';$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ทดลองดำเนินการ';$('recoveryEmailForm').style.display='none';$('recoveryChoices').hidden=false;recoveryMessage();}
+function showRecoveryChoice(){openModal('กู้คืนรหัสผ่าน (จำลอง)','เลือกวิธีทดลอง ระบบจะไม่เรียกพาสคีย์หรือส่งอีเมลจริง');recoveryReset();$('recoveryPasskey').focus();}
+$('recoveryPasskey').addEventListener('click',()=>{clearTimeout(recoveryTimer);$('recoveryPasskey').disabled=true;recoveryMessage('กำลังจำลองขั้นตอนพาสคีย์…');recoveryTimer=setTimeout(()=>{$('recoveryPasskey').disabled=false;recoveryMessage('SIMULATED ONLY · ขั้นตอนพาสคีย์แสดงผลแล้ว ยังไม่เปิดใช้จริง ไม่มีการยืนยันตัวตนหรือกู้คืนรหัสผ่าน','ok');},500);});
+$('recoveryEmailChoice').addEventListener('click',()=>{$('recoveryChoices').hidden=true;$('recoveryEmailForm').style.display='block';recoveryMessage();$('recoveryEmail').focus();});
+$('recoveryBack').addEventListener('click',()=>{recoveryReset();$('recoveryPasskey').focus();});
+$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลตัวอย่างให้ถูกต้อง · ไม่มีข้อมูลถูกส่งออก','bad');$('recoveryEmail').focus();return;}$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังจำลอง…';recoveryMessage('กำลังจำลองการกู้คืนผ่านอีเมล…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ทดลองดำเนินการ';recoveryMessage('SIMULATED ONLY · แสดงตัวอย่างสำเร็จ ไม่มีการส่งอีเมลและไม่มีการกู้คืนบัญชีจริง','ok');},520);});
+const signupFields=[['regAgent','regAgentError'],['regEmail','regEmailError'],['regPass','regPassError'],['regConfirm','regConfirmError']];
+function clearSignupErrors(){signupFields.forEach(([id,err])=>{$(err).textContent='';$(id).setAttribute('aria-invalid','false');});}
+function signupMessage(msg='',bad=false){$('signupStatus').textContent=msg;$('signupStatus').className='signupStatus'+(msg?' show':'')+(bad?' bad':'');}
+function resetSignup(){clearTimeout(signupTimer);$('signupForm').reset();signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';clearSignupErrors();signupMessage();}
+$('startSignup').addEventListener('click',()=>{resetSignup();$('loginApp').classList.add('signupMode');window.scrollTo(0,0);$('regAgent').focus();});
+$('returnLogin').addEventListener('click',()=>{resetSignup();$('loginApp').classList.remove('signupMode');window.scrollTo(0,0);u.focus();});
+signupFields.forEach(([id])=>$(id).addEventListener('input',()=>{clearSignupErrors();signupMessage();}));
+$('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErrors();signupMessage();let first=null;
+ const vals={agent:$('regAgent').value.trim(),email:$('regEmail').value.trim(),pass:$('regPass').value,confirm:$('regConfirm').value};
+ const errs={regAgent:!/^\d{6}$/.test(vals.agent)?'รหัสตัวแทนต้องเป็นตัวเลข 6 หลัก':'',regEmail:! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)?'กรุณากรอกอีเมลตัวอย่างให้ถูกต้อง':'',regPass:vals.pass.length<8?'กรุณากรอกรหัสผ่านอย่างน้อย 8 ตัวอักษร':'',regConfirm:!vals.confirm?'กรุณายืนยันรหัสผ่าน':vals.pass!==vals.confirm?'รหัสผ่านไม่ตรงกัน':''};
+ signupFields.forEach(([id,err])=>{if(errs[id]){$(err).textContent=errs[id];$(id).setAttribute('aria-invalid','true');first??=$(id);}});if(first){signupMessage('กรุณาตรวจสอบข้อมูลในแบบฟอร์มจำลอง',true);first.focus();return;}
+ signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจข้อมูลจำลอง…';signupMessage('กำลังตรวจฟอร์มจำลอง…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';signupMessage('SIMULATED ONLY · ตรวจฟอร์มสำเร็จ แต่ยังไม่ได้สร้างบัญชีจริง ไม่มีการส่งหรือบันทึกข้อมูล');},620);
+});
+
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){ $('loginApp').style.display='none'; $('desk').style.display='block'; }}
 applyHashState();
 })();
 </script>
