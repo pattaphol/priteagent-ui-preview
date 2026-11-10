@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="dark light"/>
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — App Shell UI-02 R1.4 · DEMO ONLY</title>
+<title>PriteAgent — App Shell UI-02 R1.5 · DEMO ONLY</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--aside:#0b1c2e;--panel:#0f2437;--panel2:#102b40;--surface:#0c1c2d;--line:#234158;--line2:#2f526a;--text:#eef7ff;--muted:#94abc0;--muted2:#7192a9;--accent:#39adfa;--cyan:#78e0ff;--soft-accent:rgba(57,173,250,.13);--shadow:rgba(0,0,0,.26);--white:#fff}
 html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--aside:#fff;--panel:#fff;--panel2:#eef5fc;--surface:#fff;--line:#dbe6f1;--line2:#c9dce9;--text:#1a3147;--muted:#60788e;--muted2:#7290a4;--accent:#117acc;--cyan:#096ca5;--soft-accent:#e7f3fd;--shadow:rgba(54,94,125,.1);--white:#fff}
@@ -39,6 +39,24 @@ html[data-theme="light"] #themeToggle .themeMoon{opacity:0;transform:rotate(80de
 #themeToggle .themeModeGlyph,#themeToggle .themeSun,#themeToggle .themeMoon{transform-box:view-box;backface-visibility:hidden}
 @media(prefers-reduced-motion:reduce){#themeToggle.themeTap{animation:none!important}}
 
+
+/* UI-02 R1.5 focused mobile bottom-nav submenu: no app/business rule changes. */
+.submenuScrim,.bottomSubmenu{display:none}
+@media(max-width:720px){
+.submenuScrim:not([hidden]){display:block;position:fixed;inset:0;background:rgba(2,15,28,.38);z-index:43}
+.bottomSubmenu:not([hidden]){display:block;position:fixed;left:10px;right:10px;bottom:calc(91px + env(safe-area-inset-bottom,0px));background:var(--aside);border:1px solid var(--line2);border-radius:18px;box-shadow:0 14px 48px var(--shadow);z-index:52;max-height:min(66dvh,495px);overflow:hidden}
+.bottomSubmenuHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px 10px;border-bottom:1px solid var(--line)}
+.bottomSubmenuHead h2{margin:0;font-size:15px;font-weight:820}
+.bottomSubmenuHead span{display:block;font-size:10px;color:var(--muted)}
+.bottomSubmenuHead button{flex-shrink:0;display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--line);border-radius:10px}
+.bottomSubmenuItems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:10px 12px 13px;overflow-y:auto;max-height:min(51dvh,406px)}
+.bottomSubmenuItems button{min-width:0;min-height:46px;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);text-align:left;color:var(--text);font-size:12px;font-weight:650}
+.bottomSubmenuItems button:hover,.bottomSubmenuItems button:focus-visible{border-color:var(--accent);background:var(--soft-accent)}
+.bottomSubmenuItems button .icon{height:18px;width:18px;color:var(--cyan)}
+.bottomSubmenuItems button .itemLabel{min-width:0;overflow-wrap:anywhere}
+.mobilebottom button[aria-expanded="true"]{background:var(--soft-accent);color:var(--cyan);font-weight:800}
+}
+@media(max-width:355px){.bottomSubmenuItems{grid-template-columns:1fr;max-height:48dvh}}
 </style>
 </head>
 <body>
@@ -99,10 +117,15 @@ html[data-theme="light"] #themeToggle .themeMoon{opacity:0;transform:rotate(80de
    <section id="placeholder" class="hide"><div class="tipcard" style="display:flex;align-items:flex-start;gap:15px;margin:5px 0 18px"><span class="tipicon"><svg class="icon lg"><use href="#i-grid"/></svg></span><div class="tipcardtext"><strong id="placeholderTitle">โมดูลตัวอย่าง</strong><p id="placeholderDesc">หน้านี้แสดงปลายทางการนำทางเท่านั้น ไม่มีการเชื่อมต่อระบบหรือข้อมูลจริง</p></div></div><button id="returnHome" class="action" style="background:#167fca;color:white;border-radius:10px;padding:10px 14px;font-weight:750">← กลับหน้าแรก</button></section>
   </div></main>
  </div>
+ <div id="submenuScrim" class="submenuScrim" hidden aria-hidden="true"></div>
+ <section id="bottomSubmenu" class="bottomSubmenu" role="region" aria-label="เมนูย่อย" hidden>
+  <div class="bottomSubmenuHead"><div><h2 id="bottomSubmenuTitle">เมนูย่อย</h2><span>เลือกหน้าที่ต้องการ · DEMO ONLY</span></div><button type="button" id="bottomSubmenuClose" aria-label="ปิดเมนูย่อย"><svg class="icon"><use href="#i-x"/></svg></button></div>
+  <div id="bottomSubmenuItems" class="bottomSubmenuItems"></div>
+ </section>
  <nav class="mobilebottom" aria-label="เมนูด้านล่างมือถือ">
   <button id="bottomHome" class="active"><svg class="icon"><use href="#i-home"/></svg>หน้าแรก</button>
-  <button id="bottomAgent"><svg class="icon"><use href="#i-panel"/></svg>งานตัวแทน</button>
-  <button id="bottomCustomer"><svg class="icon"><use href="#i-users"/></svg>งานลูกค้า</button>
+  <button id="bottomAgent" aria-controls="bottomSubmenu" aria-expanded="false" aria-haspopup="true"><svg class="icon"><use href="#i-panel"/></svg>งานตัวแทน</button>
+  <button id="bottomCustomer" aria-controls="bottomSubmenu" aria-expanded="false" aria-haspopup="true"><svg class="icon"><use href="#i-users"/></svg>งานลูกค้า</button>
   <button id="bottomMore"><svg class="icon"><use href="#i-menu"/></svg>เพิ่มเติม</button>
  </nav>
 </div>
@@ -121,7 +144,9 @@ const glyph={premium:'shield',home:'home',dashboard:'grid',car:'car',expense:'re
 function icon(n,cl='icon'){return `<svg class="${cl}" aria-hidden="true"><use href="#i-${glyph[n]||n||'grid'}"/></svg>`;}
 function closePops(){['notificationPop','profilePop'].forEach(x=>$(x).classList.remove('open'));$('notifications').setAttribute('aria-expanded','false');$('profile').setAttribute('aria-expanded','false');}
 function closeDrawer(){app.classList.remove('drawer-open');if(drawerTrigger?.focus)drawerTrigger.focus();drawerTrigger=null;}
-function openDrawer(button){drawerTrigger=button||document.activeElement;app.classList.add('drawer-open');$('closeDrawer').focus();closePops();}
+function openDrawer(button){closeSubmenu(false);drawerTrigger=button||document.activeElement;app.classList.add('drawer-open');$('closeDrawer').focus();closePops();}
+function closeSubmenu(restoreFocus=false){const panel=$('bottomSubmenu');const wasOpen=!panel.hidden;const active=$('bottomAgent').getAttribute('aria-expanded')==='true'?'bottomAgent':$('bottomCustomer').getAttribute('aria-expanded')==='true'?'bottomCustomer':null;panel.hidden=true;$('submenuScrim').hidden=true;$('bottomAgent').setAttribute('aria-expanded','false');$('bottomCustomer').setAttribute('aria-expanded','false');if(wasOpen&&restoreFocus&&active)$(active).focus();}
+function toggleSubmenu(which){if(!matchMedia('(max-width:720px)').matches)return;const btn=$(which==='agent'?'bottomAgent':'bottomCustomer'),isOpen=!$('bottomSubmenu').hidden&&btn.getAttribute('aria-expanded')==='true';if(isOpen){closeSubmenu(true);return;}closeSubmenu(false);closePops();const data=which==='agent'?agent:customer;$('bottomSubmenuTitle').textContent=which==='agent'?'เมนูงานตัวแทน':'เมนูงานลูกค้า';$('bottomSubmenu').setAttribute('aria-label',which==='agent'?'เมนูย่อยงานตัวแทน':'เมนูย่อยงานลูกค้า');$('bottomSubmenuItems').innerHTML=data.map(([id,label])=>`<button type="button" data-submenu-page="${id}">${icon(id)}<span class="itemLabel">${id==='home'?(which==='agent'?'หน้าแรกงานตัวแทน':'หน้าแรกงานลูกค้า'):label}</span></button>`).join('');for(const item of $('bottomSubmenuItems').querySelectorAll('[data-submenu-page]'))item.onclick=()=>{closeSubmenu(false);switchMode(which);navigate(item.dataset.submenuPage);};$('bottomSubmenu').hidden=false;$('submenuScrim').hidden=false;btn.setAttribute('aria-expanded','true');$('bottomSubmenuItems').querySelector('button')?.focus();}
 function modeItems(){return mode==='agent'?agent:customer;}
 function renderNav(){const out=modeItems().map(([id,label])=>`<button type="button" data-page="${id}" class="navitem ${page===id?'active':''}" title="${label}">${icon(id)}<span class="t">${label}</span>${id==='premium'?'<span class="later">ล็อก</span>':id==='dashboard'||id==='settings'?'<span class="later">ตัวอย่าง</span>':''}</button>`).join('');$('sidebody').innerHTML=`<div class="sidenavtitle">${mode==='agent'?'AGENT WORKSPACE':'CUSTOMER WORKSPACE'}</div>${out}`;for(const btn of $('sidebody').querySelectorAll('[data-page]'))btn.addEventListener('click',()=>navigate(btn.dataset.page));}
 function renderTiles(){const keys=mode==='agent'?['car','expense','holding','performance']:['customers','followup','calendar','policies'];const cs=['','v2','v3','v4'];let map=new Map(modeItems().map(a=>[a[0],a[1]]));$('tiles').innerHTML=keys.map((id,i)=>`<button type="button" class="tile" data-tile="${id}"><span class="tileicon ${cs[i]}">${icon(id)}</span><b>${map.get(id)}</b><small>คลิกเพื่อดูหน้าตัวอย่าง →</small></button>`).join('');for(const b of $('tiles').querySelectorAll('[data-tile]'))b.addEventListener('click',()=>navigate(b.dataset.tile));}
@@ -153,13 +178,14 @@ $('clearNotifications').onclick=()=>{closePops();showInfo('อ่านการ
 for(const b of document.querySelectorAll('[data-popaction]'))b.onclick=()=>{closePops();showInfo('รายการแจ้งเตือนตัวอย่าง','รายการนี้ไม่มีข้อมูลจริง และยังไม่เชื่อมระบบติดตามหรือแจ้งเตือน');};
 $('profileHelp').onclick=()=>showInfo('โครงพื้นที่ทำงาน · UI-02','ทดสอบเมนู Sidebar, โหมดงานตัวแทน/ลูกค้า, เมนูมือถือ, ค้นหา และสลับธีมได้ แต่ไม่มีระบบบัญชีหรือฐานข้อมูลจริง');
 $('heroAction').onclick=()=>navigate($('heroAction').dataset.target||'car');$('returnHome').onclick=()=>navigate('home');
-$('bottomHome').onclick=()=>navigate('home');$('bottomAgent').onclick=()=>switchMode('agent');$('bottomCustomer').onclick=()=>switchMode('customer');$('bottomMore').onclick=()=>openDrawer($('bottomMore'));
+$('bottomHome').onclick=()=>{closeSubmenu(false);navigate('home');};$('bottomAgent').onclick=()=>toggleSubmenu('agent');$('bottomCustomer').onclick=()=>toggleSubmenu('customer');$('bottomMore').onclick=()=>openDrawer($('bottomMore'));$('bottomSubmenuClose').onclick=()=>closeSubmenu(true);$('submenuScrim').onclick=()=>closeSubmenu(true);
 $('searchTop').onclick=$('searchIcon').onclick=()=>{openOverlay('searchOverlay');$('menuSearch').value='';renderSearch();};
 function renderSearch(){const q=$('menuSearch').value.trim().toLocaleLowerCase('th');const choices=[...agent.map(x=>({...{id:x[0],label:x[1]},mode:'agent'})),...customer.map(x=>({id:x[0],label:x[1],mode:'customer'}))].filter((x,i,a)=>a.findIndex(y=>y.id===x.id&&y.mode===x.mode)===i&&x.id!=='home');const res=choices.filter(x=>!q||x.label.toLocaleLowerCase('th').includes(q));$('searchResults').innerHTML=res.length?res.map(x=>`<button type="button" data-search-id="${x.id}" data-search-mode="${x.mode}"><span>${x.label}</span><small>${x.mode==='agent'?'งานตัวแทน':'งานลูกค้า'} →</small></button>`).join(''):'<p style="color:var(--muted);padding:7px 10px">ไม่พบเมนูที่ค้นหา</p>';for(const b of $('searchResults').querySelectorAll('[data-search-id]'))b.onclick=()=>{switchMode(b.dataset.searchMode);navigate(b.dataset.searchId);closeOverlay('searchOverlay');};}
 $('menuSearch').oninput=renderSearch;
 $('dialogOK').onclick=$('dialogX').onclick=()=>closeOverlay('dialogOverlay');$('searchX').onclick=()=>closeOverlay('searchOverlay');
 for(const id of ['dialogOverlay','searchOverlay'])$(id).addEventListener('click',e=>{if(e.target===$(id))closeOverlay(id);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('dialogOverlay').classList.contains('open'))closeOverlay('dialogOverlay');else if($('searchOverlay').classList.contains('open'))closeOverlay('searchOverlay');else if(app.classList.contains('drawer-open'))closeDrawer();else closePops();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('dialogOverlay').classList.contains('open'))closeOverlay('dialogOverlay');else if($('searchOverlay').classList.contains('open'))closeOverlay('searchOverlay');else if(!$('bottomSubmenu').hidden)closeSubmenu(true);else if(app.classList.contains('drawer-open'))closeDrawer();else closePops();}});
+window.addEventListener('resize',()=>{if(!matchMedia('(max-width:720px)').matches)closeSubmenu(false);});
 applyTheme(doc.dataset.theme);
 window.addEventListener('storage',e=>{if(e.key===THEME_KEY)applyTheme(e.newValue);});
 window.addEventListener('pageshow',()=>{try{applyTheme(localStorage.getItem(THEME_KEY));}catch(_){applyTheme('dark');}});
