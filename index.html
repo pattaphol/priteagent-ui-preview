@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<title>PriteAgent — Login R3 · Interactive Prototype</title>
+<style>
+:root{
+  --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
+  --line:#1f425d;--line2:#2b5777;--text:#edf5fb;--muted:#9db2c3;--soft:#bfd5e5;--cyan:#40b8da;
+  --cyan2:#2ed0c4;--accent:#42a4ff;--danger:#ff788b;--dangerbg:#3a1d27;--ok:#61d4ae;--okbg:#11382f;
+  --infobg:#112f45;--shadow:0 28px 78px rgba(0,0,0,.38)
+}
+*{box-sizing:border-box}html{min-width:290px;background:var(--bg)}
+body{margin:0;background:radial-gradient(circle at 15% 15%,rgba(66,164,255,.15),transparent 26%),radial-gradient(circle at 85% 85%,rgba(46,208,196,.12),transparent 25%),linear-gradient(180deg,#071521 0%,#081a28 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans Thai",system-ui,sans-serif;line-height:1.6;font-size:15px}
+button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.68}a{color:inherit}button:focus-visible,input:focus-visible{outline:3px solid #65d2ff;outline-offset:3px}button,input{-webkit-tap-highlight-color:transparent}
+.app{min-height:100dvh;display:flex;flex-direction:column}.previewbar{padding:9px 18px;background:#081726;border-bottom:1px solid #16344d;font-size:11px;color:#8cb0c6;text-align:center;font-weight:700;letter-spacing:.02em}.previewbar b{color:#a7eeff}
+.layout{width:100%;max-width:1180px;margin:auto;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);min-height:min(740px,calc(100dvh - 44px));border-radius:28px;overflow:hidden;box-shadow:var(--shadow);background:rgba(11,29,43,.84);backdrop-filter:blur(10px)}
+.story{color:var(--text);background:radial-gradient(ellipse at 85% 0%,rgba(64,184,218,.18),transparent 38%),radial-gradient(circle at 20% 85%,rgba(66,164,255,.16),transparent 35%),linear-gradient(145deg,#0a1827 0%,#0d2436 52%,#0f3042 100%);display:flex;flex-direction:column;padding:44px 48px;position:relative;isolation:isolate;overflow:hidden;border-right:1px solid rgba(255,255,255,.05)}
+.story:before,.story:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(173,225,255,.08);pointer-events:none}.story:before{width:440px;height:440px;right:-200px;top:100px}.story:after{width:280px;height:280px;right:-110px;top:230px}
+.brand{display:flex;align-items:center;gap:12px;width:fit-content}.brandmark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#3bc6ea,#2967ff);color:white;font-size:25px;font-weight:900;letter-spacing:-1px;box-shadow:0 10px 30px rgba(53,133,255,.32)}
+.brandstack{display:flex;flex-direction:column;gap:2px}.brandname{font-size:24px;letter-spacing:-.7px;line-height:1.05;font-weight:800;color:#f7fbff}.brandname .accent{color:#8be8ff}.brandlabel{font-size:10px;color:#83a5bc;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.storycopy{margin:auto 0 34px}.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.5px;font-weight:760;text-transform:uppercase;color:#8ee7f7}.eyebrow:before{content:"";width:20px;height:2px;border-radius:2px;background:linear-gradient(90deg,#43a7ff,#4ce0d2)}
+.storycopy h1{font-size:clamp(30px,3.15vw,43px);line-height:1.35;letter-spacing:-1.2px;margin:18px 0 12px;font-weight:790}.storycopy h1 em{font-style:normal;color:#8ee7f7}.storycopy p{max-width:380px;font-size:14px;color:#b6cad8;line-height:1.85;margin:0}
+.storyfeatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:420px}.feature{border:1px solid rgba(122,184,215,.16);background:rgba(255,255,255,.03);padding:15px;border-radius:15px;min-height:108px}.feature i{display:block;font-style:normal;font-size:20px;margin-bottom:10px}.feature b{font-size:13px;color:#f4fbff}.feature p{font-size:11px;color:#a8c3d5;line-height:1.6;margin:4px 0 0}.storyfoot{margin-top:30px;font-size:11px;color:#8aa8bb}
+.panel{padding:48px 50px 32px;display:flex;flex-direction:column;justify-content:center;min-width:0;background:linear-gradient(180deg,rgba(13,32,46,.96),rgba(9,24,37,.98))}.smallbrand{display:none}.panelHead{margin:0 0 24px}.panel h2{font-size:31px;color:#f3f8fd;font-weight:790;letter-spacing:-.9px;line-height:1.3;margin:0 0 8px}.panel .intro{font-size:13px;color:var(--muted);margin:0}
+.form{display:grid;gap:16px}.field{display:grid;gap:7px}.fieldrow{display:flex;justify-content:space-between;gap:12px;align-items:center}.field label{font-size:13px;color:#d9e7f1;font-weight:750}.hint{font-size:11px;color:#88a5b8}.control{height:54px;position:relative}.control input{border:1.5px solid var(--line);background:#091927;border-radius:13px;padding:0 46px 0 16px;width:100%;height:100%;color:var(--text);font-size:16px;font-weight:600;letter-spacing:.2px;outline:0;transition:border .16s,box-shadow .16s,background .16s}.control input::placeholder{font-size:13px;font-weight:400;color:#6e8ba0;letter-spacing:0}.control input:focus{border-color:#3abfe3;box-shadow:0 0 0 4px rgba(58,191,227,.14);background:#0b1f30}.control input[aria-invalid="true"]{border-color:var(--danger);background:#1c1216}.control .eye{position:absolute;right:5px;top:5px;border:0;background:none;width:44px;height:44px;border-radius:10px;color:#9eb8ca;font-size:13px;font-weight:650}.control .eye:hover{background:#143046}
+.fieldError{color:#ff92a1;font-size:12px;line-height:1.45;min-height:0}.fieldError:empty{display:none}.help{border:0;color:#86dbf0;font-size:12px;background:none;font-weight:750;padding:4px 0}.status{border-radius:12px;padding:11px 13px;border:1px solid transparent;font-size:12px;line-height:1.65;display:none}.status.show{display:block}.status.error{background:var(--dangerbg);border-color:#6f3140;color:#ffb4c0}.status.ok{background:var(--okbg);border-color:#225748;color:#8be7c6}.status.info{background:var(--infobg);border-color:#24506f;color:#aadffc}
+.primary{width:100%;height:52px;background:linear-gradient(110deg,#2e6fff,#27b6e1 70%,#36d5cb);border:0;border-radius:13px;color:white;font-size:15px;font-weight:780;box-shadow:0 14px 24px rgba(35,123,211,.22);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:10px}.primary:not(:disabled):hover{filter:brightness(1.06)}.spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:white;border-radius:50%;animation:spin .75s linear infinite}.loading .spinner{display:inline-block}
+.demo{border:1px dashed #2a5677;background:#0a1f2e;border-radius:14px;padding:15px;margin-top:24px}.demoHeader{display:flex;align-items:center;justify-content:space-between;gap:8px}.demoHeader strong{font-size:12px;color:#8fe7ff}.demo p{color:#89aabd;font-size:12px;margin:5px 0 10px}.credentials{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.credentials code{font-size:12px;font-weight:700;color:#d9f7ff;background:#0d2a3c;border:1px solid #244f6f;padding:5px 8px;border-radius:7px}.filldemo{padding:8px 13px;border-radius:9px;border:1px solid #2a5e7a;background:#0e2433;color:#a2ebff;font-size:12px;font-weight:750;min-height:38px;white-space:nowrap}.legal{margin:23px 0 0;color:#7e9aaf;font-size:11px;text-align:center}.legal strong{color:#bdd2e0;font-weight:750}.footbar{font-size:11px;color:#7490a7;margin:14px auto 20px;text-align:center;padding:0 12px}
+#desk{display:none;background:linear-gradient(180deg,#071521,#0a1826);min-height:100dvh;color:var(--text)}.deskTop{display:flex;align-items:center;justify-content:space-between;background:#0b1f2e;border-bottom:1px solid #173b55;padding:14px 28px;gap:14px}.deskBrand{display:flex;align-items:center;gap:10px;font-weight:800;color:#f0f8ff}.deskBrand .brandmark{width:34px;height:34px;font-size:22px}.deskUser{font-size:12px;color:#88a4b8}.deskMain{max-width:1040px;margin:0 auto;padding:35px 24px}.deskHeader{display:flex;justify-content:space-between;align-items:start;gap:14px;margin-bottom:25px}.deskHeader p{font-size:12px;color:#89a6bb;margin:0 0 6px}.deskHeader h2{font-size:clamp(24px,4vw,33px);color:#eff8ff;margin:0 0 8px;letter-spacing:-.6px}.deskHeader .back{border:1px solid #214964;border-radius:10px;background:#0d2434;padding:10px 14px;color:#9ee7ff;white-space:nowrap;font-weight:650;font-size:12px}.deskNotice{background:#0f3044;border:1px solid #20536e;color:#a9e6ff;padding:13px 15px;border-radius:12px;font-size:12px;margin-bottom:22px}.deskStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.deskCard{background:#0b1f2f;border:1px solid #163a54;border-radius:15px;padding:21px;min-height:148px}.deskCard small{font-size:12px;color:#8da7bb;display:block}.deskCard b{font-size:33px;color:#f2f8ff;display:block;margin-top:6px}.deskCard p{font-size:11px;color:#7cdad1;margin:7px 0 0}.deskBlock{background:#0b1f2e;border:1px solid #163a54;border-radius:16px;padding:24px;margin-top:18px}.deskBlock h3{margin:0 0 8px;color:#eef8ff}.deskBlock p{font-size:13px;color:#96aebf;margin:0}.deskLinks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.deskLink{padding:17px;border:1px solid #173954;background:#0d2434;border-radius:11px;text-align:left;display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#a7bed0}.deskLink b{font-size:13px;color:#eef8ff}.deskLink small{font-size:11px;color:#87a3b7}.deskLink:hover{background:#103049}.modalWrap{position:fixed;inset:0;background:#030b1490;z-index:10;display:none;align-items:center;justify-content:center;padding:22px}.modalWrap.open{display:flex}.modal{width:min(100%,390px);background:#0d2434;border:1px solid #1c4764;border-radius:18px;padding:23px;box-shadow:0 24px 80px rgba(0,0,0,.45)}.modal h3{margin:0 0 10px;color:#eef8ff}.modal p{color:#a4bbcb;font-size:13px;margin:0 0 16px}.modal button{border:0;background:linear-gradient(110deg,#2e6fff,#27b6e1);color:white;font-weight:700;border-radius:10px;padding:10px 18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:900px){.layout{max-width:100%;min-height:calc(100dvh - 44px);border-radius:0;box-shadow:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.story{padding:38px 27px}.panel{padding:30px 29px}.storycopy h1{font-size:30px}.storyfeatures{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.layout{display:block;min-height:calc(100dvh - 40px)}.story{display:none}.panel{padding:max(28px,env(safe-area-inset-top)) 24px max(22px,env(safe-area-inset-bottom));max-width:480px;margin:auto;min-height:calc(100dvh - 40px);justify-content:flex-start;background:transparent}.smallbrand{display:flex;align-items:center;gap:11px;margin-bottom:42px}.smallbrand .brandmark{width:42px;height:42px}.smallbrand .brandname{color:#f5faff}.smallbrand .brandlabel{color:#819db1}.panelHead{margin-bottom:26px}.panel h2{font-size:31px}.demo{margin-top:24px}.legal{margin-top:auto;padding-top:22px}.footbar{display:none}.deskTop{padding:13px 17px}.deskMain{padding:25px 16px 90px}.deskHeader{align-items:flex-start}.deskStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.deskStats .deskCard:last-child{grid-column:1/-1}.deskCard{min-height:130px;padding:16px}.deskCard b{font-size:28px}.deskBlock{padding:19px}.deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:360px){.panel{padding-inline:17px}.smallbrand{margin-bottom:30px}.panel h2{font-size:27px}.control{height:50px}.demo{padding:12px}.credentials{gap:6px}.filldemo{padding-inline:9px}.deskLink{padding:12px}}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
+
+/* Login R3 focused viewport correction: initial login fills screen without page scroll.
+   Only when the onscreen keyboard or accessibility zoom is active may the form scroll
+   to keep focused controls reachable. Post-login sample remains a separate screen. */
+html,body{height:100%;overflow-x:hidden}
+body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
+#loginApp.app{height:100dvh;min-height:0;overflow:hidden;justify-content:center}
+#loginApp .previewbar,#loginApp .footbar{display:none}
+#loginApp .layout{height:min(760px,100dvh);min-height:0;max-height:100dvh;margin:auto;border-radius:25px}
+#loginApp .panel{min-height:0;justify-content:center;padding-top:clamp(18px,3vh,46px);padding-bottom:clamp(18px,3vh,46px)}
+#loginApp .panelHead{margin-bottom:clamp(18px,2.6vh,26px)}
+#loginApp .panelHead h2{margin-bottom:0}
+#loginApp .demo{margin-top:clamp(15px,2.6vh,24px)}
+#loginApp .legal{margin-top:clamp(12px,1.8vh,22px)}
+@media (max-width:900px){
+ #loginApp .layout{height:100dvh;max-height:100dvh;border-radius:0}
+ #loginApp .story{padding:clamp(18px,3.4vh,38px) 27px}
+ #loginApp .panel{padding:clamp(18px,3vh,32px) 28px}
+}
+@media (max-width:700px){
+ #loginApp .layout{width:100%;max-width:100%;height:100dvh;min-height:0;display:flex;align-items:stretch;justify-content:center;overflow:hidden}
+ #loginApp .story{display:none}
+ #loginApp .panel{width:100%;max-width:440px;height:100%;min-height:0;margin:auto;justify-content:center;overflow:hidden;padding:clamp(11px,2.5vh,24px) clamp(16px,5.2vw,26px);background:transparent}
+ #loginApp .smallbrand{display:flex;margin:0 0 clamp(14px,3vh,28px)}
+ #loginApp .panelHead{margin:0 0 clamp(13px,2.4vh,25px)}
+ #loginApp .panelHead h2{font-size:clamp(26px,4.7vh,32px);line-height:1.3}
+ #loginApp .form{gap:clamp(9px,1.7vh,15px)}
+ #loginApp .field{gap:5px}
+ #loginApp .control{height:clamp(45px,6.2vh,53px)}
+ #loginApp .control .eye{top:3px;height:calc(100% - 6px)}
+ #loginApp .primary{height:clamp(45px,6.2vh,52px)}
+ #loginApp .demo{padding:clamp(10px,1.7vh,14px);margin-top:clamp(11px,2vh,19px)}
+ #loginApp .demo p,#loginApp .credentials{display:none}
+ #loginApp .demoHeader{gap:8px}
+ #loginApp .demoHeader strong{font-size:11px}
+ #loginApp .filldemo{min-height:34px}
+ #loginApp .legal{margin:clamp(8px,1.5vh,14px) 0 0;padding:0;font-size:10px}
+}
+@media (max-width:360px){
+ #loginApp .panel{padding-inline:15px}
+ #loginApp .smallbrand{margin-bottom:clamp(11px,2.4vh,18px)}
+ #loginApp .demoHeader strong{font-size:10px}
+ #loginApp .filldemo{padding:6px 9px;font-size:11px}
+}
+@media (max-width:700px) and (max-height:700px){
+ #loginApp .smallbrand{margin-bottom:14px}
+ #loginApp .panelHead{margin-bottom:13px}
+ #loginApp .form{gap:9px}
+ #loginApp .field{gap:3px}
+ #loginApp .demo{margin-top:11px;padding:8px 11px}
+ #loginApp .demoHeader strong{display:none}
+ #loginApp .filldemo{width:100%}
+ #loginApp .legal{margin-top:9px}
+}
+@media (max-width:700px) and (max-height:560px){
+ #loginApp .smallbrand{margin-bottom:8px}
+ #loginApp .brandmark{height:36px;width:36px;font-size:21px}
+ #loginApp .brandname{font-size:22px}
+ #loginApp .panelHead{margin-bottom:8px}
+ #loginApp .panelHead h2{font-size:24px}
+ #loginApp .form{gap:6px}
+ #loginApp .control{height:43px}
+ #loginApp .primary{height:43px}
+ #loginApp .demo{margin-top:7px}
+ #loginApp .legal{display:none}
+}
+/* Landscape phones and tablets with a shallow viewport: only the login panel.
+   Inputs remain interactive; no hero or second page is shown in the available height. */
+@media (min-width:701px) and (max-height:550px){
+ #loginApp .layout{display:flex;max-width:580px}
+ #loginApp .story{display:none}
+ #loginApp .panel{width:100%;padding:11px 28px;overflow:hidden}
+ #loginApp .smallbrand{display:flex;margin:0 0 9px}
+ #loginApp .panelHead{margin:0 0 9px}
+ #loginApp .panelHead h2{font-size:24px}
+ #loginApp .form{gap:7px}
+ #loginApp .field{gap:3px}
+ #loginApp .control{height:41px}
+ #loginApp .primary{height:42px}
+ #loginApp .demo{display:none}
+ #loginApp .legal{display:none}
+}
+/* Small-device soft keyboard can reduce visual viewport below what fits a form.
+   Permit scrolling only during field focus, rather than clipping an active input. */
+@media (max-width:700px){
+ body:has(#loginForm input:focus){overflow-y:auto}
+ #loginApp.app:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh}
+ #loginApp .layout:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh;max-height:none}
+ #loginApp .panel:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh}
+}
+
+/* PUBLIC PREVIEW SAFETY DELTA — always visible even when R3 hides its own prototype bar */
+#publicPreviewNotice{position:fixed;inset:auto 0 0 0;z-index:9999;box-sizing:border-box;background:#ffe5a0;color:#172b37;border-top:1px solid #d9b65c;box-shadow:0 -4px 16px rgba(0,0,0,.15);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));font:700 12px/1.35 system-ui,-apple-system,sans-serif;text-align:center;pointer-events:none}
+#publicPreviewNotice strong{font-weight:900;letter-spacing:.03em}
+</style>
+</head>
+<body>
+<div id="publicPreviewNotice" role="note" aria-label="ประกาศเว็บไซต์ทดลอง"><strong>DEMO ONLY</strong> · ไม่มีระบบล็อกอินจริง · ห้ามกรอกรหัสผ่านจริง</div>
+<div id="loginApp" class="app">
+ <div class="previewbar"><b>UI DESIGN R3</b> · ต้นแบบทดลองเท่านั้น · ไม่มีการเข้าสู่ระบบจริง</div>
+ <main class="layout">
+  <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
+   <div class="brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
+   <div class="storycopy"><span class="eyebrow">One workspace. Smoother daily work.</span><h1>ระบบงานที่ช่วยให้<br><em>จัดการงานได้ง่ายขึ้น</em></h1><p>รองรับงานตัวแทน งานลูกค้า และการจัดการข้อมูลประจำวัน ด้วยหน้าจอที่เน้นความชัดเจน ใช้งานง่าย และพร้อมต่อยอดสู่โมดูลในอนาคต</p></div>
+   <div class="storyfeatures"><div class="feature"><i aria-hidden="true">▣</i><b>งานตัวแทน</b><p>คันรถ ค่าใช้จ่าย และการติดตามงานในที่เดียว</p></div><div class="feature"><i aria-hidden="true">◎</i><b>งานลูกค้า</b><p>เตรียมพร้อมสำหรับ CRM และการดูแลลูกค้า</p></div></div>
+   <div class="storyfoot">PriteAgent · Dark mode default · Synthetic only</div>
+  </section>
+  <section class="panel" aria-label="ทดลองหน้าล็อกอิน">
+   <div class="smallbrand brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
+   <div class="panelHead"><h2>เข้าสู่ระบบ</h2></div>
+   <form class="form" id="loginForm" novalidate autocomplete="off">
+    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label><span class="hint">ตัวเลข 6 หลัก</span></div><div class="control"><input id="username" name="demo-user" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="กรอกรหัสตัวแทน" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="demo-pass" type="password" maxlength="32" placeholder="กรอกรหัสผ่าน" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
+    <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+    <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
+   </form>
+   <div class="demo"><div class="demoHeader"><strong>✦ ทดลองใช้งานด้วยข้อมูลจำลอง</strong><button type="button" class="filldemo" id="fillDemo">กรอกให้ทดลอง</button></div><p>ใช้บัญชีนี้เพื่อดู Validation, Loading และหน้าหลังล็อกอินตัวอย่าง</p><div class="credentials"><code>รหัสตัวแทน 123456</code><code>รหัสผ่าน 246810</code></div></div>
+   <p class="legal"><strong>UI Prototype R3</strong> · ไม่มีการส่งข้อมูลหรือบันทึกรหัสผ่าน</p>
+  </section>
+ </main>
+ <div class="footbar">PriteAgent © 2026 · Login UI Design Review · ไม่ใช่ระบบ Production</div>
+</div>
+<section id="desk" aria-label="หน้าตัวอย่างหลังทดลองเข้าสู่ระบบ">
+ <div class="previewbar">พื้นที่หลังเข้าสู่ระบบจำลอง · ใช้โหมดมืดเป็นค่าเริ่มต้น · ยังไม่มีการใช้ค่าตั้งธีมผู้ใช้จริง</div>
+ <header class="deskTop"><div class="deskBrand"><span class="brandmark" aria-hidden="true">P</span>PriteAgent</div><span class="deskUser">บัญชีทดลอง · 123456</span></header>
+ <main class="deskMain"><div class="deskHeader"><div><p>พื้นที่ทำงาน / ภาพรวม</p><h2>ตัวอย่างปลายทางหลัง Login</h2><p>หน้าจอนี้มีไว้ยืนยันการเปลี่ยนหน้าเท่านั้น การตั้งค่า Light/Dark mode ของผู้ใช้จะออกแบบและใช้งานจริงหลัง Login ในรอบถัดไป</p></div><button class="back" id="logout" type="button">↩ กลับหน้า Login</button></div>
+  <div class="deskNotice">✓ ทดลองเข้าสู่ระบบสำเร็จ — แสดงหน้าตัวอย่างด้วยข้อมูลจำลอง ไม่มี Session หรือสิทธิ์ใช้งานจริง</div>
+  <div class="deskStats"><article class="deskCard"><small>คันรถตัวอย่าง</small><b>03</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>งานที่ต้องติดตาม</small><b>08</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>โหมดเริ่มต้น</small><b>มืด</b><p>เตรียมต่อยอดการตั้งค่า</p></article></div>
+  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="ตั้งค่าธีม"><span>☾</span><b>ตั้งค่าธีม</b><small>จะเริ่มใช้หลัง Login</small></button></div></div>
+ </main>
+</section>
+<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p><button id="modalClose" type="button">เข้าใจแล้ว</button></section></div>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const form=$('loginForm'),u=$('username'),p=$('password'),status=$('formStatus'),submit=$('submit'),buttonText=$('submitText'),arrow=$('submitArrow');
+let pending=false,timer=null,lastFocus=null;
+function message(text='',type='error'){status.textContent=text;status.className='status'+(text?' show '+type:'');}
+function errors(user='',pass=''){ $('userError').textContent=user; $('passError').textContent=pass;u.setAttribute('aria-invalid',String(!!user));p.setAttribute('aria-invalid',String(!!pass));}
+function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('fillDemo').disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูลตัวอย่าง…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
+function openModal(t,desc){lastFocus=document.activeElement;$('modalTitle').textContent=t;$('modalText').textContent=desc;$('modalWrap').classList.add('open');$('modalClose').focus();}
+function closeModal(){$('modalWrap').classList.remove('open');lastFocus?.focus?.();}
+$('modalClose').addEventListener('click',closeModal);
+$('modalWrap').addEventListener('click',e=>{if(e.target===$('modalWrap'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modalWrap').classList.contains('open'))closeModal();});
+$('help').addEventListener('click',()=>openModal('ลืมรหัสผ่าน?', 'Prototype นี้ไม่มีบัญชีหรือการกู้คืนรหัสจริง สำหรับการทดลองให้กด “กรอกให้ทดลอง” เพื่อใช้ข้อมูลจำลอง ระบบกู้คืนบัญชีและการตั้งค่าโหมดการแสดงผลจริงจะออกแบบและเชื่อมต่อในงานที่ได้รับอนุมัติภายหลัง'));
+$('eye').addEventListener('click',()=>{const next=p.type==='password'?'text':'password';p.type=next;$('eye').textContent=next==='text'?'ซ่อน':'แสดง';$('eye').setAttribute('aria-label',next==='text'?'ซ่อนรหัสผ่าน':'แสดงรหัสผ่าน');$('eye').setAttribute('aria-pressed',String(next==='text'));p.focus();});
+$('fillDemo').addEventListener('click',()=>{u.value='123456';p.value='246810';errors();message('กรอกข้อมูลทดลองแล้ว กด “เข้าสู่ระบบ” เพื่อดูขั้นตอนถัดไป','info');u.focus();});
+[u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
+form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
+if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
+if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<6)pe='รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
+loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='246810'){errors();message();$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);$('logout').focus();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
+});
+$('logout').addEventListener('click',()=>{$('desk').style.display='none';$('loginApp').style.display='flex';p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');errors();message('กลับมาหน้าล็อกอินทดลองแล้ว','info');window.scrollTo(0,0);u.focus();});
+document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R3 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='demo'){u.value='123456';p.value='246810'; errors(); message('กรอกข้อมูลทดลองแล้ว กด “เข้าสู่ระบบ” เพื่อดูขั้นตอนถัดไป','info');} else if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){ $('loginApp').style.display='none'; $('desk').style.display='block'; }}
+applyHashState();
+})();
+</script>
+</body>
+</html>
