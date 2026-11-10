@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="dark light"/>
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — App Shell UI-02 R1.3 · DEMO ONLY</title>
+<title>PriteAgent — App Shell UI-02 R1.4 · DEMO ONLY</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--aside:#0b1c2e;--panel:#0f2437;--panel2:#102b40;--surface:#0c1c2d;--line:#234158;--line2:#2f526a;--text:#eef7ff;--muted:#94abc0;--muted2:#7192a9;--accent:#39adfa;--cyan:#78e0ff;--soft-accent:rgba(57,173,250,.13);--shadow:rgba(0,0,0,.26);--white:#fff}
 html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--aside:#fff;--panel:#fff;--panel2:#eef5fc;--surface:#fff;--line:#dbe6f1;--line2:#c9dce9;--text:#1a3147;--muted:#60788e;--muted2:#7290a4;--accent:#117acc;--cyan:#096ca5;--soft-accent:#e7f3fd;--shadow:rgba(54,94,125,.1);--white:#fff}
@@ -31,6 +31,13 @@ html[data-theme="light"] #themeToggle .themeModeGlyph{transform:rotate(90deg)}
 html[data-theme="light"] #themeToggle .themeSun{opacity:1;transform:rotate(-90deg) scale(1)}
 html[data-theme="light"] #themeToggle .themeMoon{opacity:0;transform:rotate(80deg) scale(.25)}
 @media(prefers-reduced-motion:reduce){#themeToggle.themeModeButton,#themeToggle .themeModeGlyph,#themeToggle .themeSun,#themeToggle .themeMoon{transition:none!important}}
+
+
+/* UI-02 R1.4: stronger tap feedback on mobile; preserve reduced-motion settings. */
+@keyframes themeModeTap{0%{transform:scale(1) rotate(0deg)}34%{transform:scale(.81) rotate(-18deg)}68%{transform:scale(1.16) rotate(12deg)}100%{transform:scale(1) rotate(0deg)}}
+#themeToggle.themeTap{animation:themeModeTap .66s cubic-bezier(.18,.7,.22,1) both}
+#themeToggle .themeModeGlyph,#themeToggle .themeSun,#themeToggle .themeMoon{transform-box:view-box;backface-visibility:hidden}
+@media(prefers-reduced-motion:reduce){#themeToggle.themeTap{animation:none!important}}
 
 </style>
 </head>
@@ -124,7 +131,15 @@ function navigate(next='home'){if(next==='premium'){closeDrawer();showInfo('🔒
 function switchMode(next){mode=next;page='home';render();$('workspace').scrollTop=0;closeDrawer();closePops();}
 const THEME_KEY='priteagent.ui.theme.v1';
 function applyTheme(value,persist=false){const theme=value==='light'?'light':'dark';doc.dataset.theme=theme;const btn=$('themeToggle');btn.setAttribute('aria-pressed',String(theme==='light'));btn.setAttribute('aria-label',theme==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');btn.title=theme==='light'?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง';if(persist){try{localStorage.setItem(THEME_KEY,theme);}catch(_){}}}
-function toggleTheme(){applyTheme(doc.dataset.theme==='dark'?'light':'dark',true);closePops();}
+function showThemeTap(){
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const btn=$('themeToggle');
+ btn.classList.remove('themeTap');
+ void btn.offsetWidth;
+ btn.classList.add('themeTap');
+}
+function toggleTheme(){applyTheme(doc.dataset.theme==='dark'?'light':'dark',true);showThemeTap();closePops();}
+$('themeToggle').addEventListener('animationend',e=>{if(e.target===$('themeToggle')&&e.animationName==='themeModeTap')$('themeToggle').classList.remove('themeTap');});
 function togglePop(id,btn){const p=$(id),was=p.classList.contains('open');closePops();if(!was){p.classList.add('open');btn.setAttribute('aria-expanded','true');}}
 function openOverlay(id){lastFocus=document.activeElement;closePops();$(id).classList.add('open');$(id==='searchOverlay'?'menuSearch':'dialogOK').focus();}
 function closeOverlay(id){$(id).classList.remove('open');lastFocus?.focus?.();lastFocus=null;}
