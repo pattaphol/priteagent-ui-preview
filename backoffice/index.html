@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="dark light"/>
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — App Shell UI-02 R1.2 · DEMO ONLY</title>
+<title>PriteAgent — App Shell UI-02 R1.3 · DEMO ONLY</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--aside:#0b1c2e;--panel:#0f2437;--panel2:#102b40;--surface:#0c1c2d;--line:#234158;--line2:#2f526a;--text:#eef7ff;--muted:#94abc0;--muted2:#7192a9;--accent:#39adfa;--cyan:#78e0ff;--soft-accent:rgba(57,173,250,.13);--shadow:rgba(0,0,0,.26);--white:#fff}
 html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--aside:#fff;--panel:#fff;--panel2:#eef5fc;--surface:#fff;--line:#dbe6f1;--line2:#c9dce9;--text:#1a3147;--muted:#60788e;--muted2:#7290a4;--accent:#117acc;--cyan:#096ca5;--soft-accent:#e7f3fd;--shadow:rgba(54,94,125,.1);--white:#fff}
@@ -20,6 +20,18 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--aside:#fff;--panel:#fff
 @media(max-width:720px){.shell{padding-bottom:calc(85px + env(safe-area-inset-bottom,0px))}.side{position:fixed;top:0;bottom:0;width:min(300px,83vw)!important;flex-basis:auto!important;transform:translateX(-101%);box-shadow:8px 0 30px #0005;transition:transform .2s;z-index:65}.shell.drawer-open .side{transform:translateX(0)}.shell.drawer-open .backdrop{position:fixed;z-index:64;inset:0;background:#0009;display:block}.side .brand{height:64px;flex-basis:64px;padding:0 18px}.side .brandcopy,.side .sidenavtitle,.side .navitem .t,.side .navitem .later,.side .sidefooter .accountcopy{display:block}.side .navitem{justify-content:flex-start;padding:10px 12px}.side .sidefooter{justify-content:flex-start;padding:12px}.drawerclose{display:grid;margin-left:auto}.top{height:58px;min-height:58px;gap:7px;padding-inline:13px}.topmobilebrand{display:flex;align-items:center;gap:7px;font-weight:820;letter-spacing:-.45px;font-size:17px}.topmobilebrand .brandmark{height:29px;width:29px;border-radius:9px;font-size:17px}.top .location{display:none}.topactions{margin-left:auto;gap:2px}.topactions .searchtop{display:none}.topactions #searchIcon{display:grid}.topavatar{width:31px;height:31px}.top .iconbtn{height:36px;width:36px}.segbar{padding:10px 13px 0}.segment{width:100%;min-width:0}.segment button{min-height:35px}.segbar .note{display:none}.workspace{padding:15px 13px 20px}.sectiontitle{font-size:26px;margin-top:4px}.subtitle{margin-bottom:17px}.introgrid{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.focuscard{padding:20px;min-height:160px;border-radius:17px}.focuscard h2{font-size:21px;margin:9px 0 4px}.focuscard p{margin-bottom:12px}.tipcard{min-height:auto;padding:13px 15px;border-radius:15px;display:flex;flex-direction:row;align-items:center;gap:13px}.tipcard .tipicon{flex:0 0 39px}.tipcard .tipcardtext{flex:1}.tipcard p{margin:2px 0 0}.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{padding:12px;min-height:122px;border-radius:13px}.tileicon{height:35px;width:35px}.tile small{font-size:10px}.mobilebottom{display:grid;position:fixed;bottom:27px;left:0;right:0;grid-template-columns:repeat(4,1fr);min-height:58px;background:var(--aside);border-top:1px solid var(--line);z-index:40;padding:3px 4px 0}.mobilebottom button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--muted);border-radius:10px;font-size:10px;min-width:0}.mobilebottom button.active{color:var(--cyan)}.mobilebottom .icon{width:20px;height:20px}.pop{right:9px;top:51px}.notice{font-size:10px;white-space:nowrap}.noticeDesktop{display:none}.noticeMobile{display:inline}.shell.collapsed .side .brandcopy,.shell.collapsed .side .navitem .t,.shell.collapsed .side .sidenavtitle,.shell.collapsed .side .sidefooter .accountcopy{display:block}}
 @media(max-width:355px){.topmobilebrand{font-size:15px}.topmobilebrand .brandmark{width:26px;height:26px}.top{padding-inline:8px}.segbar{padding-inline:9px}.workspace{padding-inline:10px}.focuscard{padding:16px}.focuscard h2{font-size:19px}.tile{padding:10px}.segment button{font-size:11px}.notice{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* UI-02 R1.3: icon-only animated theme switch aligned with Login R4.5 */
+#themeToggle.themeModeButton{border:1px solid var(--line);background:var(--panel);color:var(--text);transition:background-color .28s ease,color .28s ease,border-color .28s ease}
+#themeToggle .themeModeGlyph{height:22px;width:22px;overflow:visible;transform:rotate(0deg);transition:transform .42s cubic-bezier(.2,.85,.3,1)}
+#themeToggle .themeSun,#themeToggle .themeMoon{transform-origin:12px 12px;transition:opacity .32s ease,transform .42s cubic-bezier(.2,.85,.3,1)}
+#themeToggle .themeSun{opacity:0;transform:rotate(-80deg) scale(.25)}
+#themeToggle .themeMoon{opacity:1;transform:rotate(0deg) scale(1)}
+html[data-theme="light"] #themeToggle .themeModeGlyph{transform:rotate(90deg)}
+html[data-theme="light"] #themeToggle .themeSun{opacity:1;transform:rotate(-90deg) scale(1)}
+html[data-theme="light"] #themeToggle .themeMoon{opacity:0;transform:rotate(80deg) scale(.25)}
+@media(prefers-reduced-motion:reduce){#themeToggle.themeModeButton,#themeToggle .themeModeGlyph,#themeToggle .themeSun,#themeToggle .themeMoon{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -60,7 +72,7 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--aside:#fff;--panel:#fff
    <div class="topactions">
     <button class="searchtop" id="searchTop"><svg class="icon sm"><use href="#i-search"/></svg><span>ค้นหาเมนู...</span></button>
     <button class="iconbtn" id="searchIcon" aria-label="ค้นหาเมนู"><svg class="icon"><use href="#i-search"/></svg></button>
-    <button class="iconbtn" id="themeToggle" aria-label="เปลี่ยนธีม" aria-pressed="false"><svg class="icon"><use id="themeIcon" href="#i-moon"/></svg></button>
+    <button class="iconbtn themeModeButton" id="themeToggle" type="button" aria-label="ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง" aria-pressed="false" title="เปลี่ยนเป็นโหมดสว่าง"><svg class="themeModeGlyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="themeMoon"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z"/></g><g class="themeSun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg></button>
     <button class="iconbtn notifdot" id="notifications" aria-label="การแจ้งเตือนตัวอย่าง" aria-expanded="false"><svg class="icon"><use href="#i-bell"/></svg></button>
     <button class="topavatar" id="profile" aria-label="เมนูบัญชีตัวอย่าง" aria-expanded="false">DE</button>
    </div>
@@ -111,7 +123,7 @@ function render(){const isAgent=mode==='agent';$('modeAgent').classList.toggle('
 function navigate(next='home'){if(next==='premium'){closeDrawer();showInfo('🔒 ระบบคำนวณเบี้ยประกัน — ยังไม่ได้รับสิทธิ์','DEMO ONLY · ระบบจริงต้องยืนยันตัวตนและให้ Admin หรือ Owner อนุมัติสิทธิ์เป็นรายบัญชีก่อนเข้าถึงหน้า API สูตร และแพ็กออฟไลน์ ในหน้านี้ไม่มีการเชื่อมระบบหรือข้อมูลเบี้ยภายใน');return;}page=modeItems().some(x=>x[0]===next)?next:'home';render();$('workspace').scrollTop=0;closeDrawer();closePops();}
 function switchMode(next){mode=next;page='home';render();$('workspace').scrollTop=0;closeDrawer();closePops();}
 const THEME_KEY='priteagent.ui.theme.v1';
-function applyTheme(value,persist=false){const theme=value==='light'?'light':'dark';doc.dataset.theme=theme;$('themeToggle').setAttribute('aria-pressed',String(theme==='light'));$('themeToggle').setAttribute('aria-label',theme==='light'?'ใช้โหมดสว่าง · กดเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด · กดเปลี่ยนเป็นโหมดสว่าง');$('themeIcon').setAttribute('href',theme==='light'?'#i-sun':'#i-moon');if(persist){try{localStorage.setItem(THEME_KEY,theme);}catch(_){}}}
+function applyTheme(value,persist=false){const theme=value==='light'?'light':'dark';doc.dataset.theme=theme;const btn=$('themeToggle');btn.setAttribute('aria-pressed',String(theme==='light'));btn.setAttribute('aria-label',theme==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');btn.title=theme==='light'?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง';if(persist){try{localStorage.setItem(THEME_KEY,theme);}catch(_){}}}
 function toggleTheme(){applyTheme(doc.dataset.theme==='dark'?'light':'dark',true);closePops();}
 function togglePop(id,btn){const p=$(id),was=p.classList.contains('open');closePops();if(!was){p.classList.add('open');btn.setAttribute('aria-expanded','true');}}
 function openOverlay(id){lastFocus=document.activeElement;closePops();$(id).classList.add('open');$(id==='searchOverlay'?'menuSearch':'dialogOK').focus();}
