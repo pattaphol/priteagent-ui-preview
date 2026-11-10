@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — Login R4.6 · Interactive Prototype</title>
+<title>PriteAgent — Login R4.7 · Interactive Prototype</title>
 <style>
 :root{
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
@@ -280,7 +280,7 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 <body>
 <div id="publicPreviewNotice" role="note" aria-label="ประกาศเว็บไซต์ทดลอง"><strong>DEMO ONLY</strong> · ไม่มีระบบล็อกอินจริง · ห้ามกรอกรหัสผ่านจริง</div>
 <div id="loginApp" class="app">
- <div class="previewbar"><b>UI DESIGN R4.6</b> · ต้นแบบทดลองเท่านั้น · ไม่มีการเข้าสู่ระบบจริง</div>
+ <div class="previewbar"><b>UI DESIGN R4.7</b> · ต้นแบบทดลองเท่านั้น · ไม่มีการเข้าสู่ระบบจริง</div>
  <main class="layout">
   <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
    <div class="brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
@@ -293,8 +293,8 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
    <div class="smallbrand brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
    <div class="panelHead"><h2>เข้าสู่ระบบ</h2></div>
    <form class="form" id="loginForm" novalidate autocomplete="off">
-    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label><span class="hint">ตัวเลข 6 หลัก</span></div><div class="control"><input id="username" name="demo-user" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="กรอกรหัสตัวแทน" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
-    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="demo-pass" type="password" maxlength="32" placeholder="กรอกรหัสผ่าน" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label></div><div class="control"><input id="username" name="demo-user" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="รหัสตัวแทน 6 หลัก" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="demo-pass" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
     <div id="formStatus" class="status" role="status" aria-live="polite"></div>
     <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
    </form>
@@ -450,7 +450,7 @@ phoneInput.addEventListener('change',enforceTenDigits);
 [u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
 form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
 if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
-if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<6)pe='รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<4||pass.length>20)pe='รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร';
 errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
 loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);$('logout').focus();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
 });
