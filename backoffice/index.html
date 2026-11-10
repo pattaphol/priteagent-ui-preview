@@ -54,6 +54,7 @@ html[data-theme="light"] #themeToggle .themeMoon{opacity:0;transform:rotate(80de
 .bottomSubmenuItems button:hover,.bottomSubmenuItems button:focus-visible{border-color:var(--accent);background:var(--soft-accent)}
 .bottomSubmenuItems button .icon{height:18px;width:18px;color:var(--cyan)}
 .bottomSubmenuItems button .itemLabel{min-width:0;overflow-wrap:anywhere}
+.mobilebottom{z-index:54} /* keep bottom tabs tappable above submenu scrim */
 .mobilebottom button[aria-expanded="true"]{background:var(--soft-accent);color:var(--cyan);font-weight:800}
 }
 @media(max-width:355px){.bottomSubmenuItems{grid-template-columns:1fr;max-height:48dvh}}
