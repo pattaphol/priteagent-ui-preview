@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<title>PriteAgent — UI-03 Dashboard R1.1 · DEMO ONLY</title>
+<title>PriteAgent — UI-03 Dashboard R1.2 · DEMO ONLY</title>
 <script>
 try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}
 </script>
@@ -63,7 +63,7 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;
  <aside class="sidebar" id="sidebar" aria-label="เมนูนำทาง">
   <div class="brand"><span class="brandMark">P</span><span class="brandText"><strong>PriteAgent</strong><small>UI-03 DASHBOARD</small></span><button class="iconButton mobileClose" id="drawerClose" aria-label="ปิดเมนู"><svg><use href="#close"/></svg></button></div>
   <div class="sideLinks" id="sideLinks"></div>
-  <div class="sideFoot"><strong>DEMO ONLY</strong><div>ไม่มีบัญชีหรือข้อมูลจริง</div></div>
+  <div class="sideFoot"><strong>UI-03 R1.2 · DEMO ONLY</strong></div>
  </aside>
  <div class="shade" id="drawerShade" hidden></div>
  <div class="frame">
@@ -110,7 +110,7 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;
  <button id="bottomCustomer" aria-controls="subMenu" aria-expanded="false"><svg><use href="#users"/></svg>งานลูกค้า</button>
  <button id="bottomMore"><svg><use href="#menu"/></svg>เพิ่มเติม</button>
 </nav>
-<div class="notice" role="note">UI PROTOTYPE R1 · DEMO ONLY · NO REAL DATA OR LOGIN</div>
+<div class="notice" role="note">UI-03 Dashboard R1.2 · DEMO ONLY</div>
 <div class="dialogShade" id="dialogShade" role="presentation">
  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
   <div class="dialogTop"><h2 id="dialogTitle">รายละเอียดตัวอย่าง</h2><button class="iconButton" id="dialogClose" aria-label="ปิดหน้าต่าง"><svg><use href="#close"/></svg></button></div>
@@ -143,7 +143,7 @@ const raw={
  {id:'c6',title:'ทบทวนงานประจำเดือนสาธิต',kind:'งานทั่วไป',due:22,priority:false,done:true,details:'ข้อมูลสมมติและยังไม่ได้เชื่อมระบบ CRM',glyph:'grid'}]
 };
 const sections={
- agent:[['dashboard','Dashboard','grid'],['car','คันรถ','car'],['expense','ค่าใช้จ่าย','receipt'],['holding','ถือครอง','grid'],['performance','ผลงาน','grid'],['premium','ระบบคำนวณเบี้ยประกัน (ล็อก)','shield']],
+ agent:[['dashboard','Dashboard','grid'],['car','คันรถ · UI-04 R1.1','car'],['expense','ค่าใช้จ่าย','receipt'],['holding','ถือครอง','grid'],['performance','ผลงาน','grid'],['premium','ระบบคำนวณเบี้ยประกัน (ล็อก)','shield']],
  customer:[['dashboard','Dashboard','grid'],['customers','ลูกค้าทั้งหมด','users'],['followup','ติดตามลูกค้า','clock'],['calendar','ปฏิทินงาน','calendar'],['policies','กรมธรรม์','receipt']]
 };
 let tasks=JSON.parse(JSON.stringify(raw)),mode='agent',period='today',filter='all',fakeNum=0,lastFocus=null,activeTask=null,dialogAction=null;
@@ -197,7 +197,7 @@ function renderSide(){
  const rows=sections[mode];
  el('sideLinks').innerHTML='<div class="sideLabel">ภาพรวม</div>'+
  '<button class="sideItem active" data-side="dashboard">'+icon('grid')+'<span class="txt">Dashboard</span></button>'+
- '<a class="sideItem" href="../backoffice/" title="กลับ Back-office R1.6">'+icon('home')+'<span class="txt">Back-office R1.6</span></a>'+
+ '<a class="sideItem" href="../backoffice/" title="กลับ Back-office R1.8">'+icon('home')+'<span class="txt">Back-office R1.8</span></a>'+
  '<div class="sideLabel">'+(mode==='agent'?'งานตัวแทน':'งานลูกค้า')+'</div>'+
  rows.filter(r=>r[0]!=='dashboard').map(row=>'<button class="sideItem" title="'+esc(row[1])+'" data-side="'+row[0]+'">'+icon(row[2])+'<span class="txt">'+esc(row[1])+'</span></button>').join('')+
  '<div class="sideLabel">ตัวอย่าง</div><a class="sideItem" href="../" title="Login Preview">'+icon('home')+'<span class="txt">หน้า Login</span></a>';
@@ -235,7 +235,7 @@ function renderQuick(){
  ['pending','งานที่ยังไม่เสร็จ','กรองรายการค้าง','clock'],
  ['add','เพิ่มงานสาธิต','เพิ่มข้อมูลสมมติหนึ่งรายการ','plus'],
  [agent?'premium':'customers',agent?'ระบบคำนวณเบี้ยประกัน':'รายชื่อลูกค้า',agent?'สิทธิ์จำลอง: ปิดไว้':'เปิดตัวอย่างเมนูเท่านั้น',agent?'shield':'users'],
- ['backoffice','กลับ Back-office','ย้อนดู UI-02 R1.6','home']
+ ['backoffice','กลับ Back-office','ย้อนดู UI-02 R1.8','home']
  ];
  el('quickActions').innerHTML=actions.map(a=>'<button class="quick" data-quick="'+a[0]+'"><span class="quickIcon">'+icon(a[3])+'</span><span class="quickText"><strong>'+a[1]+'</strong><small>'+a[2]+'</small></span>'+icon('arrow','tinyIcon')+'</button>').join('');
  for(const b of el('quickActions').querySelectorAll('[data-quick]'))b.onclick=()=>{
