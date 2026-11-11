@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — Login R4.9 · Interactive Prototype</title>
+<title>PriteAgent — Login R4.10 · Interactive Prototype</title>
 <style>
 :root{
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
@@ -293,7 +293,7 @@ body.desk-active #desk .deskLinks{grid-template-columns:repeat(4,minmax(0,1fr))}
 </style>
 </head>
 <body>
-<div id="publicPreviewNotice" role="note" aria-label="Demo-only prototype warning"><strong>UI PROTOTYPE R4.9 · DEMO ONLY</strong> · NO REAL LOGIN · DO NOT ENTER REAL DATA OR PASSWORDS</div>
+<div id="publicPreviewNotice" role="note" aria-label="UI-01 R4.10 ต้นแบบสาธิต"><strong>UI-01 Login R4.10 · DEMO ONLY</strong></div>
 <div id="loginApp" class="app">
  <main class="layout">
   <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
@@ -343,7 +343,7 @@ body.desk-active #desk .deskLinks{grid-template-columns:repeat(4,minmax(0,1fr))}
  <main class="deskMain"><div class="deskHeader"><div><p>พื้นที่ทำงาน / ภาพรวม</p><h2>ตัวอย่างปลายทางหลัง Login</h2><p>หน้าจอนี้เป็นข้อมูลจำลอง การเลือกโหมดมืด/สว่างจะจำค่าบนเบราว์เซอร์นี้และส่งต่อไปยัง Back-office Preview</p></div><button class="back" id="logout" type="button">↩ กลับหน้า Login</button></div>
   <div class="deskNotice">✓ ทดลองเข้าสู่ระบบสำเร็จ — แสดงหน้าตัวอย่างด้วยข้อมูลจำลอง ไม่มี Session หรือสิทธิ์ใช้งานจริง</div>
   <div class="deskStats"><article class="deskCard"><small>คันรถตัวอย่าง</small><b>03</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>งานที่ต้องติดตาม</small><b>08</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>โหมดเริ่มต้น</small><b id="demoThemeName">มืด</b><p>จำค่าในเบราว์เซอร์นี้</p></article></div>
-  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><a class="deskLink" href="backoffice/index.html"><span>▣</span><b>ทดลองหน้า Back-office</b><small>ใช้ธีมเดียวกัน ↗</small></a><a class="deskLink" href="car-directory/"><span>▤</span><b>คันรถ</b><small>เปิด UI-04 CarDirectory ↗</small></a></div></div>
+  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><a class="deskLink" href="backoffice/"><span>▣</span><b>Back-office R1.8</b><small>เปิดหน้า UI-02 ↗</small></a><a class="deskLink" href="dashboard/"><span>▦</span><b>Dashboard R1.2</b><small>เปิดหน้า UI-03 ↗</small></a><a class="deskLink" href="car-directory/"><span>▤</span><b>คันรถ R1.1</b><small>เปิดหน้า UI-04 ↗</small></a></div></div>
  </main>
 </section>
 <div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p>
