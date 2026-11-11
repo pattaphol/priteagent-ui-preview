@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — Login R4.8 · Interactive Prototype</title>
+<title>PriteAgent — Login R4.9 · Interactive Prototype</title>
 <style>
 :root{
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
@@ -275,10 +275,25 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 .themeModeGlyph,.themeModeGlyph .themeSun,.themeModeGlyph .themeMoon{transform-box:view-box;backface-visibility:hidden}
 @media(prefers-reduced-motion:reduce){.themeModeButton.themeTap{animation:none!important}}
 
+
+/* UI-01 R4.9 focused mobile after-login scroll correction.
+   Login stays viewport-contained; post-login sample scrolls beyond fixed notice. */
+body.desk-active{height:auto;min-height:100dvh;overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+body.desk-active #desk{display:block;min-height:100dvh;height:auto;overflow:visible}
+body.desk-active #desk .deskMain{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+body.desk-active #desk .deskLinks{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(min-width:701px) and (max-width:980px){body.desk-active #desk .deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+ body.desk-active #desk .deskMain{padding:22px 16px calc(145px + env(safe-area-inset-bottom,0px));max-width:100%}
+ body.desk-active #desk .deskHeader{flex-direction:column;align-items:stretch;gap:12px}
+ body.desk-active #desk .deskHeader .back{align-self:flex-start}
+ body.desk-active #desk .deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.desk-active #desk .deskBlock{overflow:visible}
+}
 </style>
 </head>
 <body>
-<div id="publicPreviewNotice" role="note" aria-label="Demo-only prototype warning"><strong>UI PROTOTYPE R4.8 · DEMO ONLY</strong> · NO REAL LOGIN · DO NOT ENTER REAL DATA OR PASSWORDS</div>
+<div id="publicPreviewNotice" role="note" aria-label="Demo-only prototype warning"><strong>UI PROTOTYPE R4.9 · DEMO ONLY</strong> · NO REAL LOGIN · DO NOT ENTER REAL DATA OR PASSWORDS</div>
 <div id="loginApp" class="app">
  <main class="layout">
   <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
@@ -328,7 +343,7 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
  <main class="deskMain"><div class="deskHeader"><div><p>พื้นที่ทำงาน / ภาพรวม</p><h2>ตัวอย่างปลายทางหลัง Login</h2><p>หน้าจอนี้เป็นข้อมูลจำลอง การเลือกโหมดมืด/สว่างจะจำค่าบนเบราว์เซอร์นี้และส่งต่อไปยัง Back-office Preview</p></div><button class="back" id="logout" type="button">↩ กลับหน้า Login</button></div>
   <div class="deskNotice">✓ ทดลองเข้าสู่ระบบสำเร็จ — แสดงหน้าตัวอย่างด้วยข้อมูลจำลอง ไม่มี Session หรือสิทธิ์ใช้งานจริง</div>
   <div class="deskStats"><article class="deskCard"><small>คันรถตัวอย่าง</small><b>03</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>งานที่ต้องติดตาม</small><b>08</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>โหมดเริ่มต้น</small><b id="demoThemeName">มืด</b><p>จำค่าในเบราว์เซอร์นี้</p></article></div>
-  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><a class="deskLink" href="backoffice/index.html"><span>▣</span><b>ทดลองหน้า Back-office</b><small>ใช้ธีมเดียวกัน ↗</small></a></div></div>
+  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><a class="deskLink" href="backoffice/index.html"><span>▣</span><b>ทดลองหน้า Back-office</b><small>ใช้ธีมเดียวกัน ↗</small></a><a class="deskLink" href="car-directory/"><span>▤</span><b>คันรถ</b><small>เปิด UI-04 CarDirectory ↗</small></a></div></div>
  </main>
 </section>
 <div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p>
@@ -447,13 +462,14 @@ phoneInput.addEventListener('drop',e=>{
 phoneInput.addEventListener('input',enforceTenDigits);
 phoneInput.addEventListener('change',enforceTenDigits);
 [u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
+function showPostLoginDemo(){document.body.classList.add('desk-active');$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);}
 form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
 if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
 if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<4||pass.length>20)pe='รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร';
 errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
-loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);$('logout').focus();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
+loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();showPostLoginDemo();$('logout').focus({preventScroll:true});}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
 });
-$('logout').addEventListener('click',()=>{$('desk').style.display='none';$('loginApp').style.display='flex';p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');errors();message('กลับมาหน้าล็อกอินทดลองแล้ว','info');window.scrollTo(0,0);u.focus();});
+$('logout').addEventListener('click',()=>{document.body.classList.remove('desk-active');$('desk').style.display='none';$('loginApp').style.display='flex';p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');errors();message('กลับมาหน้าล็อกอินทดลองแล้ว','info');window.scrollTo(0,0);u.focus();});
 document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R4 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
 
 /* UI-01 R4 — no storage, network, email, passkey or real registration */
@@ -479,7 +495,7 @@ $('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErro
  signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจข้อมูลจำลอง…';signupMessage('กำลังตรวจฟอร์มจำลอง…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';signupMessage('SIMULATED ONLY · ตรวจแบบฟอร์มสำเร็จ ไม่มีการส่งข้อมูลหรือสร้างบัญชีจริง · ระบบจริง: (1) ยืนยันอีเมลก่อนเข้าใช้งาน (2) ระบบคำนวณเบี้ยประกันต้องได้รับอนุมัติสิทธิ์จาก Admin/Owner แยกต่างหาก');},620);
 });
 
-function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){ $('loginApp').style.display='none'; $('desk').style.display='block'; }}
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){showPostLoginDemo();}}
 applyHashState();
 })();
 </script>
