@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<title>PriteAgent — UI-03 Dashboard R1 · DEMO ONLY</title>
+<title>PriteAgent — UI-03 Dashboard R1.1 · DEMO ONLY</title>
 <script>
 try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}
 </script>
@@ -185,6 +185,7 @@ function toggleSubmenu(m){
 }
 function routeMenu(key,nextMode){
  closeSubmenu();closeDrawer();
+ if(key==='car'){location.href='../car-directory/';return}
  if(nextMode&&nextMode!==mode){mode=nextMode;filter='all';render()}
  if(key==='dashboard'){el('content').scrollTo({top:0,behavior:'smooth'});return}
  if(key==='premium'){showInfo('ระบบคำนวณเบี้ยประกัน — ไม่ได้รับสิทธิ์','DEMO ONLY · โมดูลนี้ต้องผ่านสิทธิ์ Owner/Admin ในระบบจริง ไม่ได้เปิดสูตรหรือข้อมูลเบี้ยใน Public Preview');return}
