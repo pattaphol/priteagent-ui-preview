@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>PriteAgent — UI-05A GroupForm R1 · DEMO ONLY</title>
+<title>PriteAgent — UI-05A GroupForm R2 · DEMO ONLY</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--side:#0b1c2e;--panel:#0f2437;--panel2:#142d43;--text:#edf7ff;--muted:#9cb3c7;--line:#26435e;--line2:#385977;--accent:#38aff4;--cyan:#7ddfff;--soft:rgba(57,173,250,.13);--danger:#ffb7a9;--notice:#ffe29a}
@@ -23,6 +23,18 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;
 .main{padding:15px 13px 26px}.crumb{font-size:10px;margin-bottom:9px}.head h1{font-size:25px}.head p{font-size:11px}.badge{font-size:9px;padding:6px}.banner{padding:13px;border-radius:14px}.banner strong{font-size:12px}.banner small{font-size:10px}.panel{border-radius:15px;margin-bottom:11px}.panelBody{padding:13px}.panelHead{padding:13px 13px 0}.row2{grid-template-columns:1fr;gap:11px}.row3{gap:6px}.row3 .control{padding:7px 5px;font-size:11px}.members{grid-template-columns:1fr;gap:8px}.member{padding:11px}.roleSummary{gap:8px}.role{padding:9px}.role strong{font-size:12px}.actions{flex-direction:column-reverse;align-items:stretch;padding:13px}.leftActions{justify-content:center}.primary{width:100%}
 .mobileBottom{position:fixed;z-index:86;bottom:26px;left:0;right:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));min-height:59px;background:var(--side);border-top:1px solid var(--line);padding:3px 4px}.mobileBottom button{font-size:10px;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:9px;min-width:0}.mobileBottom button.active,.mobileBottom button[aria-expanded=true]{color:var(--cyan);background:var(--soft)}.mobileBottom svg{width:20px;height:20px}.submenuScrim:not([hidden]){display:block;position:fixed;z-index:79;inset:0;background:#0006}.submenu:not([hidden]){display:block;position:fixed;z-index:82;bottom:calc(91px + env(safe-area-inset-bottom,0px));left:10px;right:10px;background:var(--side);border:1px solid var(--line2);border-radius:16px;max-height:61dvh;overflow:hidden}.submenuHeader{padding:9px 13px;font-weight:850;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.submenuItems{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px;max-height:47dvh;overflow-y:auto}.submenuItems button{min-height:44px;padding:9px;border:1px solid var(--line);background:var(--panel);border-radius:10px;text-align:left;font-size:11px}.notice{font-size:9px}.dialog{max-height:84dvh}.summaryRoles{grid-template-columns:1fr 1fr}}
 @media(max-width:355px){.badge{display:none}.roleSummary,.summaryRoles{grid-template-columns:1fr}.submenuItems{grid-template-columns:1fr}}
+
+/* UI-05A R2: four-part iPhone form navigation / one mock preview action */
+.formMap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 13px}
+.formMap a{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 8px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);font-size:11px;font-weight:800}
+.formMap a:hover{background:var(--soft);color:var(--cyan)}
+.formMap b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 3px;border-radius:7px;background:var(--soft);color:var(--cyan);font-size:10px}
+.numberedPanel{scroll-margin-top:12px}.noteControl{min-height:76px;resize:vertical;font:inherit;line-height:1.55}
+.fuelInfo{margin-top:14px;padding:13px;display:grid;gap:6px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2)}
+.fuelInfo strong{font-size:12px}.fuelInfo span{color:var(--cyan);font-size:12px;font-weight:800}.fuelInfo small{color:var(--muted);font-size:10px}
+.mobilePreview{display:none}
+@media(max-width:720px){.formMap{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.formMap a{font-size:11px}.main{padding-bottom:138px}
+.mobilePreview{display:block;position:fixed;bottom:calc(95px + env(safe-area-inset-bottom,0px));right:13px;z-index:75;min-height:43px;padding:9px 16px;border:1px solid #7ddfff;border-radius:999px;background:#147cc7;color:white;font-weight:850;font-size:12px;box-shadow:0 5px 19px #0008}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -68,28 +80,32 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;
 </header>
 <main id="main" class="main" tabindex="-1"><div class="inner">
 <div class="crumb"><a href="../car-directory/">คันรถของฉัน</a><span>›</span><span>GroupForm</span></div>
-<div class="head"><div><div class="eyebrow">UI-05A · V1 GROUPFORM BASELINE</div><h1>สร้าง / ตั้งค่าคันรถ</h1><p>ฟอร์มต้นแบบจาก V1 Snapshot เพื่อทดลองการกรอกข้อมูลและบทบาทสมาชิก โดยไม่เปลี่ยนกฎธุรกิจ</p></div><span class="badge">R1 · DEMO ONLY</span></div>
-<div class="banner"><span class="bannerIcon"><svg><use href="#i-eye"/></svg></span><div><strong>ลองกรอกข้อมูลแล้วกด “ดูตัวอย่าง”</strong><small>ระบบนี้ไม่สร้างคันรถ ไม่บันทึกข้อมูล และไม่ออกรหัสจริง</small></div></div>
+<div class="head"><div><div class="eyebrow">UI-05A · V1 v103 VISUAL DELTA</div><h1>สร้าง / ตั้งค่าคันรถ</h1><p>แบบฟอร์ม 4 ส่วน อ้างอิงภาพ V1 v103 · ข้อมูลสมมติ ไม่เปลี่ยน Business Rules</p></div><span class="badge">R2 · DEMO ONLY</span></div>
+<div class="banner"><span class="bannerIcon"><svg><use href="#i-eye"/></svg></span><div><strong>กรอกฟอร์ม 4 ส่วนแล้วกด “ดูตัวอย่าง”</strong><small>ระบบนี้ไม่สร้างคันรถ ไม่บันทึกข้อมูล และไม่ออกรหัสจริง</small></div></div>
 <section class="panel" aria-labelledby="modeHeading"><div class="panelHead"><h2 id="modeHeading">เลือกแบบฟอร์มตัวอย่าง</h2><p>แต่ละแบบจำลองมีค่าทดลองแยกกัน จนกว่าจะรีโหลดหน้า</p></div>
 <div class="panelBody"><div class="viewTabs" role="group" aria-label="แบบฟอร์ม"><button id="createTab" class="active" aria-pressed="true">สร้างคันรถ</button><button id="settingsTab" aria-pressed="false">ตั้งค่าคันรถ</button></div></div></section>
-<form id="form" novalidate autocomplete="off">
-<section class="panel" aria-labelledby="mainHeading"><div class="panelHead"><h2 id="mainHeading">ข้อมูลคันรถและช่วงเวลา</h2><p>ปี/เดือน/วีค และวันที่เป็นช่องกรอกเพื่อทดลองเท่านั้น</p></div>
-<div class="panelBody">
-<div class="field"><label for="carName">ชื่อคันรถ</label><input class="control" id="carName" maxlength="160" required placeholder="ชื่อคันรถตัวอย่าง"><span class="err" id="errName"></span></div>
+<nav class="formMap" aria-label="ทางลัดฟอร์มสี่ส่วน">
+<a href="#part-period"><b>01</b>ช่วงเวลา</a><a href="#part-info"><b>02</b>ข้อมูลคันรถ</a><a href="#part-members"><b>03</b>สมาชิก/บทบาท</a><a href="#part-review"><b>04</b>ตรวจทาน</a>
+</nav><form id="form" novalidate autocomplete="off">
+<section id="part-period" class="panel numberedPanel" aria-labelledby="mainHeading">
+<div class="panelHead"><h2 id="mainHeading">01 · ช่วงเวลาและรหัสคันรถ</h2><p>แสดงฟิลด์แบบ V1 แต่ไม่ออกรหัสและไม่ปรับวันที่อัตโนมัติ</p></div><div class="panelBody">
+<div class="idRow"><span>รหัสคันรถ GRP-ID</span><strong id="fakeGrpId">GRP-DEMO-XXXX</strong></div><p class="hint">ตัวอย่างคงที่เท่านั้น ไม่ใช่รหัสสำหรับเข้าร่วมคันรถ</p>
 <div class="row3 space">
-<div class="field"><label for="carYear">ปี พ.ศ.</label><select id="carYear" class="control"><option value="">เลือก</option><option value="2569">2569</option><option value="2570">2570</option><option value="2571">2571</option></select></div>
-<div class="field"><label for="carMonth">เดือน</label><select id="carMonth" class="control"><option value="">เลือก</option><option value="1">ม.ค.</option><option value="2">ก.พ.</option><option value="3">มี.ค.</option><option value="4">เม.ย.</option><option value="5">พ.ค.</option><option value="6">มิ.ย.</option><option value="7">ก.ค.</option><option value="8">ส.ค.</option><option value="9">ก.ย.</option><option value="10">ต.ค.</option><option value="11">พ.ย.</option><option value="12">ธ.ค.</option></select></div>
-<div class="field"><label for="carWeek">วีค</label><select id="carWeek" class="control"><option value="">เลือก</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
+<div class="field"><label for="carYear">ปี พ.ศ.</label><select id="carYear" class="control"><option value="">เลือกปี</option><option value="2569">2569</option><option value="2570">2570</option><option value="2571">2571</option></select></div>
+<div class="field"><label for="carMonth">เดือน</label><select id="carMonth" class="control"><option value="">เลือกเดือน</option><option value="1">มกราคม</option><option value="2">กุมภาพันธ์</option><option value="3">มีนาคม</option><option value="4">เมษายน</option><option value="5">พฤษภาคม</option><option value="6">มิถุนายน</option><option value="7">กรกฎาคม</option><option value="8">สิงหาคม</option><option value="9">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option></select></div>
+<div class="field"><label for="carWeek">วีค</label><select id="carWeek" class="control"><option value="">เลือกวีค</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
 </div>
 <div class="row2 space">
 <div class="field"><label for="startDate">วันที่เริ่มคันรถ</label><input class="control" type="date" id="startDate" required><span class="err" id="errStart"></span></div>
 <div class="field"><label for="endDate">วันที่สิ้นสุดคันรถ</label><input class="control" type="date" id="endDate" required><span class="err" id="errEnd"></span></div>
-</div>
-<div class="field space"><label for="province">จังหวัด / จุดหมาย</label><select id="province" class="control"><option value="">เลือกจังหวัดตัวอย่าง</option><option>กรุงเทพมหานคร</option><option>เชียงใหม่</option><option>ขอนแก่น</option><option>นครราชสีมา</option><option>ชลบุรี</option><option>ภูเก็ต</option></select><span class="err" id="errProvince"></span></div>
-<div class="idRow space"><span>รหัสคันรถ GRP-ID</span><strong>ยังไม่ออกรหัส · DEMO</strong></div>
-<p class="hint">V1 ใช้ปี/เดือน/วีคกับรหัสคันรถ แต่ต้นแบบนี้ไม่คำนวณรหัสหรือกำหนดวันที่อัตโนมัติ</p>
+</div><p class="hint">V1 มีตัวเลือกวันที่ตามวีค (จันทร์–ศุกร์) แต่ต้นแบบนี้ให้เลือกวันที่เอง ไม่มีการคำนวณช่วงวันตามกฎ V1</p>
 </div></section>
-<section class="panel" aria-labelledby="memberHeading"><div class="panelHead"><h2 id="memberHeading">สมาชิกในคันรถ</h2><p>รายชื่อสมมติ คนที่ 1–4 พร้อมบทบาทแยกกัน</p></div>
+<section id="part-info" class="panel numberedPanel" aria-labelledby="infoHeading"><div class="panelHead"><h2 id="infoHeading">02 · ข้อมูลคันรถ</h2><p>ชื่อ จังหวัด และหมายเหตุพื้นที่/งาน ตามภาพ V1</p></div><div class="panelBody">
+<div class="field"><label for="carName">ชื่อคันรถ</label><input class="control" id="carName" maxlength="160" required placeholder="ชื่อคันรถตัวอย่าง"><span class="err" id="errName"></span></div>
+<div class="field space"><label for="province">จังหวัดที่ไปวิ่งงาน</label><select id="province" class="control"><option value="">เลือกจังหวัดตัวอย่าง</option><option>กรุงเทพมหานคร</option><option>เชียงใหม่</option><option>ขอนแก่น</option><option>นครราชสีมา</option><option>ชลบุรี</option><option>ภูเก็ต</option></select><span class="err" id="errProvince"></span></div>
+<div class="field space"><label for="workNote">หมายเหตุพื้นที่ / งาน</label><textarea class="control noteControl" id="workNote" maxlength="500" placeholder="เช่น พื้นที่เพิ่มเติม (ข้อมูลสมมติ)"></textarea><small>ไม่ควรกรอกข้อมูลลูกค้าหรือสถานที่จริงใน Preview</small></div>
+</div></section>
+<section id="part-members" class="panel numberedPanel" aria-labelledby="memberHeading"><div class="panelHead"><h2 id="memberHeading">03 · สมาชิกและบทบาท</h2><p>รายชื่อสมมติ คนที่ 1–4 และแยก CarLeader ออกจาก CarOwner</p></div>
 <div class="panelBody">
 <div class="field" style="max-width:245px;margin-bottom:13px"><label for="memberCount">จำนวนช่องสมาชิกที่แสดง</label><select class="control" id="memberCount"><option value="1">1 คน</option><option value="2">2 คน</option><option value="3">3 คน</option><option value="4">4 คน</option></select><small>ใช้ควบคุมช่องในหน้าทดลอง ไม่ใช่สิทธิ์สมาชิกจริง</small></div>
 <div class="members" id="members">
@@ -100,21 +116,31 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--panel:#fff;
 </div>
 <div class="err" id="errMember" role="status" aria-live="polite"></div>
 <div class="field space"><label for="owner">เลือกเจ้าของรถ (CarOwner)</label><select class="control" id="owner" style="max-width:390px"></select><span class="err" id="errOwner"></span></div>
+<div class="field space"><label for="selfPosition">ตัวเอง (ตำแหน่งสมมติ)</label><select id="selfPosition" class="control" style="max-width:390px"></select><small>เฉพาะการแสดงผล ไม่ผูกบัญชีและไม่เปลี่ยนสิทธิ์จริง</small></div>
 <div class="roleSummary">
 <div class="role"><small>หัวหน้าคัน · CarLeader</small><strong id="leaderName">สมาชิก 1</strong><span>คนที่ 1 (ตัวอย่าง)</span></div>
 <div class="role"><small>เจ้าของรถ · CarOwner</small><strong id="ownerName">สมาชิก 3</strong><span id="ownerNo">คนที่ 3 (เลือกได้)</span></div>
 </div>
 <div class="footNote"><strong>บทบาท:</strong> คนที่ 1 เป็นหัวหน้าคันตามกรอบ Owner-approved ตัวอย่างนี้ให้เลือกเจ้าของรถแยกกัน ไม่มีการตั้งสิทธิ์สมาชิกหรือเชื่อมบัญชีจริง</div>
 </div></section>
+<section id="part-review" class="panel numberedPanel" aria-labelledby="reviewHeading"><div class="panelHead"><h2 id="reviewHeading">04 · ตรวจทานและข้อมูลเพิ่มเติม</h2><p>งบประมาณและสกุลเงินเป็นเพียงตัวอย่าง ไม่มีการบันทึกหรือคำนวณเงินจริง</p></div>
+<div class="panelBody"><div class="row2">
+<div class="field"><label for="budget">งบประมาณคันรถ (ตัวอย่าง)</label><input id="budget" class="control" inputmode="decimal" maxlength="24" placeholder="เช่น 3,000"><small>ข้อมูลสาธิต ไม่ตรวจจำนวนเงินและไม่ใช้กับ Expense</small></div>
+<div class="field"><label for="currency">สกุลเงิน</label><input id="currency" class="control" value="บาทไทย (THB) · สาธิต" readonly aria-readonly="true"><small>แสดงผลเท่านั้น ไม่มีระบบสกุลเงินจริง</small></div>
+</div>
+<div class="fuelInfo"><strong>ข้อมูลการคิดค่าน้ำมัน</strong><span>ยังไม่คำนวณ — รอ Owner ยืนยันกฎ V2</span><small>ไม่คัดลอกเปอร์เซ็นต์จาก V1 และไม่สร้างสูตรใหม่ใน UI</small></div>
+<div class="footNote"><strong>ขอบเขต:</strong> ดูตัวอย่างข้อมูลเท่านั้น ไม่มี Save / Business Calculation / Auth / Backend / API</div>
+</div></section>
 <section class="panel"><div class="actions"><div class="leftActions"><a class="btn" href="../car-directory/">กลับรายการคันรถ</a><button class="btn" type="button" id="resetBtn"><svg style="width:17px;height:17px"><use href="#i-reset"/></svg>คืนค่าตัวอย่าง</button></div><button type="button" id="previewBtn" class="btn primary"><svg style="width:17px;height:17px"><use href="#i-eye"/></svg>ดูตัวอย่าง</button></div></section>
 </form>
+<button id="mobilePreview" class="mobilePreview" type="button">ดูตัวอย่าง</button>
 <p class="state" role="status" aria-live="polite" id="state">ฟอร์มนี้ไม่บันทึกข้อมูลจริง</p>
-<div class="footNote"><strong>UI-05A R1:</strong> จำกัดเฉพาะฟอร์มทดลอง ไม่มี Save, Auth, API, Backend, Database, GRP-ID จริง, Join/Invite, Archive, Expense, Holding หรือการเปลี่ยน Business Rules</div>
+<div class="footNote"><strong>UI-05A R2:</strong> จำกัดเฉพาะฟอร์มทดลอง ไม่มี Save, Auth, API, Backend, Database, GRP-ID จริง, Join/Invite, Archive, Expense, Holding หรือการเปลี่ยน Business Rules</div>
 </div></main></div></div>
 <div id="submenuScrim" class="submenuScrim" hidden></div>
 <section class="submenu" id="submenu" hidden aria-label="เมนูย่อยมือถือ"><div class="submenuHeader"><strong id="submenuTitle">งานตัวแทน</strong><button class="iconBtn" id="subClose" aria-label="ปิดเมนู"><svg><use href="#i-x"/></svg></button></div><div id="submenuItems" class="submenuItems"></div></section>
 <nav class="mobileBottom" aria-label="เมนูหลักมือถือ"><button id="homeBtn"><svg><use href="#i-home"/></svg>หน้าแรก</button><button class="active" id="agentBtn" aria-controls="submenu" aria-expanded="false"><svg><use href="#i-grid"/></svg>งานตัวแทน</button><button id="customerBtn" aria-controls="submenu" aria-expanded="false"><svg><use href="#i-users"/></svg>งานลูกค้า</button><button id="moreBtn"><svg><use href="#i-menu"/></svg>เพิ่มเติม</button></nav>
-<div class="notice" role="note">UI-05A GroupForm R1 · DEMO ONLY</div>
+<div class="notice" role="note">UI-05A GroupForm R2 · DEMO ONLY</div>
 <div class="dialogShade" id="dialogShade"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialogHead"><h2 id="dialogTitle">ดูตัวอย่างคันรถ</h2><button class="iconBtn" id="dialogX" aria-label="ปิดหน้าต่าง"><svg><use href="#i-x"/></svg></button></div><div id="dialogHint" class="dialogHint">ไม่มีการบันทึกข้อมูลจริง</div><div id="dialogContent"></div><button id="dialogClose" class="btn primary" style="width:100%;margin-top:14px">ปิดตัวอย่าง</button></section></div>
 <script>
 (function(){
@@ -123,8 +149,8 @@ const get=id=>document.getElementById(id);
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const themeKey='priteagent.ui.theme.v1';
 const fixtures={
- create:{name:'คันรถตัวอย่างใหม่',province:'เชียงใหม่',year:'2569',month:'11',week:'2',start:'2026-11-09',end:'2026-11-13',count:4,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3','สมาชิก 4'],owner:'3'},
- settings:{name:'คันรถตัวอย่าง A',province:'ขอนแก่น',year:'2569',month:'11',week:'2',start:'2026-11-09',end:'2026-11-13',count:3,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3',''],owner:'2'}
+ create:{name:'คันรถตัวอย่างใหม่',province:'เชียงใหม่',year:'2569',month:'11',week:'2',start:'2026-11-09',end:'2026-11-13',count:4,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3','สมาชิก 4'],owner:'3',self:'2',note:'พื้นที่ตัวอย่าง',budget:'3000'},
+ settings:{name:'คันรถตัวอย่าง A',province:'ขอนแก่น',year:'2569',month:'11',week:'2',start:'2026-11-09',end:'2026-11-13',count:3,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3',''],owner:'2',self:'1',note:'ตัวอย่างตั้งค่าคันรถ',budget:''}
 };
 const clone=x=>JSON.parse(JSON.stringify(x)),state={create:clone(fixtures.create),settings:clone(fixtures.settings)};
 let mode='create',focusBeforeDialog=null;
@@ -137,6 +163,8 @@ function updateRoles(){
  sel.innerHTML='<option value="">ยังไม่ระบุเจ้าของรถ</option>'+Array.from({length:d.count},(_,i)=>'<option value="'+(i+1)+'">คนที่ '+(i+1)+' — '+esc(d.members[i]?.trim()||'ยังไม่กรอกชื่อ')+'</option>').join('');
  if(Number(old)>d.count)d.owner='';
  sel.value=d.owner;
+ const self=get('selfPosition');self.innerHTML='<option value="">ไม่ระบุตำแหน่งตัวเอง</option>'+Array.from({length:d.count},(_,i)=>'<option value="'+(i+1)+'">คนที่ '+(i+1)+' — '+esc(d.members[i]?.trim()||'ยังไม่กรอกชื่อ')+'</option>').join('');
+ if(Number(d.self)>d.count)d.self='';self.value=d.self;
  get('leaderName').textContent=d.members[0]?.trim()||'ยังไม่กรอกชื่อ';
  const ownerIndex=Number(d.owner)-1;
  get('ownerName').textContent=ownerIndex>=0&&ownerIndex<d.count?(d.members[ownerIndex]?.trim()||'ยังไม่กรอกชื่อ'):'ยังไม่ระบุ';
@@ -145,7 +173,7 @@ function updateRoles(){
 }
 function draw(){
  const d=current();
- for(const [id,key] of Object.entries({carName:'name',province:'province',carYear:'year',carMonth:'month',carWeek:'week',startDate:'start',endDate:'end'}))get(id).value=d[key];
+ for(const [id,key] of Object.entries({carName:'name',province:'province',carYear:'year',carMonth:'month',carWeek:'week',startDate:'start',endDate:'end',workNote:'note',budget:'budget'}))get(id).value=d[key];
  get('memberCount').value=String(d.count);
  for(let i=1;i<=4;i++){document.querySelector('[data-member-row="'+i+'"]').hidden=i>d.count;get('member'+i).value=d.members[i-1]}
  updateRoles();clearErrors();
@@ -171,8 +199,9 @@ function preview(){
  const item=(label,value)=>'<div class="summaryItem"><small>'+esc(label)+'</small><strong>'+esc(value)+'</strong></div>';
  const roles='<div class="summaryRoles">'+item('หัวหน้าคัน · CarLeader','คนที่ 1 — '+d.members[0])+item('เจ้าของรถ · CarOwner','คนที่ '+d.owner+' — '+d.members[oi])+'</div>';
  const members=Array.from({length:d.count},(_,i)=>d.members[i].trim()?'<div class="summaryMember"><span>คนที่ '+(i+1)+' — '+esc(d.members[i])+'</span><em>'+esc([i===0?'หัวหน้าคัน':'',i===oi?'เจ้าของรถ':''].filter(Boolean).join(' / ')||'สมาชิก')+'</em></div>':'').join('');
- const html='<div class="summary">'+item('ชื่อคันรถ',d.name)+item('จังหวัด',d.province)+item('ช่วงเวลา','ปี '+d.year+' · '+months[Number(d.month)]+' · วีค '+d.week)+item('วันที่',d.start+' ถึง '+d.end)+roles+'</div><h3 style="font-size:13px;margin:14px 0 5px">สมาชิกสมมติ</h3><div class="summaryMembers">'+members+'</div><div class="footNote">ดูตัวอย่างเท่านั้น · ไม่สร้าง/ตั้งค่าคันรถ ไม่บันทึก และไม่ออกรหัส GRP-ID จริง</div>';
- openDialog(mode==='create'?'ตัวอย่างการสร้างคันรถ':'ตัวอย่างการตั้งค่าคันรถ',html,'UI-05A GroupForm R1 · DEMO ONLY');
+ const selfIndex=Number(d.self)-1;const selfLabel=selfIndex>=0&&selfIndex<d.count?'คนที่ '+d.self+' — '+(d.members[selfIndex]?.trim()||'ยังไม่กรอกชื่อ'):'ไม่ได้ระบุ';
+ const html='<div class="summary">'+item('รหัส GRP-ID สมมติ','GRP-DEMO-XXXX')+item('ชื่อคันรถ',d.name)+item('จังหวัด',d.province)+item('หมายเหตุพื้นที่ / งาน',d.note.trim()||'ไม่ได้ระบุ')+item('ช่วงเวลา','ปี '+d.year+' · '+months[Number(d.month)]+' · วีค '+d.week)+item('วันที่',d.start+' ถึง '+d.end)+roles+item('ตัวเอง (ตำแหน่งสมมติ)',selfLabel)+item('งบประมาณตัวอย่าง',d.budget.trim()?d.budget+' THB':'ไม่ได้ตั้งงบ')+item('สกุลเงิน','บาทไทย (THB) · สาธิต')+item('ค่าน้ำมัน','ยังไม่คำนวณ — รอ Owner ยืนยันกฎ V2')+'</div><h3 style="font-size:13px;margin:14px 0 5px">สมาชิกสมมติ</h3><div class="summaryMembers">'+members+'</div><div class="footNote">ดูตัวอย่างเท่านั้น · ไม่สร้าง/ตั้งค่าคันรถ ไม่บันทึก ไม่คำนวณ และไม่ออกรหัส GRP-ID จริง</div>';
+ openDialog(mode==='create'?'ตัวอย่างการสร้างคันรถ':'ตัวอย่างการตั้งค่าคันรถ',html,'UI-05A GroupForm R2 · DEMO ONLY · NO SAVE');
  get('state').textContent='เปิดสรุปตัวอย่างแล้ว — ไม่มีการบันทึก';
 }
 function closeDrawer(){get('app').classList.remove('drawerOpen');get('drawerShade').hidden=true;get('hamburger').setAttribute('aria-expanded','false')}
@@ -181,7 +210,7 @@ function closeMenu(){get('submenu').hidden=true;get('submenuScrim').hidden=true;
 const menus={agent:[['Dashboard','dashboard'],['คันรถของฉัน','car'],['สร้าง / ตั้งค่าคันรถ','form'],['ค่าใช้จ่าย (ตัวอย่าง)','expense']],customer:[['ลูกค้าทั้งหมด','customers'],['ติดตามลูกค้า','followup'],['กรมธรรม์','policies']]};
 function toggleMenu(which){if(!matchMedia('(max-width:720px)').matches)return;const btn=get(which==='agent'?'agentBtn':'customerBtn');const wasOpen=!get('submenu').hidden&&btn.getAttribute('aria-expanded')==='true';if(wasOpen){closeMenu();return}closeDrawer();closeMenu();get('submenuTitle').textContent=which==='agent'?'งานตัวแทน':'งานลูกค้า';get('submenuItems').innerHTML=menus[which].map(([label,dest])=>'<button data-nav="'+dest+'">'+esc(label)+'</button>').join('');get('submenu').hidden=false;get('submenuScrim').hidden=false;btn.setAttribute('aria-expanded','true')}
 function navigate(which){closeMenu();closeDrawer();if(which==='dashboard'){location.href='../dashboard/';return}if(which==='car'){location.href='../car-directory/';return}if(which==='form'){get('carName').focus();return}info('เมนูตัวอย่าง','UI-05A ยังไม่มีหน้าทำงานจริงสำหรับ '+which+' · รอ Scope แยกจาก Owner')}
-const fields={carName:'name',province:'province',carYear:'year',carMonth:'month',carWeek:'week',startDate:'start',endDate:'end'};
+const fields={carName:'name',province:'province',carYear:'year',carMonth:'month',carWeek:'week',startDate:'start',endDate:'end',workNote:'note',budget:'budget'};
 for(const [id,key] of Object.entries(fields)){
  const update=()=>{current()[key]=get(id).value;clearErrors();get('state').textContent='แก้ข้อมูลสาธิตชั่วคราวแล้ว — ยังไม่ได้บันทึก'};
  get(id).addEventListener('input',update);get(id).addEventListener('change',update);
@@ -189,9 +218,10 @@ for(const [id,key] of Object.entries(fields)){
 for(let i=1;i<=4;i++)get('member'+i).addEventListener('input',()=>{current().members[i-1]=get('member'+i).value;updateRoles();clearErrors()});
 get('memberCount').onchange=()=>{current().count=Number(get('memberCount').value);updateRoles();for(let i=1;i<=4;i++)document.querySelector('[data-member-row="'+i+'"]').hidden=i>current().count;clearErrors()};
 get('owner').onchange=()=>{current().owner=get('owner').value;updateRoles();clearErrors()};
+get('selfPosition').onchange=()=>{current().self=get('selfPosition').value;updateRoles();clearErrors()};
 get('createTab').onclick=()=>{mode='create';draw()};get('settingsTab').onclick=()=>{mode='settings';draw()};
 get('resetBtn').onclick=()=>{state[mode]=clone(fixtures[mode]);draw();get('state').textContent='คืนค่าข้อมูลสมมติแล้ว'};
-get('previewBtn').onclick=preview;get('form').onsubmit=e=>{e.preventDefault();preview()};
+get('previewBtn').onclick=preview;get('mobilePreview').onclick=preview;get('form').onsubmit=e=>{e.preventDefault();preview()};
 get('themeBtn').onclick=()=>theme(document.documentElement.dataset.theme==='light'?'dark':'light',true);
 get('searchBtn').onclick=()=>navigate('car');
 get('notifyBtn').onclick=()=>info('แจ้งเตือนตัวอย่าง','ยังไม่มีการแจ้งเตือนจริงใน UI-05A');
