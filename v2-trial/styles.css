@@ -202,3 +202,25 @@ button:not(:disabled):active{transform:translateY(1px)}
  main{margin-inline-start:0;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 }
 @media(max-width:350px){.shell-current{font-size:14px}.shell-actions button{font-size:10px;padding-inline:4px}}
+
+/* UI R3.5 — animated compact navigation across phone, tablet and narrow desktop. */
+@media(max-width:1199px){
+ :root{--app-drawer-top:74px}
+ .shell-header{position:sticky;top:0;z-index:12}
+ .shell-header #menu{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 44px;min-width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--ink);font-size:25px;line-height:1}
+ .shell-header #menu span{display:none}
+ .shell-bottom{display:none!important}
+ #main, main{margin-inline-start:0!important;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+ .nav-backdrop{display:block!important;position:fixed;inset:var(--app-drawer-top) 0 0;width:100vw;border:0;border-radius:0;padding:0;z-index:9;background:rgba(2,12,26,.56);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility 0s linear .34s}
+ .nav-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .28s ease,visibility 0s linear 0s}
+ #sidebar{display:block!important;position:fixed;top:var(--app-drawer-top);bottom:0;width:min(300px,86vw);max-height:calc(100dvh - var(--app-drawer-top));z-index:10;overflow-y:auto;overscroll-behavior:contain;box-shadow:8px 14px 32px rgba(0,0,0,.28);background:var(--panel);transform:translate3d(-105%,0,0);opacity:0;visibility:hidden;pointer-events:none;transition:transform .34s cubic-bezier(.22,1,.36,1),opacity .28s ease,visibility 0s linear .34s;will-change:transform}
+ #sidebar.open{transform:translate3d(0,0,0);opacity:1;visibility:visible;pointer-events:auto;transition:transform .34s cubic-bezier(.22,1,.36,1),opacity .28s ease,visibility 0s linear 0s}
+}
+@media(max-width:767px){
+ :root{--app-drawer-top:66px}
+ .shell-header .brand{display:none}
+ .shell-current{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ #sidebar,.nav-backdrop{transition:none!important;will-change:auto}
+}
