@@ -164,7 +164,7 @@ function render() {
     const directory = screen === 'cars';
     const profile = `<div class="shell-profile" id="shell-profile" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกในเบราว์เซอร์นี้</p><button type="button" id="trial-logout">กลับหน้า Login ทดลอง</button></div>`;
     root.innerHTML = `<header class="shell-header">
- <button id="menu" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
+ <button id="menu" type="button" aria-label="เปิดเมนูนำทาง" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
  <strong class="brand">prite<span>agent</span> <small>V2</small></strong>
  <div class="shell-current">${activeName}</div>
  <div class="shell-actions">
@@ -173,11 +173,12 @@ function render() {
  <button type="button" disabled aria-label="การแจ้งเตือนยังไม่พร้อมใช้งาน">แจ้งเตือน</button>
  <button id="profile" aria-expanded="${profileOpen}" aria-controls="shell-profile">บัญชี</button>
  </div>${profile}</header>
+  <button type="button" id="nav-backdrop" class="nav-backdrop" aria-label="ปิดเมนูนำทาง" ${menuOpen?'':'hidden'}></button>
  <aside id="sidebar" class="${menuOpen ? 'open' : ''}"><div class="work-area" role="group" aria-label="เลือกพื้นที่ทำงาน">
  <button data-area="agent" aria-pressed="${area === 'agent'}">งานตัวแทน</button>
  <button data-area="customer" aria-pressed="${area === 'customer'}">งานลูกค้า</button></div>
  <nav aria-label="เมนูพื้นที่ทำงาน">${menuMarkup(areas[area])}</nav></aside>
- <nav class="shell-bottom" aria-label="เมนูมือถือ">${menuMarkup(areas[area].slice(0, 4))}<button id="more-nav" aria-controls="sidebar" aria-expanded="${menuOpen}">เพิ่มเติม</button></nav>
+
  <main id="main" tabindex="-1">
  <nav class="shell-breadcrumb" aria-label="เส้นทาง"><button data-page="home">${areaName}</button>
  ${screen === 'car-detail' ? '<button data-page="cars">คันรถของฉัน</button>' : ''}<span aria-current="page">${activeName}</span></nav>
@@ -328,13 +329,18 @@ root.addEventListener('click', (ev)=>{
         filters = initialFilters();
         render();
         document.querySelector('#search').focus();
-    } else if (b.id === 'menu' || b.id === 'more-nav') {
+    } else if (b.id === 'nav-backdrop') {
+        menuOpen = false;
+        document.querySelector('aside').classList.remove('open');
+        b.hidden = true;
+        document.querySelector('#menu').setAttribute('aria-expanded', 'false');
+        document.querySelector('#menu').focus();
+    } else if (b.id === 'menu') {
         menuOpen = !menuOpen;
         document.querySelector('aside').classList.toggle('open', menuOpen);
-        for (const id of [
-            'menu',
-            'more-nav'
-        ])document.querySelector('#' + id)?.setAttribute('aria-expanded', String(menuOpen));
+        document.querySelector('#nav-backdrop').hidden = !menuOpen;
+        b.setAttribute('aria-expanded', String(menuOpen));
+        b.setAttribute('aria-label', menuOpen?'ปิดเมนูนำทาง':'เปิดเมนูนำทาง');
     } else if (b.id === 'theme') {
         const dark = document.documentElement.dataset.theme === 'dark' || !document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches;
         const next = dark ? 'light' : 'dark';
@@ -352,7 +358,9 @@ document.addEventListener('keydown', (ev)=>{
     if (ev.key === 'Escape' && menuOpen) {
         menuOpen = false;
         document.querySelector('aside').classList.remove('open');
+        document.querySelector('#nav-backdrop').hidden = true;
         document.querySelector('#menu').setAttribute('aria-expanded', 'false');
+        document.querySelector('#menu').setAttribute('aria-label', 'เปิดเมนูนำทาง');
         document.querySelector('#menu').focus();
     }
 });

@@ -185,3 +185,20 @@ button:not(:disabled):active{transform:translateY(1px)}
  .dashboard-stat{min-height:105px}
 }
 @media(prefers-reduced-motion:reduce){button{transition:none!important;transform:none!important}}
+
+/* Owner-approved mobile top navigation R3.4; preserve modern dashboard styles. */
+.nav-backdrop{display:none}
+@media(max-width:767px){
+ .shell-header{z-index:12;min-height:66px}
+ .shell-header #menu{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;min-width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--ink);font-size:25px;line-height:1}
+ .shell-header #menu span{display:none}
+ .shell-header .brand{display:none}
+ .shell-current{font-weight:750;font-size:16px;white-space:nowrap}
+ .shell-actions button{min-height:44px}
+ .shell-bottom{display:none!important}
+ .nav-backdrop:not([hidden]){display:block;position:fixed;inset:66px 0 0;z-index:9;padding:0;width:100vw;border:0;border-radius:0;background:rgba(2,12,26,.60)}
+ #sidebar{display:none;position:fixed;top:66px;bottom:0;z-index:10;width:min(300px,86vw);max-height:calc(100dvh - 66px);overflow:auto;overscroll-behavior:contain;box-shadow:8px 14px 32px rgba(0,0,0,.28)}
+ #sidebar.open{display:block}
+ main{margin-inline-start:0;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:350px){.shell-current{font-size:14px}.shell-actions button{font-size:10px;padding-inline:4px}}
