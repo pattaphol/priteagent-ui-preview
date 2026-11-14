@@ -224,3 +224,38 @@ button:not(:disabled):active{transform:translateY(1px)}
 @media(prefers-reduced-motion:reduce){
  #sidebar,.nav-backdrop{transition:none!important;will-change:auto}
 }
+
+/* Owner UI R3.6 — V1 Sun/Moon icon-only toggle and sidebar account/logout footer. */
+.shell-actions #theme{position:relative;display:inline-grid;place-items:center;flex:none;width:42px;min-width:42px;height:42px;min-height:42px;padding:0;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer}
+.shell-actions #theme:hover{background:var(--accent);color:var(--cyan);border-color:var(--line)}
+.theme-switch-icon{position:relative;display:inline-block;width:19px;height:19px}
+.theme-switch-icon svg{position:absolute;inset:0;width:19px;height:19px;transition:opacity .2s ease,transform .28s ease}
+.theme-switch-icon .icon-sun{opacity:1;transform:scale(1) rotate(0)}
+.theme-switch-icon .icon-moon{opacity:0;transform:scale(.65) rotate(-40deg)}
+html[data-theme="light"] .theme-switch-icon .icon-sun{opacity:0;transform:scale(.65) rotate(40deg)}
+html[data-theme="light"] .theme-switch-icon .icon-moon{opacity:1;transform:scale(1) rotate(0)}
+@keyframes prite-theme-icon-tap{0%{transform:scale(1) rotate(0)}38%{transform:scale(.72) rotate(-26deg)}70%{transform:scale(1.16) rotate(17deg)}100%{transform:scale(1) rotate(0)}}
+#theme.theme-switch-tap .theme-switch-icon{animation:prite-theme-icon-tap .49s cubic-bezier(.2,.8,.2,1)}
+#sidebar{display:flex;flex-direction:column;overflow:hidden;min-height:0}
+#sidebar .sidebar-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+#sidebar .sidebar-scroll nav{margin-bottom:14px}
+#sidebar .sidebar-footer{margin-top:auto;flex:0 0 auto;border-top:1px solid var(--line);padding:14px 2px 3px;display:grid;gap:4px;background:var(--panel)}
+#sidebar .sidebar-footer>button{display:flex;gap:12px;align-items:center;text-align:left;justify-content:flex-start;width:100%;min-height:45px;padding:11px 13px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);font-weight:600;font-size:14px}
+#sidebar .sidebar-footer>button:hover{background:var(--accent);color:var(--cyan)}
+#sidebar .sidebar-footer>button svg{flex:0 0 19px}
+#sidebar .sidebar-account-info{padding:12px 13px;margin:3px 2px 8px;border-radius:10px;background:var(--accent);border:1px solid var(--line)}
+#sidebar .sidebar-account-info[hidden]{display:none!important}
+#sidebar .sidebar-account-info strong{font-size:13px}
+#sidebar .sidebar-account-info p{font-size:11px;line-height:1.65;margin:4px 0 0;color:var(--muted)}
+@media(max-width:1199px){
+ #sidebar{display:flex!important;flex-direction:column!important;overflow:hidden!important;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+ #sidebar .sidebar-footer{padding-top:12px}
+}
+@media(max-width:767px){
+ .shell-actions #theme{width:44px;min-width:44px;height:44px;min-height:44px;padding:0}
+ #sidebar .sidebar-footer>button{min-height:48px}
+}
+@media(prefers-reduced-motion:reduce){
+ .theme-switch-icon svg{transition:none!important}
+ #theme.theme-switch-tap .theme-switch-icon{animation:none!important}
+}
