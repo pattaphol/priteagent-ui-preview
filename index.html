@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
-<title>PriteAgent — Login R4.10 · Interactive Prototype</title>
+<title>PriteAgent | เข้าสู่ระบบ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 :root{
@@ -296,32 +296,37 @@ body.desk-active{height:100dvh;overflow:hidden!important}
 body.desk-active #publicPreviewNotice{display:none!important}
 body.desk-active #desk{display:block;position:fixed;inset:0;z-index:30;min-height:0;height:100dvh;overflow:hidden}
 #dashboardFrame{display:block;width:100%;height:100%;border:0;background:#f4f7fb}
+
+/* UI PM7 R3.7: product-style status presentation; no false account or data claims. */
+#publicPreviewNotice{background:rgba(10,25,38,.96);color:#bacdda;border-top:1px solid #25445d;box-shadow:none;padding:7px 12px;font-size:11px;letter-spacing:0;line-height:1.45;font-weight:500}
+#publicPreviewNotice strong{font-weight:600;letter-spacing:0}
+#help:disabled,#startSignup:disabled{opacity:.48;cursor:not-allowed;pointer-events:none}
 </style>
 </head>
 <body>
-<div id="publicPreviewNotice" role="note" aria-label="UI-01 R4.10 ต้นแบบสาธิต"><strong>UI-01 Login R4.10 · DEMO ONLY</strong></div>
+<div id="publicPreviewNotice" role="note" aria-label="สถานะเชื่อมต่อบัญชี"><strong>ยังไม่รองรับบัญชีผู้ใช้จริง กรุณาอย่าใช้รหัสผ่านส่วนตัว</strong></div>
 <div id="loginApp" class="app">
  <main class="layout">
   <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
    <div class="brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
    <div class="storycopy"><span class="eyebrow">One workspace. Smoother daily work.</span><h1>ระบบงานที่ช่วยให้<br><em>จัดการงานได้ง่ายขึ้น</em></h1><p>รองรับงานตัวแทน งานลูกค้า และการจัดการข้อมูลประจำวัน ด้วยหน้าจอที่เน้นความชัดเจน ใช้งานง่าย และพร้อมต่อยอดสู่โมดูลในอนาคต</p></div>
    <div class="storyfeatures"><div class="feature"><i aria-hidden="true">▣</i><b>งานตัวแทน</b><p>คันรถ ค่าใช้จ่าย และการติดตามงานในที่เดียว</p></div><div class="feature"><i aria-hidden="true">◎</i><b>งานลูกค้า</b><p>เตรียมพร้อมสำหรับ CRM และการดูแลลูกค้า</p></div></div>
-   <div class="storyfoot">PriteAgent · Dark mode default · Synthetic only</div>
+   <div class="storyfoot">PriteAgent · Insurance Agent Workspace</div>
   </section>
-  <section class="panel" aria-label="ทดลองหน้าล็อกอิน">
+  <section class="panel" aria-label="เข้าสู่ระบบ PriteAgent">
    <button type="button" class="themeModeButton" data-theme-toggle aria-label="ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง" aria-pressed="false" title="เปลี่ยนเป็นโหมดสว่าง"><svg class="themeModeGlyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="themeMoon"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z"/></g><g class="themeSun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg></button>
    <div class="smallbrand brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
    <div class="panelHead"><h2>เข้าสู่ระบบ</h2></div>
    <form class="form" id="loginForm" novalidate autocomplete="off">
-    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label></div><div class="control"><input id="username" name="demo-user" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="รหัสตัวแทน 6 หลัก" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
-    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="demo-pass" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label></div><div class="control"><input id="username" name="agent-id" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="รหัสตัวแทน 6 หลัก" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help" disabled title="ยังไม่เปิดใช้งาน">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="agent-password" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
     <div id="formStatus" class="status" role="status" aria-live="polite"></div>
     <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
    </form>
-   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction">สมัครสมาชิก</button></div>
+   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction" disabled title="ยังไม่เปิดใช้งาน">สมัครสมาชิก</button></div>
    
-   <section id="signupView" class="signupView" aria-label="สมัครสมาชิกจำลอง">
-    <h2 id="signupTitle">สมัครสมาชิก</h2><p class="signupSub">DEMO ONLY · กรุณาใช้ข้อมูลสมมติเท่านั้น ไม่มีการสร้างบัญชีหรือส่งอีเมลจริง · ระบบจริงต้องยืนยันอีเมลก่อนเข้าใช้งาน และต้องได้รับอนุมัติจาก Admin/Owner ก่อนใช้ระบบคำนวณเบี้ยประกัน</p>
+   <section id="signupView" class="signupView" aria-label="สมัครสมาชิก">
+    <h2 id="signupTitle">สมัครสมาชิก</h2><p class="signupSub">บริการสมัครสมาชิกยังไม่เปิดใช้งาน โปรดอย่าใส่ข้อมูลส่วนบุคคลในแบบฟอร์มนี้</p>
     <form id="signupForm" novalidate autocomplete="off">
      <div class="signupNameGrid">
       <div class="field"><label for="regFirstName">ชื่อ</label><div class="control"><input id="regFirstName" type="text" maxlength="80" placeholder="ชื่อ" autocomplete="off" aria-describedby="regFirstNameError"></div><div id="regFirstNameError" class="fieldError" role="alert"></div></div>
@@ -330,28 +335,28 @@ body.desk-active #desk{display:block;position:fixed;inset:0;z-index:30;min-heigh
       <div class="field"><label for="regPhone">เบอร์โทรศัพท์</label><div class="control"><input id="regPhone" type="text" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="ตัวเลข 10 หลัก" autocomplete="off" aria-describedby="regPhoneError"></div><div id="regPhoneError" class="fieldError" role="alert"></div></div>
      </div>
      <div class="field"><label for="regAgent">รหัสตัวแทน</label><div class="control"><input id="regAgent" type="text" inputmode="numeric" maxlength="6" placeholder="ตัวเลข 6 หลัก" autocomplete="off" aria-describedby="regAgentError"></div><div id="regAgentError" class="fieldError" role="alert"></div></div>
-     <div class="field"><label for="regEmail">อีเมล</label><div class="control"><input id="regEmail" type="email" placeholder="ตัวอย่าง: name@example.com" autocomplete="off" aria-describedby="regEmailError"></div><div id="regEmailError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regEmail">อีเมล</label><div class="control"><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="off" aria-describedby="regEmailError"></div><div id="regEmailError" class="fieldError" role="alert"></div></div>
      <div class="field"><label for="regPass">รหัสผ่าน</label><div class="control"><input id="regPass" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="regPassError"></div><div id="regPassError" class="fieldError" role="alert"></div></div>
      <div class="field"><label for="regConfirm">ยืนยันรหัสผ่าน</label><div class="control"><input id="regConfirm" type="password" minlength="4" maxlength="20" placeholder="ยืนยันรหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="regConfirmError"></div><div id="regConfirmError" class="fieldError" role="alert"></div></div>
      <p class="permissionNote"><strong>🔒 สิทธิ์คำนวณเบี้ย:</strong> เมื่อยืนยันอีเมลแล้ว ยังต้องรอ Admin หรือเจ้าของระบบอนุญาตเป็นรายบัญชี จึงเข้าใช้งานระบบคำนวณเบี้ยประกันได้</p>
      <div id="signupStatus" class="signupStatus" role="status" aria-live="polite"></div>
-     <button id="signupSubmit" type="submit" class="primary">สมัครสมาชิก (จำลอง)</button>
+     <button id="signupSubmit" type="submit" class="primary">สมัครสมาชิก</button>
     </form>
     <div class="signupReturn"><button id="returnLogin" type="button">← กลับไปเข้าสู่ระบบ</button></div>
    </section>
   </section>
  </main>
- <div class="footbar">PriteAgent © 2026 · Login UI Design Review · ไม่ใช่ระบบ Production</div>
+ <div class="footbar">PriteAgent © 2026</div>
 </div>
 <section id="desk" aria-label="Dashboard PriteAgent V2">
- <iframe id="dashboardFrame" title="Dashboard และระบบคันรถ PriteAgent V2 (ข้อมูลทดลองในเบราว์เซอร์)" referrerpolicy="same-origin"></iframe>
+ <iframe id="dashboardFrame" title="Dashboard และระบบคันรถ PriteAgent V2" referrerpolicy="same-origin"></iframe>
 </section>
-<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p>
+<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลบริการ</h3><p id="modalText"></p>
  <div id="recoveryChoices" class="choiceGroup" hidden>
-  <button id="recoveryPasskey" type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ทดลองขั้นตอน · ไม่เรียก WebAuthn จริง</small></button>
-  <button id="recoveryEmailChoice" type="button" class="choice"><strong>กู้คืนด้วยอีเมล</strong><small>ตรวจฟอร์มจำลอง · ไม่ส่งอีเมลจริง</small></button>
+  <button id="recoveryPasskey" type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ยังไม่เปิดให้บริการ</small></button>
+  <button id="recoveryEmailChoice" type="button" class="choice"><strong>กู้คืนด้วยอีเมล</strong><small>ยังไม่เปิดให้บริการ</small></button>
  </div>
- <form id="recoveryEmailForm" class="recoveryForm" novalidate><label for="recoveryEmail">อีเมลสำหรับกู้คืน (ตัวอย่าง)</label><input id="recoveryEmail" type="email" placeholder="name@example.com" autocomplete="off"/><button id="recoveryEmailSubmit" type="submit" class="modalPrimary">ทดลองดำเนินการ</button><button id="recoveryBack" type="button" class="recoveryBack">← เลือกวิธีอื่น</button></form>
+ <form id="recoveryEmailForm" class="recoveryForm" novalidate><label for="recoveryEmail">อีเมลสำหรับกู้คืน</label><input id="recoveryEmail" type="email" placeholder="name@example.com" autocomplete="off"/><button id="recoveryEmailSubmit" type="submit" class="modalPrimary">ดำเนินการ</button><button id="recoveryBack" type="button" class="recoveryBack">← เลือกวิธีอื่น</button></form>
  <div id="recoveryStatus" class="recoveryMsg" role="status" aria-live="polite"></div>
  <button id="modalClose" type="button">ปิดหน้าต่าง</button></section></div>
 <script>
@@ -393,7 +398,7 @@ const form=$('loginForm'),u=$('username'),p=$('password'),status=$('formStatus')
 let pending=false,timer=null,lastFocus=null;
 function message(text='',type='error'){status.textContent=text;status.className='status'+(text?' show '+type:'');}
 function errors(user='',pass=''){ $('userError').textContent=user; $('passError').textContent=pass;u.setAttribute('aria-invalid',String(!!user));p.setAttribute('aria-invalid',String(!!pass));}
-function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูลตัวอย่าง…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
+function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูล…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
 function openModal(t,desc){lastFocus=document.activeElement;$('modalTitle').textContent=t;$('modalText').textContent=desc;$('modalWrap').classList.add('open');$('modalClose').focus();}
 function closeModal(){$('modalWrap').classList.remove('open');lastFocus?.focus?.();}
 $('modalClose').addEventListener('click',closeModal);
@@ -462,7 +467,7 @@ phoneInput.addEventListener('drop',e=>{
 phoneInput.addEventListener('input',enforceTenDigits);
 phoneInput.addEventListener('change',enforceTenDigits);
 [u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
-function showPostLoginDemo(){
+function openWorkspace(){
  document.body.classList.add('desk-active');
  $('loginApp').style.display='none';
  $('desk').style.display='block';
@@ -475,7 +480,7 @@ form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message(
 if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
 if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<4||pass.length>20)pe='รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร';
 errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
-loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();showPostLoginDemo();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
+loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();openWorkspace();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ถูกต้อง','error');p.focus();}},780);
 });
 window.addEventListener('message',event=>{
  if(event.origin!==window.location.origin || event.source!==$('dashboardFrame').contentWindow) return;
@@ -485,35 +490,35 @@ window.addEventListener('message',event=>{
  $('dashboardFrame').removeAttribute('src');
  $('loginApp').style.display='flex';
  p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');
- errors();message('กลับมาหน้า Login ทดลองแล้ว','info');window.scrollTo(0,0);u.focus();
+ errors();message('กลับสู่หน้าเข้าสู่ระบบแล้ว','info');window.scrollTo(0,0);u.focus();
 });
 
-document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R4 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
+document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder,'ฟีเจอร์นี้อยู่ระหว่างพัฒนาและยังไม่เปิดให้บริการ')));
 
 /* UI-01 R4 — no storage, network, email, passkey or real registration */
 let recoveryTimer=null,signupTimer=null;
 function recoveryMessage(text='',type=''){const out=$('recoveryStatus');out.textContent=text;out.className='recoveryMsg'+(text?' show':'')+(type?' '+type:'');}
-function recoveryReset(){clearTimeout(recoveryTimer);$('recoveryEmail').value='';$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ทดลองดำเนินการ';$('recoveryEmailForm').style.display='none';$('recoveryChoices').hidden=false;recoveryMessage();}
-function showRecoveryChoice(){openModal('กู้คืนรหัสผ่าน (จำลอง)','เลือกวิธีทดลอง ระบบจะไม่เรียกพาสคีย์หรือส่งอีเมลจริง');recoveryReset();$('recoveryPasskey').focus();}
-$('recoveryPasskey').addEventListener('click',()=>{clearTimeout(recoveryTimer);$('recoveryPasskey').disabled=true;recoveryMessage('กำลังจำลองขั้นตอนพาสคีย์…');recoveryTimer=setTimeout(()=>{$('recoveryPasskey').disabled=false;recoveryMessage('SIMULATED ONLY · ขั้นตอนพาสคีย์แสดงผลแล้ว ยังไม่เปิดใช้จริง ไม่มีการยืนยันตัวตนหรือกู้คืนรหัสผ่าน','ok');},500);});
+function recoveryReset(){clearTimeout(recoveryTimer);$('recoveryEmail').value='';$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';$('recoveryEmailForm').style.display='none';$('recoveryChoices').hidden=false;recoveryMessage();}
+function showRecoveryChoice(){openModal('กู้คืนรหัสผ่าน','การกู้คืนบัญชียังไม่เปิดให้บริการ');recoveryReset();$('recoveryPasskey').focus();}
+$('recoveryPasskey').addEventListener('click',()=>{clearTimeout(recoveryTimer);$('recoveryPasskey').disabled=true;recoveryMessage('กำลังตรวจสอบการให้บริการ…');recoveryTimer=setTimeout(()=>{$('recoveryPasskey').disabled=false;recoveryMessage('ยังไม่รองรับการยืนยันตัวตนด้วยพาสคีย์','ok');},500);});
 $('recoveryEmailChoice').addEventListener('click',()=>{$('recoveryChoices').hidden=true;$('recoveryEmailForm').style.display='block';recoveryMessage();$('recoveryEmail').focus();});
 $('recoveryBack').addEventListener('click',()=>{recoveryReset();$('recoveryPasskey').focus();});
-$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลตัวอย่างให้ถูกต้อง · ไม่มีข้อมูลถูกส่งออก','bad');$('recoveryEmail').focus();return;}$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังจำลอง…';recoveryMessage('กำลังจำลองการกู้คืนผ่านอีเมล…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ทดลองดำเนินการ';recoveryMessage('SIMULATED ONLY · แสดงตัวอย่างสำเร็จ ไม่มีการส่งอีเมลและไม่มีการกู้คืนบัญชีจริง','ok');},520);});
+$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลให้ถูกต้อง','bad');$('recoveryEmail').focus();return;}$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังตรวจสอบ…';recoveryMessage('กำลังตรวจสอบการให้บริการ…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';recoveryMessage('ยังไม่เปิดให้บริการกู้คืนบัญชีผ่านอีเมล','ok');},520);});
 const signupFields=[['regFirstName','regFirstNameError'],['regLastName','regLastNameError'],['regNickname','regNicknameError'],['regPhone','regPhoneError'],['regAgent','regAgentError'],['regEmail','regEmailError'],['regPass','regPassError'],['regConfirm','regConfirmError']];
 function clearSignupErrors(){signupFields.forEach(([id,err])=>{$(err).textContent='';$(id).setAttribute('aria-invalid','false');});}
 function signupMessage(msg='',bad=false){$('signupStatus').textContent=msg;$('signupStatus').className='signupStatus'+(msg?' show':'')+(bad?' bad':'');}
-function resetSignup(){clearTimeout(signupTimer);$('signupForm').reset();signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';clearSignupErrors();signupMessage();}
+function resetSignup(){clearTimeout(signupTimer);$('signupForm').reset();signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';clearSignupErrors();signupMessage();}
 $('startSignup').addEventListener('click',()=>{resetSignup();$('loginApp').classList.add('signupMode');window.scrollTo(0,0);$('regFirstName').focus();});
 $('returnLogin').addEventListener('click',()=>{resetSignup();$('loginApp').classList.remove('signupMode');window.scrollTo(0,0);u.focus();});
 signupFields.forEach(([id])=>$(id).addEventListener('input',()=>{clearSignupErrors();signupMessage();}));
 $('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErrors();signupMessage();let first=null;
  const vals={first:$('regFirstName').value.trim(),last:$('regLastName').value.trim(),nickname:$('regNickname').value.trim(),phone:$('regPhone').value.trim(),agent:$('regAgent').value.trim(),email:$('regEmail').value.trim(),pass:$('regPass').value,confirm:$('regConfirm').value};
- const errs={regFirstName:!vals.first||vals.first.length>80?'กรุณากรอกชื่อ':'',regLastName:!vals.last||vals.last.length>80?'กรุณากรอกนามสกุล':'',regNickname:!vals.nickname||vals.nickname.length>40?'กรุณากรอกชื่อเล่นสำหรับแสดงในคันรถ':'',regPhone:!/^[0-9]{10}$/.test(vals.phone)?'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก':'',regAgent:!/^\d{6}$/.test(vals.agent)?'รหัสตัวแทนต้องเป็นตัวเลข 6 หลัก':'',regEmail:! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)?'กรุณากรอกอีเมลตัวอย่างให้ถูกต้อง':'',regPass:vals.pass.length<4||vals.pass.length>20?'รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':'',regConfirm:!vals.confirm?'กรุณายืนยันรหัสผ่าน':vals.confirm.length<4||vals.confirm.length>20?'ยืนยันรหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':vals.pass!==vals.confirm?'รหัสผ่านไม่ตรงกัน':''};
- signupFields.forEach(([id,err])=>{if(errs[id]){$(err).textContent=errs[id];$(id).setAttribute('aria-invalid','true');first??=$(id);}});if(first){signupMessage('กรุณาตรวจสอบข้อมูลในแบบฟอร์มจำลอง',true);first.focus();return;}
- signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจข้อมูลจำลอง…';signupMessage('กำลังตรวจฟอร์มจำลอง…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';signupMessage('SIMULATED ONLY · ตรวจแบบฟอร์มสำเร็จ ไม่มีการส่งข้อมูลหรือสร้างบัญชีจริง · ระบบจริง: (1) ยืนยันอีเมลก่อนเข้าใช้งาน (2) ระบบคำนวณเบี้ยประกันต้องได้รับอนุมัติสิทธิ์จาก Admin/Owner แยกต่างหาก');},620);
+ const errs={regFirstName:!vals.first||vals.first.length>80?'กรุณากรอกชื่อ':'',regLastName:!vals.last||vals.last.length>80?'กรุณากรอกนามสกุล':'',regNickname:!vals.nickname||vals.nickname.length>40?'กรุณากรอกชื่อเล่นสำหรับแสดงในคันรถ':'',regPhone:!/^[0-9]{10}$/.test(vals.phone)?'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก':'',regAgent:!/^\d{6}$/.test(vals.agent)?'รหัสตัวแทนต้องเป็นตัวเลข 6 หลัก':'',regEmail:! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)?'กรุณากรอกอีเมลให้ถูกต้อง':'',regPass:vals.pass.length<4||vals.pass.length>20?'รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':'',regConfirm:!vals.confirm?'กรุณายืนยันรหัสผ่าน':vals.confirm.length<4||vals.confirm.length>20?'ยืนยันรหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':vals.pass!==vals.confirm?'รหัสผ่านไม่ตรงกัน':''};
+ signupFields.forEach(([id,err])=>{if(errs[id]){$(err).textContent=errs[id];$(id).setAttribute('aria-invalid','true');first??=$(id);}});if(first){signupMessage('กรุณาตรวจสอบข้อมูลในแบบฟอร์ม',true);first.focus();return;}
+ signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจสอบข้อมูล…';signupMessage('กำลังตรวจสอบแบบฟอร์ม…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';signupMessage('ยังไม่เปิดให้สมัครสมาชิกผ่านเว็บไซต์');},620);
 });
 
-function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){message('โปรดเข้าสู่ระบบทดลองก่อนเปิด Dashboard','info');}}
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){message('โปรดเข้าสู่ระบบก่อนเปิด Dashboard','info');}}
 applyHashState();
 })();
 </script>
