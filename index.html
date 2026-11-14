@@ -290,6 +290,11 @@ body.desk-active #desk .deskLinks{grid-template-columns:repeat(4,minmax(0,1fr))}
  body.desk-active #desk .deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}
  body.desk-active #desk .deskBlock{overflow:visible}
 }
+/* Login -> functional V2 Dashboard with the SAME visible public root URL. */
+body.desk-active{height:100dvh;overflow:hidden!important}
+body.desk-active #publicPreviewNotice{display:none!important}
+body.desk-active #desk{display:block;position:fixed;inset:0;z-index:30;min-height:0;height:100dvh;overflow:hidden}
+#dashboardFrame{display:block;width:100%;height:100%;border:0;background:#f4f7fb}
 </style>
 </head>
 <body>
@@ -337,14 +342,8 @@ body.desk-active #desk .deskLinks{grid-template-columns:repeat(4,minmax(0,1fr))}
  </main>
  <div class="footbar">PriteAgent © 2026 · Login UI Design Review · ไม่ใช่ระบบ Production</div>
 </div>
-<section id="desk" aria-label="หน้าตัวอย่างหลังทดลองเข้าสู่ระบบ">
- <div class="previewbar">พื้นที่หลังเข้าสู่ระบบจำลอง · โหมดสีเดียวกับหน้า Login · ไม่ใช่บัญชีจริง</div>
- <header class="deskTop"><div class="deskBrand"><span class="brandmark" aria-hidden="true">P</span>PriteAgent</div><span class="deskUser">บัญชีทดลอง · 123456</span><button type="button" class="themeModeButton deskTheme" data-theme-toggle aria-label="ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง" aria-pressed="false" title="เปลี่ยนเป็นโหมดสว่าง"><svg class="themeModeGlyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="themeMoon"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z"/></g><g class="themeSun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg></button></header>
- <main class="deskMain"><div class="deskHeader"><div><p>พื้นที่ทำงาน / ภาพรวม</p><h2>ตัวอย่างปลายทางหลัง Login</h2><p>หน้าจอนี้เป็นข้อมูลจำลอง การเลือกโหมดมืด/สว่างจะจำค่าบนเบราว์เซอร์นี้และส่งต่อไปยัง Back-office Preview</p></div><button class="back" id="logout" type="button">↩ กลับหน้า Login</button></div>
-  <div class="deskNotice">✓ ทดลองเข้าสู่ระบบสำเร็จ — แสดงหน้าตัวอย่างด้วยข้อมูลจำลอง ไม่มี Session หรือสิทธิ์ใช้งานจริง</div>
-  <div class="deskStats"><article class="deskCard"><small>คันรถตัวอย่าง</small><b>03</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>งานที่ต้องติดตาม</small><b>08</b><p>ตัวเลขสมมติ</p></article><article class="deskCard"><small>โหมดเริ่มต้น</small><b id="demoThemeName">มืด</b><p>จำค่าในเบราว์เซอร์นี้</p></article></div>
-  <div class="deskBlock"><h3>ตัวอย่างการนำทางหลัง Login</h3><p>หน้าจอนี้มีไว้ทดสอบการเปลี่ยนหน้าเท่านั้น ไม่ใช่การออกแบบ App Shell หรือ Dashboard</p><div class="deskLinks"><button type="button" class="deskLink" data-placeholder="งานตัวแทน"><span>▦</span><b>งานตัวแทน</b><small>ระบบตัวอย่าง</small></button><button type="button" class="deskLink" data-placeholder="งานลูกค้า"><span>◎</span><b>งานลูกค้า</b><small>ระบบตัวอย่าง</small></button><a class="deskLink" href="backoffice/"><span>▣</span><b>Back-office R1.8</b><small>เปิดหน้า UI-02 ↗</small></a><a class="deskLink" href="dashboard/"><span>▦</span><b>Dashboard R1.2</b><small>เปิดหน้า UI-03 ↗</small></a><a class="deskLink" href="car-directory/"><span>▤</span><b>คันรถ R1.1</b><small>เปิดหน้า UI-04 ↗</small></a></div></div>
- </main>
+<section id="desk" aria-label="Dashboard PriteAgent V2">
+ <iframe id="dashboardFrame" title="Dashboard และระบบคันรถ PriteAgent V2 (ข้อมูลทดลองในเบราว์เซอร์)" referrerpolicy="same-origin"></iframe>
 </section>
 <div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลการทดลอง</h3><p id="modalText"></p>
  <div id="recoveryChoices" class="choiceGroup" hidden>
@@ -462,14 +461,32 @@ phoneInput.addEventListener('drop',e=>{
 phoneInput.addEventListener('input',enforceTenDigits);
 phoneInput.addEventListener('change',enforceTenDigits);
 [u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
-function showPostLoginDemo(){document.body.classList.add('desk-active');$('loginApp').style.display='none';$('desk').style.display='block';window.scrollTo(0,0);}
+function showPostLoginDemo(){
+ document.body.classList.add('desk-active');
+ $('loginApp').style.display='none';
+ $('desk').style.display='block';
+ const frame=$('dashboardFrame');
+ frame.src=new URL('v2-trial/',window.location.href).href;
+ window.scrollTo(0,0);
+ frame.focus({preventScroll:true});
+}
 form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
 if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
 if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<4||pass.length>20)pe='รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร';
 errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
-loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();showPostLoginDemo();$('logout').focus({preventScroll:true});}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
+loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();showPostLoginDemo();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ตรงกับบัญชีทดลอง ลองกรอกให้ทดลองอีกครั้ง','error');p.focus();}},780);
 });
-$('logout').addEventListener('click',()=>{document.body.classList.remove('desk-active');$('desk').style.display='none';$('loginApp').style.display='flex';p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');errors();message('กลับมาหน้าล็อกอินทดลองแล้ว','info');window.scrollTo(0,0);u.focus();});
+window.addEventListener('message',event=>{
+ if(event.origin!==window.location.origin || event.source!==$('dashboardFrame').contentWindow) return;
+ if(!event.data || event.data.type!=='PRITEAGENT_TRIAL_EXIT') return;
+ document.body.classList.remove('desk-active');
+ $('desk').style.display='none';
+ $('dashboardFrame').removeAttribute('src');
+ $('loginApp').style.display='flex';
+ p.value='';p.type='password';$('eye').textContent='แสดง';$('eye').setAttribute('aria-pressed','false');
+ errors();message('กลับมาหน้า Login ทดลองแล้ว','info');window.scrollTo(0,0);u.focus();
+});
+
 document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder+' · ตัวอย่าง','นี่เป็นเพียงปลายทางจำลองของ Login R4 เท่านั้น หน้า App Shell และโมดูลจริงจะออกแบบในรอบถัดไปหลัง Owner อนุมัติ UI Login')));
 
 /* UI-01 R4 — no storage, network, email, passkey or real registration */
@@ -495,7 +512,7 @@ $('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErro
  signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจข้อมูลจำลอง…';signupMessage('กำลังตรวจฟอร์มจำลอง…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก (จำลอง)';signupMessage('SIMULATED ONLY · ตรวจแบบฟอร์มสำเร็จ ไม่มีการส่งข้อมูลหรือสร้างบัญชีจริง · ระบบจริง: (1) ยืนยันอีเมลก่อนเข้าใช้งาน (2) ระบบคำนวณเบี้ยประกันต้องได้รับอนุมัติสิทธิ์จาก Admin/Owner แยกต่างหาก');},620);
 });
 
-function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){showPostLoginDemo();}}
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){message('โปรดเข้าสู่ระบบทดลองก่อนเปิด Dashboard','info');}}
 applyHashState();
 })();
 </script>
