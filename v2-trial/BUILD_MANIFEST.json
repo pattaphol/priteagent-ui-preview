@@ -1,18 +1,18 @@
 {
   "name": "PRITEAGENT_V2_PUBLIC_SYNTHETIC_FUNCTIONAL_TRIAL",
   "source_repository": "pattaphol/priteagent-v2",
-  "source_commit": "5cc2cd3556925810f9057bd03fb5b2e29a6acbec",
-  "source_tree": "ba6b432528a16119da7fc2a9c2030b3e64fe67cd",
+  "source_commit": "d862af1f019940c2dbc775648b7b0c9a286eafe4",
+  "source_tree": "7dfbe409814425432d8f8e62a2a0b1e7f3d265ac",
   "public_host_repo": "pattaphol/priteagent-ui-preview",
   "public_origin": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/",
   "visibility": "PUBLIC",
   "data_policy": "SYNTHETIC_ONLY_NO_REAL_CUSTOMER_DATA",
   "data_store": "BROWSER_ORIGIN_LOCAL_INDEXEDDB_NOT_SHARED_ACROSS_DEVICES",
-  "build_note": "R3.7 text-only changes in authoritative private V2 index.html and src/app.ts; matching exact Thai text replacements in previously compiled public v2-trial/app.js; no fresh Node compiler/build; root Login updated separately as public entry.",
-  "checks": "R3_7_PRIVATE_PER_FILE_GIT_READBACK_PASS;PUBLIC_PER_FILE_GIT_READBACK_PASS;PUBLIC_JS_RUNTIME_NOT_YET_VERIFIED;NO_AUTH_OR_SHARED_DATA;OWNER_BROWSER_REVIEW_PENDING",
-  "prepublish_backup_commit": "c47996ea71427e9ec212d47790dab3b579df5596",
-  "prepublish_backup_branch": "backup/pages-before-real-look-copy-20261114-ui-pm7",
-  "published_status": "OWNER_REVIEW_R3_7_PENDING",
+  "build_note": "Exact scoped changes from current V2 source applied to already compiled JS and styles; full Node build NOT_RUN in Chat.",
+  "checks": "PUBLIC_JS_SYNTAX_PARSE_PASS;PRIVATE_PUBLIC_CSS_GIT_BLOB_MATCH;SOURCE_READBACK_PASS;OWNER_BROWSER_DEVICE_QA_PENDING",
+  "prepublish_backup_commit": "50a9a528526aec64bf6b1830554e8bccd05091eb",
+  "prepublish_backup_branch": "backup/public-before-r3-visual-refresh-20261114-ui-pm6",
+  "published_status": "OWNER_PREVIEW_UI_R3_6",
   "files": [
     "root/index.html",
     "v2-trial/index.html",
@@ -23,29 +23,18 @@
     "v2-trial/BUILD_MANIFEST.json"
   ],
   "login_dashboard_entry": "https://pattaphol.github.io/priteagent-ui-preview/",
-  "entry_rule": "UI_PRESENTATION_ONLY;PUBLIC_ENTRY_FIXED_TEST_ACCOUNT_NO_AUTH;ROOT_SAME_VISIBLE_URL",
-  "source_backup_branch": "backup/v2-before-real-look-copy-20261114-ui-pm7",
+  "entry_rule": "SYNTHETIC_LOGIN_SUCCESS_IFRAME_SAME_VISIBLE_ROOT_URL_NO_AUTH",
+  "source_backup_branch": "backup/v2-before-r3-visual-refresh-20261114-ui-pm6",
   "font_profile": "V1_PLUS_JAKARTA_SANS_AND_NOTO_SANS_THAI",
   "font_stack": "'Plus Jakarta Sans','Noto Sans Thai',system-ui,sans-serif",
   "font_import": "https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
   "font_scope": "ACTIVE_ROOT_LOGIN_AND_V2_TRIAL_DASHBOARD_AND_MODULES",
-  "prepublish_backup_tree": "27335e23b317d87434e0f83587859731e00652e0",
+  "prepublish_backup_tree": "ef56ad8d4f5851933b292c5a2ce0913b0e23b9ca",
   "font_csp_fix": "V2_DASHBOARD_ENABLE_GOOGLE_FONTS_CSS_AND_FONT_WITH_RESTRICTED_CSP",
   "csp_style_src": "'self' https://fonts.googleapis.com",
   "csp_font_src": "'self' https://fonts.gstatic.com",
   "csp_security": "all original default-src, connect-src, script-src, img-src, object-src, base-uri and form-action directives preserved",
-  "visual_revision": "UI_PM7_R3_7_PRODUCT_STYLE_UI_COPY",
-  "visual_scope": "REMOVE_VISIBLE_DEMO_PREVIEW_TRIAL_LABELS_FROM_ACTIVE_LOGIN_AND_DASHBOARD;DISABLE_UNIMPLEMENTED_SIGNUP_RECOVERY;KEEP_TRUTHFUL_DEVICE_LOCAL_AND_NO_REAL_ACCOUNT_STATUS",
-  "visual_limits": "NO_REAL_AUTH_OR_SHARED_DB;APPROVED_UI_R3_6_PRESERVED;NO_REAL_CUSTOMER_DATA;OWNER_VISUAL_REVIEW_PENDING",
-  "product_ui": "PRODUCT_STYLE_PRESENTATION_ONLY_NOT_RELEASE_OR_REAL_IDENTITY",
-  "changed_paths": [
-    "index.html",
-    "v2-trial/index.html",
-    "v2-trial/app.js",
-    "v2-trial/BUILD_MANIFEST.json"
-  ],
-  "source_changed_paths": [
-    "src/app.ts",
-    "index.html"
-  ]
+  "visual_revision": "V2_R3_6_V1_THEME_ICON_ACCOUNT_FOOTER",
+  "visual_scope": "RESTORE_V1_SUN_MOON_ICON_ONLY_ANIMATION;ACCOUNT_LOGOUT_BOTTOM_SIDEBAR_DIVIDER;REMOVE_HEADER_SEARCH_NOTIFICATIONS",
+  "visual_limits": "NO_AUTH_OR_NEW_FEATURES;EMPTY_METRICS_REMAIN_REAL_ZERO;BROWSER_E2E_PENDING_OWNER"
 }

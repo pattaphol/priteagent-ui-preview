@@ -175,14 +175,14 @@ function result() {
     const rows = filterCars(cars, filters), el = document.querySelector('#results');
     document.querySelector('#count').textContent = `${rows.length} คันรถ · ${layoutNames[layout]}`;
     el.setAttribute('aria-busy', String(state === 'loading'));
-    el.innerHTML = state === 'loading' ? '<div class="empty" role="status">กำลังโหลดข้อมูลคันรถ… <button data-retry>โหลดรายการใหม่</button></div>' : state === 'error' ? '<div class="empty" role="alert">โหลดข้อมูลคันรถไม่สำเร็จ <button data-retry>ลองอีกครั้ง</button></div>' : rows.length ? rowsMarkup(rows) : '<div class="empty" role="status">ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้ <button data-reset>ล้างตัวกรอง</button></div>';
+    el.innerHTML = state === 'loading' ? '<div class="empty" role="status">กำลังโหลดคันรถตัวอย่าง… <button data-retry>แสดงข้อมูลตัวอย่าง</button></div>' : state === 'error' ? '<div class="empty" role="alert">โหลดข้อมูลตัวอย่างไม่สำเร็จ <button data-retry>ลองอีกครั้ง</button></div>' : rows.length ? rowsMarkup(rows) : '<div class="empty" role="status">ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้ <button data-reset>ล้างตัวกรอง</button></div>';
 }
 function render() {
     const activeName = screen === 'car-detail' ? 'รายละเอียดคันรถ' : names[screen];
     const areaName = area === 'agent' ? 'งานตัวแทน' : 'งานลูกค้า';
     const detail = cars.find((car)=>car.id === detailCarId);
     const directory = screen === 'cars';
-    const accountInfo = `<div class="sidebar-account-info" id="shell-profile" role="region" aria-label="ข้อมูลการใช้งาน" ${profileOpen ? '' : 'hidden'}><strong>ข้อมูลการใช้งาน</strong><p>ข้อมูลคันรถเก็บเฉพาะอุปกรณ์นี้ ยังไม่เชื่อมบัญชีผู้ใช้</p></div>`;
+    const accountInfo = `<div class="sidebar-account-info" id="shell-profile" role="region" aria-label="รายละเอียดบัญชีทดลอง" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกเฉพาะในเบราว์เซอร์นี้ ไม่มีบัญชีจริง</p></div>`;
     const themeLabel = document.documentElement.dataset.theme === 'light' ? 'เปลี่ยนเป็นโหมดมืด' : 'เปลี่ยนเป็นโหมดสว่าง';
     root.innerHTML = `<header class="shell-header">
  <button id="menu" type="button" aria-label="เปิดเมนูนำทาง" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
@@ -202,14 +202,14 @@ function render() {
  <div class="sidebar-footer" aria-label="เมนูบัญชี">
  <button id="profile" type="button" aria-expanded="${profileOpen}" aria-controls="shell-profile"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span>บัญชี</span></button>
  ${accountInfo}
- <button id="trial-logout" type="button" title="กลับหน้าเข้าสู่ระบบ"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span>ออกจากระบบ</span></button>
+ <button id="trial-logout" type="button" title="กลับหน้า Login ทดลอง"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span>ออกจากระบบ</span></button>
  </div></aside>
 
  <main id="main" tabindex="-1">
  <nav class="shell-breadcrumb" aria-label="เส้นทาง"><button data-page="home">${areaName}</button>
  ${screen === 'car-detail' ? '<button data-page="cars">คันรถของฉัน</button>' : ''}<span aria-current="page">${activeName}</span></nav>
  <div id="pending-recovery" role="status"></div>
- ${directory ? `<div class="notice">ข้อมูลคันรถเก็บเฉพาะอุปกรณ์นี้ ยังไม่เชื่อมบัญชีผู้ใช้</div><div class="heading"><div><h1 tabindex="-1">คันรถของฉัน</h1><p>เลือกคันรถเพื่อดูรายละเอียดหรือแก้ไข</p></div><div class="create"><button data-action="create-group">+ สร้างคันรถ</button><button disabled>เข้าร่วมคันรถ</button></div></div>
+ ${directory ? `<div class="notice">ข้อมูลเก็บในเบราว์เซอร์นี้ กรุณาใช้ข้อมูลจำลอง</div><div class="heading"><div><h1 tabindex="-1">คันรถของฉัน</h1><p>เลือกคันรถเพื่อดูรายละเอียดหรือแก้ไข</p></div><div class="create"><button data-action="create-group">+ สร้างคันรถ</button><button disabled>เข้าร่วมคันรถ</button></div></div>
  <div class="tools"><label class="search">ค้นหา<input id="search" type="search" placeholder="คันรถ จังหวัด รหัสกลุ่ม หรือสมาชิก" value="${e(filters.query)}"></label><div class="periods">${select('year', 'ปี', [
         '',
         ...[
@@ -236,7 +236,7 @@ function render() {
         archived: 'คลังคันรถ'
     }).map(([s, n])=>`<button data-status="${s}" aria-pressed="${filters.status === s}">${n}</button>`).join('')}</div><p id="count" role="status"></p><section id="results" aria-label="รายการคันรถ"></section>
  ` : screen==='home' ? `<section class="shell-page dashboard-page" aria-labelledby="dashboard-title">
- <div class="dashboard-intro"><div><span class="dashboard-kicker">${areaName}</span><h1 id="dashboard-title" tabindex="-1">หน้าแรก</h1><p>ภาพรวมงานของคุณใน PriteAgent V2</p></div><span class="dashboard-status">ข้อมูลบนอุปกรณ์นี้</span></div>
+ <div class="dashboard-intro"><div><span class="dashboard-kicker">${areaName}</span><h1 id="dashboard-title" tabindex="-1">หน้าแรก</h1><p>ภาพรวมงานของคุณใน PriteAgent V2</p></div><span class="dashboard-status">ข้อมูลทดลอง · เครื่องนี้</span></div>
  ${area==='agent'?`
  <div class="dashboard-stats" aria-label="สรุปข้อมูลคันรถ"><article class="dashboard-stat"><span>คันรถที่บันทึกไว้</span><strong>${cars.length}</strong><small>ข้อมูลในเบราว์เซอร์เครื่องนี้</small></article><article class="dashboard-stat"><span>คันรถที่กำลังดำเนินการ</span><strong>${cars.filter(c=>!c.closed&&!c.archived).length}</strong><small>ไม่นับคันรถที่ปิดหรือจัดเก็บ</small></article></div>
  <div class="dashboard-work"><h2>เริ่มทำงาน</h2><div class="dashboard-actions"><button data-page="cars" class="dashboard-primary">ดูคันรถของฉัน</button><button data-action="create-group">+ สร้างคันรถ</button></div>
@@ -244,8 +244,8 @@ function render() {
  <p class="dashboard-footnote">ค่าใช้จ่าย ถืองาน และงานลูกค้ายังไม่เปิดใช้งานจริง ข้อมูลคันรถที่สร้างในขั้นนี้ไม่ใช่ข้อมูลกลางข้ามอุปกรณ์</p>
  `:'<div class="dashboard-work"><h2>งานลูกค้า</h2><p>ยังไม่พร้อมใช้งาน ขณะนี้ยังไม่มีข้อมูลลูกค้าหรือสิทธิ์บัญชีจริง</p><button data-area="agent">กลับงานตัวแทน</button></div>'}
  </section>` : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
- <footer>PriteAgent V2 · พื้นที่ทำงาน</footer></main>
- <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>ยังไม่เปิดใช้งาน</strong><p>ฟีเจอร์นี้อยู่ระหว่างพัฒนา ยังไม่สามารถบันทึกหรือจัดการข้อมูลในส่วนนี้ได้</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
+ <footer>PriteAgent V2 · ทดลองส่วนตัว</footer></main>
+ <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>SIMULATED / NOT IMPLEMENTED</strong><p>แสดงปลายทางและบริบทคันรถเท่านั้น ยังไม่มีการบันทึก แก้ไข หรือคำนวณจริง</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
     if (directory) result();
     showPendingRecovery();
     document.querySelector('#search')?.addEventListener('input', (ev)=>{
@@ -402,7 +402,7 @@ async function openGroupForm(id) {
         return;
     }
     const dialog = document.createElement('dialog');
-    dialog.setAttribute('aria-label', 'ข้อมูลคันรถ');
+    dialog.setAttribute('aria-label', 'ข้อมูลคันรถตัวอย่าง');
     dialog.innerHTML = `<form><h2>${current ? 'แก้ไขข้อมูลคันรถ' : 'สร้างคันรถ'}</h2><p>บันทึกในเบราว์เซอร์นี้</p>
  <label>ปี <input name="year" type="number" required></label><label>เดือน <input name="month" type="number" min="1" max="12" required></label><label>วีค <input name="week" type="number" min="1" max="5" required></label>
  <label>วันเริ่ม <input name="startDate" type="date" required></label><label>วันสิ้นสุด <input name="endDate" type="date" required></label>
