@@ -53,23 +53,3 @@ button:disabled { opacity: .55; cursor: not-allowed; }
  .shell-bottom button { justify-content: center; padding: 4px 2px; font-size: 11px; line-height: 1.2; text-align: center; }
  main { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 }
-/* Login > Dashboard SAME-URL R2: synthetic V2 Dashboard in existing shell. */
-.dashboard-page{padding:clamp(16px,3vw,28px);background:transparent;border:0}
-.dashboard-intro{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:0 0 22px}
-.dashboard-intro h1{margin:4px 0 7px;font-size:clamp(25px,3vw,34px)}
-.dashboard-intro p,.dashboard-stat small,.dashboard-car-list small,.dashboard-footnote{color:var(--muted)}
-.dashboard-kicker{font-size:12px;color:var(--cyan);font-weight:700}
-.dashboard-status{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:11px;color:var(--muted)}
-.dashboard-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:20px}
-.dashboard-stat,.dashboard-work{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px}
-.dashboard-stat{display:flex;flex-direction:column;gap:7px}
-.dashboard-stat span{font-size:13px}.dashboard-stat strong{font-size:32px;line-height:1.1}.dashboard-stat small{font-size:11px}
-.dashboard-work h2{font-size:17px;margin:0 0 13px}.dashboard-work h2:not(:first-child){margin-top:22px}
-.dashboard-actions{display:flex;flex-wrap:wrap;gap:10px}
-.dashboard-actions button{min-width:140px}.dashboard-primary{background:var(--accent);color:var(--cyan);font-weight:700}
-.dashboard-car-list{display:grid;gap:8px}.dashboard-car-list>button{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;text-align:left}
-.dashboard-car-list>button span:first-child{display:grid;gap:4px;min-width:0}.dashboard-car-list strong{overflow-wrap:anywhere}
-.dashboard-car-list small{font-size:11px;overflow-wrap:anywhere}.dashboard-empty{color:var(--muted);font-size:13px}
-.dashboard-footnote{margin-top:15px;font-size:12px;line-height:1.7}
-.shell-profile #trial-logout{margin-top:10px;width:100%;white-space:nowrap;font-size:12px}
-@media(max-width:600px){.dashboard-stats{grid-template-columns:1fr}.dashboard-page{padding:0}.dashboard-stat,.dashboard-work{padding:16px}.dashboard-intro{margin-bottom:14px}.dashboard-actions button{flex:1;min-width:0}}

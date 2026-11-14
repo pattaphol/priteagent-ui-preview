@@ -1,28 +1,23 @@
 {
   "name": "PRITEAGENT_V2_PUBLIC_SYNTHETIC_FUNCTIONAL_TRIAL",
   "source_repository": "pattaphol/priteagent-v2",
-  "source_commit": "938b5a9516b24ecdb66f2dbcd2811e14594127f1",
-  "source_tree": "d2e5df1d55c535469825e556842e2c9c60885633",
+  "source_commit": "e157895d2272b1e802e9ce2c5bb67ac8c7ad7315",
+  "source_tree": "7086f96b3a71236c9baa122d227a7547dbe40f84",
   "public_host_repo": "pattaphol/priteagent-ui-preview",
   "public_origin": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/",
   "visibility": "PUBLIC",
   "data_policy": "SYNTHETIC_ONLY_NO_REAL_CUSTOMER_DATA",
   "data_store": "BROWSER_ORIGIN_LOCAL_INDEXEDDB_NOT_SHARED_ACROSS_DEVICES",
-  "build_note": "R2 scoped UI text delta staged on prior verified Code8 Node-built output; full Node build on exact new source NOT_RUN",
-  "checks": "CHAT_R2_PATCH_CONTRACT_PASS;DASHBOARD_FRAGMENT_NODE_PARSE_PASS;PRIVATE_DASHBOARD_TO_PUBLIC_JS_MATCH_PASS;CSS_SOURCE_BLOB_MATCH_PASS;FULL_BROWSER_E2E_NOT_RUN",
-  "prepublish_backup_commit": "fb71492cb1c26068557ad3e020bab000989ba6fb",
-  "prepublish_backup_branch": "backup/public-before-login-dashboard-20261114-ui-pm6",
-  "published_status": "STAGED_FOR_OWNER_PREVIEW_NOT_LIVE_VERIFIED",
+  "build_note": "Node v24.22.1 scripts/build.mjs in restored Code8 R1 snapshot with identical source tree",
+  "checks": "JS_SYNTAX_3_OF_3_PASS;DOMAIN_TESTS_5_OF_5_PASS;BROWSER_E2E_NOT_RUN",
+  "prepublish_backup_commit": "7d91c3372c587ea56c879107b82ac51759a5fc32",
+  "prepublish_backup_branch": null,
+  "published_status": "OWNER_PREVIEW_CANDIDATE",
   "files": [
-    "root/index.html",
-    "v2-trial/index.html",
-    "v2-trial/app.js",
-    "v2-trial/styles.css",
-    "v2-trial/domain.js",
-    "v2-trial/adapters.js",
-    "v2-trial/BUILD_MANIFEST.json"
-  ],
-  "login_dashboard_entry": "https://pattaphol.github.io/priteagent-ui-preview/",
-  "entry_rule": "SYNTHETIC_LOGIN_SUCCESS_IFRAME_SAME_VISIBLE_ROOT_URL_NO_AUTH",
-  "source_backup_branch": "backup/code8-before-login-dashboard-20261114-ui-pm6"
+    "index.html",
+    "app.js",
+    "styles.css",
+    "domain.js",
+    "adapters.js"
+  ]
 }

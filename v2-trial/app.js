@@ -93,12 +93,12 @@ const areas = {
     ]
 };
 let area = 'agent';
-let screen = 'home';
+let screen = 'cars';
 let detailCarId = null;
 let profileOpen = false;
 const themeKey = 'priteagent-v2:shell:theme';
 try {
-    const savedTheme = storage.getItem(themeKey) || storage.getItem('priteagent.ui.theme.v1');
+    const savedTheme = storage.getItem(themeKey);
     if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.dataset.theme = savedTheme;
 } catch  {}
 function navigate(destination) {
@@ -162,7 +162,7 @@ function render() {
     const areaName = area === 'agent' ? 'งานตัวแทน' : 'งานลูกค้า';
     const detail = cars.find((car)=>car.id === detailCarId);
     const directory = screen === 'cars';
-    const profile = `<div class="shell-profile" id="shell-profile" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกในเบราว์เซอร์นี้</p><button type="button" id="trial-logout">กลับหน้า Login ทดลอง</button></div>`;
+    const profile = `<div class="shell-profile" id="shell-profile" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกในเบราว์เซอร์นี้</p></div>`;
     root.innerHTML = `<header class="shell-header">
  <button id="menu" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
  <strong class="brand">prite<span>agent</span> <small>V2</small></strong>
@@ -208,15 +208,7 @@ function render() {
         closed: 'ปิดแล้ว',
         archived: 'คลังคันรถ'
     }).map(([s, n])=>`<button data-status="${s}" aria-pressed="${filters.status === s}">${n}</button>`).join('')}</div><p id="count" role="status"></p><section id="results" aria-label="รายการคันรถ"></section>
- ` : screen==='home' ? `<section class="shell-page dashboard-page" aria-labelledby="dashboard-title">
- <div class="dashboard-intro"><div><span class="dashboard-kicker">${areaName}</span><h1 id="dashboard-title" tabindex="-1">หน้าแรก</h1><p>ภาพรวมงานของคุณใน PriteAgent V2</p></div><span class="dashboard-status">ข้อมูลทดลอง · เครื่องนี้</span></div>
- ${area==='agent'?`
- <div class="dashboard-stats" aria-label="สรุปข้อมูลคันรถ"><article class="dashboard-stat"><span>คันรถที่บันทึกไว้</span><strong>${cars.length}</strong><small>ข้อมูลในเบราว์เซอร์เครื่องนี้</small></article><article class="dashboard-stat"><span>คันรถที่กำลังดำเนินการ</span><strong>${cars.filter(c=>!c.closed&&!c.archived).length}</strong><small>ไม่นับคันรถที่ปิดหรือจัดเก็บ</small></article></div>
- <div class="dashboard-work"><h2>เริ่มทำงาน</h2><div class="dashboard-actions"><button data-page="cars" class="dashboard-primary">ดูคันรถของฉัน</button><button data-action="create-group">+ สร้างคันรถ</button></div>
- <h2>รายการคันรถของฉัน</h2>${cars.length?`<div class="dashboard-car-list">${cars.slice(0,3).map(c=>`<button data-car="${e(c.id)}" data-action="body" aria-label="เปิดรายละเอียดคันรถ ${e(c.name)}"><span><strong>${e(c.name)}</strong><small>${e(c.destination||'ยังไม่ระบุจังหวัด')} · ${period(c)}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>`:'<p class="dashboard-empty">ยังไม่มีคันรถที่บันทึกไว้ เริ่มจากปุ่มสร้างคันรถ</p>'}</div>
- <p class="dashboard-footnote">ค่าใช้จ่าย ถืองาน และงานลูกค้ายังไม่เปิดใช้งานจริง ข้อมูลคันรถที่สร้างในขั้นนี้ไม่ใช่ข้อมูลกลางข้ามอุปกรณ์</p>
- `:'<div class="dashboard-work"><h2>งานลูกค้า</h2><p>ยังไม่พร้อมใช้งาน ขณะนี้ยังไม่มีข้อมูลลูกค้าหรือสิทธิ์บัญชีจริง</p><button data-area="agent">กลับงานตัวแทน</button></div>'}
- </section>` : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
+ ` : screen === 'home' ? `<section class="shell-page"><h1 tabindex="-1">หน้าแรก</h1><p>พื้นที่ทดลองส่วนตัว</p>${area === 'agent' ? `<p>คันรถที่บันทึกในเครื่อง ${cars.length} คัน</p><button data-page="cars">เปิดรายการคันรถ</button>` : '<p>งานลูกค้ายังไม่พร้อมใช้งาน</p>'}</section>` : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
  <footer>PriteAgent V2 · ทดลองส่วนตัว</footer></main>
  <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>SIMULATED / NOT IMPLEMENTED</strong><p>แสดงปลายทางและบริบทคันรถเท่านั้น ยังไม่มีการบันทึก แก้ไข หรือคำนวณจริง</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
     if (directory) result();
@@ -318,7 +310,7 @@ root.addEventListener('click', (ev)=>{
         navigate('home');
     } else if (b.id === 'shell-search') {
         document.querySelector('#search')?.focus();
-    } else if (b.id === 'trial-logout') { if(window.parent!==window){window.parent.postMessage({type:'PRITEAGENT_TRIAL_EXIT'},window.location.origin);}else{window.location.assign(new URL('../',window.location.href).href);} } else if (b.id === 'profile') {
+    } else if (b.id === 'profile') {
         profileOpen = !profileOpen;
         b.setAttribute('aria-expanded', String(profileOpen));
         document.querySelector('#shell-profile').hidden = !profileOpen;
