@@ -182,22 +182,28 @@ function render() {
     const areaName = area === 'agent' ? 'งานตัวแทน' : 'งานลูกค้า';
     const detail = cars.find((car)=>car.id === detailCarId);
     const directory = screen === 'cars';
-    const profile = `<div class="shell-profile" id="shell-profile" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกในเบราว์เซอร์นี้</p><button type="button" id="trial-logout">กลับหน้า Login ทดลอง</button></div>`;
+    const accountInfo = `<div class="sidebar-account-info" id="shell-profile" role="region" aria-label="รายละเอียดบัญชีทดลอง" ${profileOpen ? '' : 'hidden'}><strong>บัญชีทดลอง</strong><p>ข้อมูลบันทึกเฉพาะในเบราว์เซอร์นี้ ไม่มีบัญชีจริง</p></div>`;
+    const themeLabel = document.documentElement.dataset.theme === 'light' ? 'เปลี่ยนเป็นโหมดมืด' : 'เปลี่ยนเป็นโหมดสว่าง';
     root.innerHTML = `<header class="shell-header">
  <button id="menu" type="button" aria-label="เปิดเมนูนำทาง" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
  <strong class="brand">prite<span>agent</span> <small>V2</small></strong>
  <div class="shell-current">${activeName}</div>
  <div class="shell-actions">
- <button id="shell-search" ${directory ? '' : 'disabled'} aria-label="ค้นหาในรายการรถ">ค้นหา</button>
- <button id="theme" aria-label="สลับธีม">◐ ธีม</button>
- <button type="button" disabled aria-label="การแจ้งเตือนยังไม่พร้อมใช้งาน">แจ้งเตือน</button>
- <button id="profile" aria-expanded="${profileOpen}" aria-controls="shell-profile">บัญชี</button>
- </div>${profile}</header>
+ <button id="theme" type="button" class="theme-icon-button" aria-label="${themeLabel}" title="${themeLabel}"><span class="theme-switch-icon" aria-hidden="true">
+ <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+ <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486A9 9 0 0 1 11.514 3.015a9 9 0 1 0 9.471 9.471Z"/></svg>
+ </span></button>
+ </div></header>
   <button type="button" id="nav-backdrop" class="nav-backdrop ${menuOpen?'open':''}" aria-label="ปิดเมนูนำทาง" aria-hidden="${!menuOpen}" tabindex="${menuOpen?0:-1}"></button>
- <aside id="sidebar" class="${menuOpen ? 'open' : ''}"><div class="work-area" role="group" aria-label="เลือกพื้นที่ทำงาน">
+ <aside id="sidebar" class="${menuOpen ? 'open' : ''}"><div class="sidebar-scroll"><div class="work-area" role="group" aria-label="เลือกพื้นที่ทำงาน">
  <button data-area="agent" aria-pressed="${area === 'agent'}">งานตัวแทน</button>
  <button data-area="customer" aria-pressed="${area === 'customer'}">งานลูกค้า</button></div>
- <nav aria-label="เมนูพื้นที่ทำงาน">${menuMarkup(areas[area])}</nav></aside>
+ <nav aria-label="เมนูพื้นที่ทำงาน">${menuMarkup(areas[area])}</nav></div>
+ <div class="sidebar-footer" aria-label="เมนูบัญชี">
+ <button id="profile" type="button" aria-expanded="${profileOpen}" aria-controls="shell-profile"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span>บัญชี</span></button>
+ ${accountInfo}
+ <button id="trial-logout" type="button" title="กลับหน้า Login ทดลอง"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span>ออกจากระบบ</span></button>
+ </div></aside>
 
  <main id="main" tabindex="-1">
  <nav class="shell-breadcrumb" aria-label="เส้นทาง"><button data-page="home">${areaName}</button>
@@ -337,8 +343,6 @@ root.addEventListener('click', (ev)=>{
     } else if (b.dataset.area) {
         area = b.dataset.area;
         navigate('home');
-    } else if (b.id === 'shell-search') {
-        document.querySelector('#search')?.focus();
     } else if (b.id === 'trial-logout') { if(window.parent!==window){window.parent.postMessage({type:'PRITEAGENT_TRIAL_EXIT'},window.location.origin);}else{window.location.assign(new URL('../',window.location.href).href);} } else if (b.id === 'profile') {
         profileOpen = !profileOpen;
         b.setAttribute('aria-expanded', String(profileOpen));
@@ -357,8 +361,18 @@ root.addEventListener('click', (ev)=>{
         const dark = document.documentElement.dataset.theme === 'dark' || !document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches;
         const next = dark ? 'light' : 'dark';
         document.documentElement.dataset.theme = next;
+        const label = next === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
+        b.setAttribute('aria-label', label);
+        b.setAttribute('title', label);
+        b.classList.remove('theme-switch-tap');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            void b.offsetWidth;
+            b.classList.add('theme-switch-tap');
+            b.addEventListener('animationend', () => b.classList.remove('theme-switch-tap'), {once:true});
+        }
         try {
             storage.setItem(themeKey, next);
+            storage.setItem('priteagent.ui.theme.v1', next);
         } catch  {}
     }
 });
