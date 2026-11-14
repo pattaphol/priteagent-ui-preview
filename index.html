@@ -7,6 +7,7 @@
 <script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
 <title>PriteAgent — Login R4.10 · Interactive Prototype</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 :root{
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
   --line:#1f425d;--line2:#2b5777;--text:#edf5fb;--muted:#9db2c3;--soft:#bfd5e5;--cyan:#40b8da;
@@ -14,7 +15,7 @@
   --infobg:#112f45;--shadow:0 28px 78px rgba(0,0,0,.38)
 }
 *{box-sizing:border-box}html{min-width:290px;background:var(--bg)}
-body{margin:0;background:radial-gradient(circle at 15% 15%,rgba(66,164,255,.15),transparent 26%),radial-gradient(circle at 85% 85%,rgba(46,208,196,.12),transparent 25%),linear-gradient(180deg,#071521 0%,#081a28 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Noto Sans Thai",system-ui,sans-serif;line-height:1.6;font-size:15px}
+body{margin:0;background:radial-gradient(circle at 15% 15%,rgba(66,164,255,.15),transparent 26%),radial-gradient(circle at 85% 85%,rgba(46,208,196,.12),transparent 25%),linear-gradient(180deg,#071521 0%,#081a28 100%);color:var(--text);font-family:'Plus Jakarta Sans','Noto Sans Thai',system-ui,sans-serif;line-height:1.6;font-size:15px}
 button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.68}a{color:inherit}button:focus-visible,input:focus-visible{outline:3px solid #65d2ff;outline-offset:3px}button,input{-webkit-tap-highlight-color:transparent}
 .app{min-height:100dvh;display:flex;flex-direction:column}.previewbar{padding:9px 18px;background:#081726;border-bottom:1px solid #16344d;font-size:11px;color:#8cb0c6;text-align:center;font-weight:700;letter-spacing:.02em}.previewbar b{color:#a7eeff}
 .layout{width:100%;max-width:1180px;margin:auto;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);min-height:min(740px,calc(100dvh - 44px));border-radius:28px;overflow:hidden;box-shadow:var(--shadow);background:rgba(11,29,43,.84);backdrop-filter:blur(10px)}
@@ -128,7 +129,7 @@ body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
 }
 
 /* PUBLIC STATIC PREVIEW, no real authentication. Sticky safety notice */
-#publicPreviewNotice{position:fixed;inset:auto 0 0 0;z-index:9999;box-sizing:border-box;background:#ffe5a0;color:#172b37;border-top:1px solid #d9b65c;box-shadow:0 -4px 16px rgba(0,0,0,.15);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));font:700 12px/1.35 system-ui,-apple-system,sans-serif;text-align:center;pointer-events:none}
+#publicPreviewNotice{position:fixed;inset:auto 0 0 0;z-index:9999;box-sizing:border-box;background:#ffe5a0;color:#172b37;border-top:1px solid #d9b65c;box-shadow:0 -4px 16px rgba(0,0,0,.15);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));font:700 12px/1.35 'Plus Jakarta Sans','Noto Sans Thai',system-ui,sans-serif;text-align:center;pointer-events:none}
 #publicPreviewNotice strong{font-weight:900;letter-spacing:.03em}
 /* R4: preserve the R3 palette, center hero content/cards and login heading */
 #loginApp .story{position:relative;justify-content:center}
