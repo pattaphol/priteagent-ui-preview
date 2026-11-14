@@ -1,23 +1,23 @@
 {
   "name": "PRITEAGENT_V2_PUBLIC_SYNTHETIC_FUNCTIONAL_TRIAL",
   "source_repository": "pattaphol/priteagent-v2",
-  "source_commit": "42a0b8bf6af7c4271b38640531856abeb984c064",
-  "source_tree": "ea48b0087758ce609eca386edc7855a2bc93eb46",
+  "source_commit": "e157895d2272b1e802e9ce2c5bb67ac8c7ad7315",
+  "source_tree": "7086f96b3a71236c9baa122d227a7547dbe40f84",
   "public_host_repo": "pattaphol/priteagent-ui-preview",
   "public_origin": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/",
   "visibility": "PUBLIC",
   "data_policy": "SYNTHETIC_ONLY_NO_REAL_CUSTOMER_DATA",
   "data_store": "BROWSER_ORIGIN_LOCAL_INDEXEDDB_NOT_SHARED_ACROSS_DEVICES",
-  "build_note": "Scoped in-memory TypeScript type erasure from verified Code8 source blobs; Node original build script not executed",
-  "checks": "SOURCE_BLOBS_5_OF_5_MATCHED;JS_SYNTAX_3_OF_3_PASS;DOMAIN_SMOKE_2_OF_2_PASS;BROWSER_E2E_NOT_VERIFIED",
-  "prepublish_backup_commit": "30f67da0b68e562da13fad071ec267d12d293e23",
-  "prepublish_backup_branch": "backup/ui-pages-main-pre-v2-trial-20261114",
-  "published_status": "CANDIDATE_ARTIFACT;HTTP_NOT_VERIFIED",
+  "build_note": "Node v24.22.1 scripts/build.mjs in restored Code8 R1 snapshot with identical source tree",
+  "checks": "JS_SYNTAX_3_OF_3_PASS;DOMAIN_TESTS_5_OF_5_PASS;BROWSER_E2E_NOT_RUN",
+  "prepublish_backup_commit": "7d91c3372c587ea56c879107b82ac51759a5fc32",
+  "prepublish_backup_branch": null,
+  "published_status": "OWNER_PREVIEW_CANDIDATE",
   "files": [
     "index.html",
-    "domain.js",
-    "adapters.js",
     "app.js",
-    "styles.css"
+    "styles.css",
+    "domain.js",
+    "adapters.js"
   ]
 }
