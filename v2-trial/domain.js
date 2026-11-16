@@ -47,6 +47,7 @@ export function validateCarGroup(draft) {
         if (!name.trim()) errors['member' + (index + 1)] = 'กรอกชื่อสมาชิกคนที่ ' + (index + 1);
     });
     if (!Number.isInteger(draft.ownerIndex) || !draft.members[draft.ownerIndex]?.trim()) errors.ownerIndex = 'เลือกเจ้าของรถจากสมาชิกที่มีชื่อ';
+ if (draft.selfPosition !== undefined && (!Number.isInteger(draft.selfPosition) || !draft.members[draft.selfPosition]?.trim())) errors.selfPosition = 'เลือกตัวเองจากสมาชิกที่มีชื่อ';
     if (draft.budget !== undefined && !Number.isInteger(draft.budget)) errors.budget = 'ระบุจำนวนเงินเป็นบาทเต็ม';
     return errors;
 }

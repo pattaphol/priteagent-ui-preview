@@ -472,7 +472,7 @@ function openWorkspace(){
  $('loginApp').style.display='none';
  $('desk').style.display='block';
  const frame=$('dashboardFrame');
- frame.src=new URL('v2-trial/',window.location.href).href;
+ frame.src=new URL('v2-trial/?rev=pm34-groupform-20261116',window.location.href).href;
  window.scrollTo(0,0);
  frame.focus({preventScroll:true});
 }

@@ -259,3 +259,29 @@ html[data-theme="light"] .theme-switch-icon .icon-moon{opacity:1;transform:scale
  .theme-switch-icon svg{transition:none!important}
  #theme.theme-switch-tap .theme-switch-icon{animation:none!important}
 }
+
+/* PM34 / Owner UX Q2-Q4: full-page scrollable GroupForm, synthetic data only */
+dialog.groupform-sheet{inset:0;position:fixed;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;box-sizing:border-box;margin:0;border:0;border-radius:0;padding:0;overflow-y:auto;overscroll-behavior:contain;background:var(--bg);color:var(--ink)}
+dialog.groupform-sheet::backdrop{background:rgba(0,10,25,.7)}
+.groupform-page{max-width:960px;margin:0 auto;padding:0 24px calc(32px + env(safe-area-inset-bottom,0px))}
+.groupform-header{position:sticky;top:0;z-index:2;height:auto!important;min-height:90px;margin:0 -24px 18px;padding:20px 24px!important;border-bottom:1px solid var(--line);background:var(--panel);display:block}
+.groupform-kicker{font-size:12px;font-weight:700;color:var(--cyan)}
+.groupform-header h2{font-size:27px;font-weight:800;line-height:1.35;margin:4px 0 7px}
+.groupform-header p{font-size:13px;color:var(--muted);margin:0;line-height:1.7}
+.groupform-body{display:grid;gap:18px}
+.groupform-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 19px rgba(0,0,0,.04);display:grid;gap:14px}
+.groupform-card h3{font-size:19px;font-weight:750;margin:0 0 2px;color:var(--ink)}
+.groupform-id{background:var(--accent);color:var(--cyan);font-weight:700;border-radius:10px;padding:11px 13px;line-height:1.6;margin:0}
+.groupform-card label{font-size:13px;color:var(--ink);font-weight:600;gap:8px}
+.groupform-card input,.groupform-card select{width:100%;min-height:47px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font-size:16px;font-weight:400}
+.groupform-card label[hidden],.groupform-sheet [hidden]{display:none!important}
+.groupform-card .groupform-hint{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
+.groupform-review{border-color:var(--cyan)}
+.groupform-review [data-review]{display:block;white-space:pre-wrap;line-height:1.95;font-size:13px;background:var(--bg);color:var(--ink);padding:17px;border-radius:12px;overflow-wrap:anywhere}
+.groupform-review [data-error]{color:#d13c4d;font-weight:600;font-size:13px;margin:0}
+.groupform-buttons{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+.groupform-buttons button{margin:0;padding:10px 18px;min-height:48px;font-size:14px;font-weight:700}
+.groupform-buttons [data-save]{background:#108158;border-color:#108158;color:#fff}
+.groupform-buttons button[type=submit]{background:var(--accent);color:var(--cyan)}
+@media(max-width:600px){.groupform-page{padding:0 12px calc(18px + env(safe-area-inset-bottom,0px))}.groupform-header{min-height:80px;margin:0 -12px 14px;padding:16px 12px!important}.groupform-header h2{font-size:22px}.groupform-header p{font-size:12px}.groupform-body{gap:12px}.groupform-card{padding:17px 15px;border-radius:13px;gap:12px}.groupform-card h3{font-size:16px}.groupform-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.groupform-buttons button{padding:10px 6px;white-space:normal}.groupform-buttons [data-save]{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.groupform-sheet *{scroll-behavior:auto!important}}

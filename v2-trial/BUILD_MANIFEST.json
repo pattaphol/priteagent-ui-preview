@@ -1,8 +1,8 @@
 {
   "name": "PRITEAGENT_V2_PUBLIC_SYNTHETIC_FUNCTIONAL_TRIAL",
   "source_repository": "pattaphol/priteagent-v2",
-  "source_commit": "5cc2cd3556925810f9057bd03fb5b2e29a6acbec",
-  "source_tree": "ba6b432528a16119da7fc2a9c2030b3e64fe67cd",
+  "source_commit": "042931d401e989223f5bcea4b1e8d3d742b66898",
+  "source_tree": "12724f265a78193d8c9d2439903cc512a5bb72be",
   "public_host_repo": "pattaphol/priteagent-ui-preview",
   "public_origin": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/",
   "visibility": "PUBLIC",
@@ -34,18 +34,25 @@
   "csp_style_src": "'self' https://fonts.googleapis.com",
   "csp_font_src": "'self' https://fonts.gstatic.com",
   "csp_security": "all original default-src, connect-src, script-src, img-src, object-src, base-uri and form-action directives preserved",
-  "visual_revision": "UI_PM7_R3_7_PRODUCT_STYLE_UI_COPY",
-  "visual_scope": "REMOVE_VISIBLE_DEMO_PREVIEW_TRIAL_LABELS_FROM_ACTIVE_LOGIN_AND_DASHBOARD;DISABLE_UNIMPLEMENTED_SIGNUP_RECOVERY;KEEP_TRUTHFUL_DEVICE_LOCAL_AND_NO_REAL_ACCOUNT_STATUS",
+  "visual_revision": "PM34_GROUPFORM_V1_LONG_Q2_Q3_Q4_20261116",
+  "visual_scope": "OWNER_APPROVED_CONTINUOUS_FULL_SCREEN_GROUPFORM_BOTTOM_THAI_REVIEW_LOCAL_SYNTHETIC_SELF",
   "visual_limits": "NO_REAL_AUTH_OR_SHARED_DB;APPROVED_UI_R3_6_PRESERVED;NO_REAL_CUSTOMER_DATA;OWNER_VISUAL_REVIEW_PENDING",
   "product_ui": "PRODUCT_STYLE_PRESENTATION_ONLY_NOT_RELEASE_OR_REAL_IDENTITY",
   "changed_paths": [
     "index.html",
     "v2-trial/index.html",
     "v2-trial/app.js",
+    "v2-trial/styles.css",
+    "v2-trial/domain.js",
     "v2-trial/BUILD_MANIFEST.json"
   ],
   "source_changed_paths": [
     "src/app.ts",
-    "index.html"
-  ]
+    "src/styles.css",
+    "src/domain.ts"
+  ],
+  "preview_static_js_syntax": "OPEN_GROUP_FORM_SYNTAX_CHECK_PASSED",
+  "preview_runtime_qa": "NOT_VERIFIED",
+  "preview_user_approval": "OWNER_REQUESTED_TRIAL_UPDATE_20261116",
+  "status_note": "Public synthetic-only owner UI trial; actual Auth0 hosted MFA/ACL/Production NOT_INCLUDED"
 }

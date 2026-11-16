@@ -1,4 +1,4 @@
-import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js';
+import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');
 let storage;
@@ -402,20 +402,21 @@ async function openGroupForm(id) {
         return;
     }
     const dialog = document.createElement('dialog');
+ dialog.className='groupform-sheet';
     dialog.setAttribute('aria-label', 'ข้อมูลคันรถ');
-    dialog.innerHTML = `<form><h2>${current ? 'แก้ไขข้อมูลคันรถ' : 'สร้างคันรถ'}</h2><p>บันทึกในเบราว์เซอร์นี้</p>
+    dialog.innerHTML = `<form class="groupform-page"><header class="groupform-header"><div class="groupform-kicker">PriteAgent · จัดการคันรถ</div><h2>${current ? 'แก้ไขข้อมูลคันรถ' : 'สร้างคันรถ'}</h2><p>กรอกข้อมูลในฟอร์มเดียว ตรวจทานท้ายหน้าแล้วกดบันทึก</p></header><div class="groupform-body"><section class="groupform-card"><h3>01 · ข้อมูลคันรถ</h3><p class="groupform-id">รหัสคันรถ: ${current ? current.id : "กำหนดหลังบันทึก"}</p>
  <label>ปี <input name="year" type="number" required></label><label>เดือน <input name="month" type="number" min="1" max="12" required></label><label>วีค <input name="week" type="number" min="1" max="5" required></label>
  <label>วันเริ่ม <input name="startDate" type="date" required></label><label>วันสิ้นสุด <input name="endDate" type="date" required></label>
  <label>ชื่อคันรถ <input name="name" required></label><label>จังหวัด <input name="province" required></label><label>หมายเหตุ <input name="workNote"></label>
- <label>จำนวนสมาชิก <input name="memberCount" type="number" min="1" max="4" required></label>
+ </section><section class="groupform-card"><h3>02 · สมาชิกและผู้รับผิดชอบ</h3><p class="groupform-hint">สมาชิกคนที่ 1 เป็นหัวหน้าคัน เจ้าของรถและตัวเองเลือกแยกกันได้</p><label>จำนวนสมาชิก <input name="memberCount" type="number" min="1" max="4" required></label>
  ${[
         1,
         2,
         3,
         4
     ].map((i)=>`<label>สมาชิก ${i}${i === 1 ? ' (หัวหน้าคัน)' : ''} <input name="member${i}"></label>`).join('')}
- <label>เจ้าของรถ (ลำดับสมาชิก) <input name="ownerIndex" type="number" min="1" max="4" required></label><label>งบประมาณ (บาทเต็ม) <input name="budget" type="number" step="1"></label>
- <p role="alert" data-error></p><pre data-review hidden></pre><button type="submit">ตรวจทาน</button><button type="button" data-save hidden>บันทึก</button><button type="button" data-close>ปิด</button></form>`;
+ <label>ใช้รถ (เจ้าของรถ) <select name="ownerIndex" required><option value="">เลือกสมาชิก</option></select></label><label>ตัวเอง (ตำแหน่ง · ข้อมูลจำลอง) <select name="selfPosition"><option value="">ไม่ระบุ</option></select></label><p class="groupform-hint">ตำแหน่ง “ตัวเอง” เป็นข้อมูลจำลอง ไม่ผูกบัญชีหรือสิทธิ์จริง</p></section><section class="groupform-card"><h3>03 · งบประมาณ</h3><label>งบประมาณ (บาทเต็ม) <input name="budget" type="number" step="1"></label>
+ <p class="groupform-hint">ค่าน้ำมัน: ยังไม่คำนวณในหน้านี้</p></section><section class="groupform-card groupform-review"><h3>04 · ตรวจทานก่อนบันทึก</h3><p class="groupform-hint">ข้อมูลจะบันทึกลงเบราว์เซอร์นี้เมื่อยืนยันสำเร็จ</p><div data-review hidden></div><p role="alert" data-error></p><div class="groupform-buttons"><button type="button" data-close>ยกเลิก</button><button type="submit">ตรวจทานข้อมูล</button><button type="button" data-save hidden>บันทึกคันรถ</button></div></section></div></form>`;
     document.body.append(dialog);
     const form = dialog.querySelector('form');
     const field = (name)=>form.elements.namedItem(name);
@@ -438,6 +439,21 @@ async function openGroupForm(id) {
         field('memberCount').value = '1';
         field('ownerIndex').value = '1';
     }
+
+ const refreshChoices=()=>{
+  const count=Number(field('memberCount').value);
+  for(let i=1;i<=4;i++){const inp=field('member'+i),label=inp.closest('label');if(label)label.hidden=i>count;inp.required=i<=count;}
+  for(const [key,placeholder] of [['ownerIndex','เลือกสมาชิก'],['selfPosition','ไม่ระบุ']]){
+   const select=field(key),old=select.value;
+   select.replaceChildren();
+   const empty=document.createElement('option');empty.value='';empty.textContent=placeholder;select.append(empty);
+   for(let i=1;i<=count;i++){const name=field('member'+i).value.trim();if(!name)continue;const option=document.createElement('option');option.value=String(i);option.textContent='คนที่ '+i+' · '+name;select.append(option);}
+   if(old&&Array.from(select.options).some(x=>x.value===old))select.value=old;
+  }
+ };
+ refreshChoices();
+ if(current){field('ownerIndex').value=String(current.ownerIndex+1);field('selfPosition').value=current.selfPosition===undefined?'':String(current.selfPosition+1);}
+
     let draft = null;
     let requestId = crypto.randomUUID();
     let dirty = false;
@@ -463,7 +479,9 @@ async function openGroupForm(id) {
         }
         previousCount = next;
     });
-    form.addEventListener('input', ()=>{
+    field('memberCount').addEventListener('change',refreshChoices);
+ form.addEventListener('input',ev=>{if(ev.target?.name?.startsWith('member'))refreshChoices();});
+ form.addEventListener('input', ()=>{
         dirty = true;
         draft = null;
         requestId = crypto.randomUUID();
@@ -488,17 +506,30 @@ async function openGroupForm(id) {
                 4
             ].slice(0, count).map((i)=>field('member' + i).value),
             ownerIndex: Number(field('ownerIndex').value) - 1,
+ ...(field('selfPosition').value?{selfPosition:Number(field('selfPosition').value)-1}:{}),
             ...field('budget').value ? {
                 budget: Number(field('budget').value)
             } : {}
         };
-        const { validateCarGroup } = await import('./domain.js');
+        const { validateCarGroup } = await import('./domain.js?rev=pm34-groupform-20261116');
         const errors = validateCarGroup(candidate);
         dialog.querySelector('[data-error]').textContent = Object.values(errors).join(' · ');
         if (Object.keys(errors).length) return;
         draft = candidate;
         const review = dialog.querySelector('[data-review]');
-        review.textContent = JSON.stringify(candidate, null, 2);
+        review.textContent = [
+  'ปี / เดือน / วีค: '+candidate.year+' / '+candidate.month+' / '+candidate.week,
+  'วันที่: '+candidate.startDate+' ถึง '+candidate.endDate,
+  'ชื่อคันรถ: '+candidate.name,
+  'จังหวัด: '+candidate.province,
+  'หมายเหตุ: '+(candidate.workNote||'—'),
+  'หัวหน้าคัน: คนที่ 1 · '+candidate.members[0],
+  'สมาชิก: '+candidate.members.map((name,i)=>'คนที่ '+(i+1)+' · '+name).join(' | '),
+  'เจ้าของรถ: คนที่ '+(candidate.ownerIndex+1)+' · '+candidate.members[candidate.ownerIndex],
+  'ตัวเอง (ข้อมูลจำลอง): '+(candidate.selfPosition===undefined?'ไม่ระบุ':'คนที่ '+(candidate.selfPosition+1)+' · '+candidate.members[candidate.selfPosition]),
+  'งบประมาณ: '+(candidate.budget===undefined?'ไม่ระบุ':candidate.budget.toLocaleString('th-TH')+' บาท'),
+  'ค่าน้ำมัน: ยังไม่คำนวณในหน้านี้'
+ ].join('\n');
         review.hidden = false;
         dialog.querySelector('[data-save]').hidden = false;
     });
