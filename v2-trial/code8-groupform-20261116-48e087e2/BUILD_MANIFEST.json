@@ -1,0 +1,53 @@
+{
+  "preview_version": "code8-groupform-20261116-48e087e2",
+  "date_ict": "2026-11-16",
+  "visibility": "PUBLIC_SYNTHETIC_ONLY",
+  "url": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/code8-groupform-20261116-48e087e2/",
+  "source_head": "bf6484afc97bb881880406dd750d9662a1025959",
+  "source_tree": "1f6d731e377d834f2def8cc8d3001833bef6154b",
+  "source_checkpoint_sha256": {
+    "src/app.ts": "bbadaa5695b4620e022205e7a1acf4b5423a24a97271f75a9c415877fc45b29f",
+    "src/domain.ts": "75a09c33e18d5ec327c65b57348f0722f510fb5e45123fe1330fe08c6f0a0120",
+    "src/styles.css": "4ea3e54758b9ab26081248febc863309070d8d7ca43a97e9728e5a17e375b706",
+    "src/adapters.ts": "3793a2becec4e7ee0b15ecab206df985638c0b605a268aa775d18d5200822a0b"
+  },
+  "build_artifact_sha256": {
+    "adapters.js": "8b5336fb2fa3c0cc7ba17259661931fcc33aea7d3543ad267aa2836a6ac385a7",
+    "app.js": "48e087e26181b70f8919244f0f3b3abadc7fcb5ec3861f4e0b2c327789dcd342",
+    "domain.js": "66b7e121a52064ea6787f4eb2852e9f7a6f08e84ffebecf925c8912ea543166a",
+    "index.html": "6ab64920a4a154b6fe2e6606f35ead8f190b5e0129b7efc5147b537fa6a8e1c0",
+    "styles.css": "4ea3e54758b9ab26081248febc863309070d8d7ca43a97e9728e5a17e375b706"
+  },
+  "preview_asset_sha256": {
+    "adapters.js": "2545e91b4c098b1acbee2b6571766db8ee221e963a823ef93255de734417a720",
+    "app.js": "4602518d40a07d34b98ff2dde8ebf7117e055e9bf20cd67f74260d33aa1b1b75",
+    "domain.js": "66b7e121a52064ea6787f4eb2852e9f7a6f08e84ffebecf925c8912ea543166a",
+    "index.html": "6ab64920a4a154b6fe2e6606f35ead8f190b5e0129b7efc5147b537fa6a8e1c0",
+    "styles.css": "4ea3e54758b9ab26081248febc863309070d8d7ca43a97e9728e5a17e375b706"
+  },
+  "preview_storage_only_replacements": {
+    "app.js": {
+      "priteagent-v2:phase1:pending-operation:": "priteagent-preview:code8-groupform-20261116-48e087e2:pending-operation:",
+      "priteagent-v2:shell:theme": "priteagent-preview:code8-groupform-20261116-48e087e2:theme"
+    },
+    "adapters.js": {
+      "priteagent-v2:sprint1:": "priteagent-preview:code8-groupform-20261116-48e087e2:layout:",
+      "priteagent-v2-synthetic-phase1": "priteagent-preview-code8-groupform-20261116-48e087e2"
+    }
+  },
+  "storage_isolation": "distinct IndexedDB database and localStorage keys; shared origin, no read/migrate/delete of prior keys",
+  "previous_preview_head": "0f3fc54182806dcd43f7f14bc5f053d1639ab1ba",
+  "previous_preview_tree": "c8255e6bc9aaf2cf580de1caa6f865719df17061",
+  "previous_preview_url": "https://pattaphol.github.io/priteagent-ui-preview/v2-trial/",
+  "changed_paths": [
+    "v2-trial/code8-groupform-20261116-48e087e2/BUILD_MANIFEST.json",
+    "v2-trial/code8-groupform-20261116-48e087e2/adapters.js",
+    "v2-trial/code8-groupform-20261116-48e087e2/app.js",
+    "v2-trial/code8-groupform-20261116-48e087e2/domain.js",
+    "v2-trial/code8-groupform-20261116-48e087e2/index.html",
+    "v2-trial/code8-groupform-20261116-48e087e2/styles.css"
+  ],
+  "build": "PASS_ORIGINAL_BYTES",
+  "owner_ui": "NOT_VERIFIED",
+  "functional_qa": "NOT_RUN"
+}
