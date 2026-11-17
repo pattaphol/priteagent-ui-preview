@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<title>PriteAgent — UI-04 CarDirectory R2 · V1 Baseline · DEMO ONLY</title>
+<title>PriteAgent V2 — คันรถของฉัน</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--side:#0b1c2e;--surface:#0c1c2d;--panel:#0f2437;--panel2:#122b42;--text:#eef7ff;--muted:#9ab2c6;--line:#24435d;--line2:#335a73;--accent:#39adfa;--cyan:#80e1ff;--teal:#73ded4;--soft:rgba(57,173,250,.13);--shadow:rgba(0,0,0,.25)}
@@ -49,6 +49,28 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
 .v1Card{display:flex;flex-direction:column;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.v1Card:hover{border-color:var(--accent)}.v1Open{display:flex;flex:1;flex-direction:column;text-align:left;align-items:stretch;padding:20px;color:var(--text)}.v1CardTop{display:flex;align-items:center;justify-content:space-between}.v1Icon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:var(--soft);color:var(--cyan)}.v1Badge{font-size:10px;color:var(--teal);background:var(--soft);padding:4px 8px;border-radius:99px}.v1Badge.closed{color:var(--muted);background:var(--panel2)}.v1Card h2{font-size:18px;margin:16px 0 12px}.v1Facts{display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:12px;margin-bottom:15px}.v1Total{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:14px;margin-top:auto}.v1Total span{font-size:11px;color:var(--muted)}.v1Total strong{display:block;font-size:18px;color:var(--text);margin-top:4px}.v1Actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:11px;border-top:1px solid var(--line);background:var(--panel2)}.v1Actions button{font-size:11px;min-height:38px;background:var(--panel);border:1px solid var(--line);border-radius:8px}.v1Actions button:hover{border-color:var(--accent);color:var(--cyan)}.v1-small .v1Open{padding:12px}.v1-small .v1Icon{display:none}.v1-small .v1Card h2{font-size:15px;margin:11px 0}.v1-small .v1Facts{gap:5px;margin:0;font-size:11px}.v1-large .v1Open{padding:27px}.v1-large .v1Card h2{font-size:26px}.v1-large .v1Actions{grid-template-columns:repeat(2,minmax(0,200px));padding:15px 27px}.v1Members{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0}.v1Members span{display:flex;align-items:center;gap:6px;font-size:11px}.v1Members i{font-style:normal;background:#247d94;color:white;border-radius:50%;width:30px;height:30px;display:grid;place-items:center}.v1Code{font-size:11px;color:var(--muted);margin-bottom:15px}.v1TableWrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}.v1Table{min-width:760px;width:100%;border-collapse:collapse;font-size:12px}.v1Table th,.v1Table td{padding:13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}.v1Table th{background:var(--panel2);color:var(--muted)}.v1Table small{display:block;color:var(--muted)}.v1Name{font-weight:700;color:var(--cyan)}.v1Table .v1Actions{padding:0;border:0;background:none}
 @media(max-width:1000px){.v1Grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v1Tools{flex-wrap:wrap}.v1Search{width:100%}}
 @media(max-width:720px){.v1Heading h1{font-size:25px}.v1Heading p{font-size:11px}.v1Tools{margin:10px 0}.v1Periods{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.v1Periods select{width:100%;max-width:100%;font-size:11px;padding:0 4px}.v1Modes{grid-template-columns:1fr}.v1ModeBtns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.v1ModeBtns button{flex-direction:column;padding:6px 1px;font-size:10px}.v1Status{gap:5px}.v1Status button{padding:8px 9px;font-size:11px}.v1Grid{grid-template-columns:1fr;gap:10px}.v1Grid.v1-small{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v1-small .v1Actions{grid-template-columns:1fr}.v1-small .v1Card h2{font-size:13px}.v1-small .v1Badge{font-size:9px}.v1-large .v1Open{padding:20px}.v1-large .v1Actions{padding:11px}}
+
+.carCreate,.carGroupPrimary{background:#108158;color:#fff;border:1px solid #108158;border-radius:10px;padding:8px 14px;min-height:44px;font-weight:750}
+.carCreate{flex:none}.resultsHead{flex-wrap:wrap}
+#carStorageStatus:not(:empty),#carPending:not([hidden]){margin:0 0 12px;color:var(--cyan)}#carPending p{margin:0 0 4px}
+.carGroupDialog{color:var(--text);background:var(--side);border:1px solid var(--line2);border-radius:19px;box-shadow:0 22px 75px var(--shadow);width:min(680px,calc(100% - 24px));max-width:none;max-height:min(88dvh,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px));padding:0;overflow:auto;overscroll-behavior:contain}
+.carGroupDialog::backdrop{background:#01121fbb}.carGroupDialog [hidden]{display:none!important}
+.carGroupHeader{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--side);border-bottom:1px solid var(--line);padding:12px 16px}
+.carGroupHeader h2{margin:0;font-size:clamp(16px,4.2vw,21px);line-height:1.35}
+.carGroupForm{display:grid;gap:13px;padding:16px;min-width:0}.carGroupForm p,.carGroupForm h3{margin:0}
+.carGroupForm label{display:grid;align-content:start;gap:5px;min-width:0;font-weight:650}
+.carGroupForm input,.carGroupForm select{width:100%;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--surface);border:1px solid var(--line2);border-radius:9px;padding:7px 8px;scroll-margin-block:16px}
+.carGroupForm :is(input,select,button):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.carGroupForm [aria-invalid=true]{border-color:#e35c64}
+.carGroupForm #carGroupError:not(:empty),.carGroupFieldError{font-weight:700;color:var(--text);border-inline-start:3px solid #e35c64;padding-inline-start:7px}
+.carGroupForm small{color:var(--muted);font-weight:500}
+.carGroupPeriod,.carGroupGrid{display:grid;gap:9px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.carGroupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.carGroupMembers,#carGroupReview{display:grid;gap:8px;border:1px solid var(--line);border-radius:11px;padding:10px;background:var(--panel)}
+#carGroupReview p{white-space:pre-line;overflow-wrap:anywhere}
+.carGroupActions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding-bottom:env(safe-area-inset-bottom)}
+.carGroupActions .resetBtn{min-height:44px}
+@media(max-width:390px){.carGroupForm,.carGroupHeader{padding-inline:11px}.carGroupGrid{gap:8px}.carGroupPeriod{gap:6px}}
 </style>
 </head>
 <body>
@@ -73,14 +95,13 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
   <div class="brand"><span class="logo">P</span><span class="brandCopy"><strong>PriteAgent</strong><small>CAR WORKSPACE · UI-04</small></span><button class="iconBtn closeDrawer" id="closeDrawer" aria-label="ปิดเมนู"><svg><use href="#i-x"/></svg></button></div>
   <div class="sideItems">
    <div class="sideHeading">พื้นที่ทำงาน</div>
-   <a class="sideItem" href="../backoffice/" title="Back-office R1.8"><svg><use href="#i-home"/></svg><span>Back-office</span></a>
-   <a class="sideItem" href="../dashboard/" title="Dashboard R1.2"><svg><use href="#i-grid"/></svg><span>Dashboard</span></a>
+   <a class="sideItem" href="../dashboard/" title="Dashboard"><svg><use href="#i-grid"/></svg><span>Dashboard</span></a>
    <a class="sideItem active" href="./" aria-current="page" title="คันรถตัวอย่าง"><svg><use href="#i-car"/></svg><span>คันรถ</span></a>
    <button class="sideItem" id="sideExpense" title="เมนูค่าใช้จ่ายตัวอย่าง"><svg><use href="#i-grid"/></svg><span>ค่าใช้จ่าย (ตัวอย่าง)</span></button>
    <div class="sideHeading">ตัวอย่าง</div>
    <a class="sideItem" href="../" title="Login Preview"><svg><use href="#i-home"/></svg><span>หน้า Login</span></a>
   </div>
-  <div class="sideFoot"><strong>UI-04 R2 · DEMO ONLY</strong></div>
+  <div class="sideFoot"><strong>UI-04 ข้อมูลจำลอง</strong></div>
  </aside>
  <div class="scrim" id="scrim" hidden></div>
  <div class="frame">
@@ -99,18 +120,20 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
   </header>
   <main id="main" class="main" tabindex="-1">
    <div class="inner">
-     <div class="backline"><a href="../backoffice/">หน้าหลัก</a> / งานตัวแทน / คันรถ</div>
-     <div class="v1Heading"><div><div class="eyebrow">งานตัวแทน · V1 Source Snapshot</div><h1>คันรถของฉัน</h1><p>กดตัวการ์ดเพื่อตั้งค่าคันรถ หรือเลือกค่าใช้จ่ายและถืองานด้านล่าง</p></div><span class="demoPill">R2 · DEMO ONLY</span></div>
+     <div class="backline"><a href="../dashboard/">หน้าหลัก</a> / งานตัวแทน / คันรถ</div>
+     <div class="v1Heading"><div><div class="eyebrow">งานตัวแทน</div><h1>คันรถของฉัน</h1><p>กดตัวการ์ดเพื่อตั้งค่าคันรถ หรือเลือกค่าใช้จ่ายและถืองานด้านล่าง</p></div><span class="demoPill">ข้อมูลจำลอง</span></div>
      <section class="v1Tools" aria-label="ค้นหาคันรถ">
       <label class="v1Search"><svg class="smallIcon"><use href="#i-search"/></svg><input id="searchCars" type="search" autocomplete="off" aria-label="ค้นหาคันรถ จังหวัด รหัส และสมาชิก" placeholder="ค้นหาคันรถ จังหวัด หรือสมาชิก"/></label>
       <div class="v1Periods"><select id="filterYear" aria-label="กรองปี"><option value="">ทุกปี</option><option value="2569">พ.ศ. 2569</option><option value="2568">พ.ศ. 2568</option></select><select id="filterMonth" aria-label="กรองเดือน"><option value="">ทุกเดือน</option><option value="11">พฤศจิกายน</option><option value="10">ตุลาคม</option></select><select id="filterWeek" aria-label="กรองวีค"><option value="">ทุกวีค</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
      </section>
      <section class="v1Modes" aria-label="รูปแบบคันรถ"><strong>รูปแบบการแสดงคันรถ</strong><div class="v1ModeBtns" role="group" aria-label="เลือกรูปแบบการแสดงคันรถ"><button data-layout="small" aria-pressed="false">▦ <span>กะทัดรัด</span></button><button data-layout="medium" aria-pressed="true">▣ <span>มาตรฐาน</span></button><button data-layout="large" aria-pressed="false">▤ <span>รายละเอียด</span></button><button data-layout="table" aria-pressed="false">☷ <span>ตาราง</span></button></div><p id="layoutHelp" aria-live="polite">มาตรฐาน · การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย</p></section>
      <div class="v1Status" role="group" aria-label="กรองสถานะ"><button data-state="all" aria-pressed="true">ทั้งหมด</button><button data-state="open" aria-pressed="false">กำลังดำเนินการ</button><button data-state="closed" aria-pressed="false">ปิดแล้ว</button><button data-state="archived" aria-pressed="false">คลังคันรถ</button></div>
-     <div class="resultsHead"><strong>รายการคันรถ</strong><span id="resultCount" aria-live="polite"></span></div>
-     <section id="carGrid" class="v1Grid" aria-label="การ์ดคันรถสาธิต"></section><div id="tableWrap" class="v1TableWrap" role="region" tabindex="0" aria-label="ตารางคันรถ เลื่อนซ้ายขวาได้" hidden></div>
+     <div class="resultsHead"><strong>รายการคันรถ</strong><span id="resultCount" aria-live="polite"></span><button type="button" id="createCar" class="carCreate">+ สร้างคันรถ</button></div>
+     <div id="carStorageStatus" role="status" aria-live="polite"></div>
+     <div id="carPending" hidden><p>มีคำขอบันทึกที่ยังไม่ได้ยืนยัน</p><button type="button" class="resetBtn">ตรวจผลและลองคำขอเดิม</button></div>
+     <section id="carGrid" class="v1Grid" aria-label="การ์ดคันรถ"></section><div id="tableWrap" class="v1TableWrap" role="region" tabindex="0" aria-label="ตารางคันรถ เลื่อนซ้ายขวาได้" hidden></div>
      <section class="empty" id="empty" hidden><strong>ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้</strong><p>ลองเปลี่ยนปี เดือน วีค หรือสถานะ</p><button id="resetSearch" class="resetBtn">ล้างตัวกรอง</button></section>
-     <div class="explainer"><b>UI-04 R2 · V1 Baseline Preview:</b> อ้างอิงโครงสร้างรายการและโหมดแสดงผลจาก <code>app/workspace-design.tsx</code> ใน V1 GitHub Snapshot ไม่ใช่การยืนยัน Native V1 HEAD จริง ข้อมูลและยอดเงินทั้งหมดเป็นข้อมูลสมมติ ปุ่มค่าใช้จ่าย/ถืองานยังไม่เชื่อมธุรกรรม</div>
+     <div class="explainer">เว็บทดลอง V2 · ใช้ข้อมูลจำลองเท่านั้น ข้อมูลคันรถเก็บในเบราว์เซอร์นี้ ปุ่มค่าใช้จ่ายและถืองานยังไม่เชื่อมธุรกรรม</div>
    </div>
   </main>
  </div>
@@ -126,7 +149,7 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
  <button id="bottomCustomer" aria-controls="mobileSubmenu" aria-expanded="false"><svg><use href="#i-users"/></svg>งานลูกค้า</button>
  <button id="bottomMore"><svg><use href="#i-menu"/></svg>เพิ่มเติม</button>
 </nav>
-<div class="notice" role="note">UI-04 CarDirectory R2 · DEMO ONLY</div>
+<div class="notice" role="note">UI-04 CarDirectory ข้อมูลจำลอง</div>
 <div class="dialogShade" id="dialogShade" role="presentation">
  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
   <div class="dialogHead"><div><h2 id="dialogTitle">รายละเอียดคันรถ</h2><div class="detailSub" id="dialogSubtitle"></div></div><button class="iconBtn" id="dialogX" aria-label="ปิดรายละเอียด"><svg><use href="#i-x"/></svg></button></div>
@@ -134,24 +157,61 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
   <button class="primary" id="dialogOK">ปิดรายละเอียด</button>
  </div>
 </div>
-<script>
+<dialog id="carGroupDialog" class="carGroupDialog" aria-labelledby="carGroupTitle">
+ <header class="carGroupHeader"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="iconBtn" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
+ <form class="carGroupForm" novalidate>
+  <p>เพิ่มรายชื่อและสร้างคันรถด้วยข้อมูลจำลอง โดยไม่ต้องเชื่อมบัญชีสมาชิก</p>
+  <label>รหัสคันรถ GRP-ID<input name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"></label>
+  <div class="carGroupPeriod">
+   <label>ปี พ.ศ.<input name="year" type="number" min="1" step="1" required></label>
+   <label>เดือน<input name="month" type="number" min="1" max="12" step="1" required></label>
+   <label>วีค<input name="week" type="number" min="1" max="5" step="1" required></label>
+  </div>
+  <div class="carGroupGrid">
+   <label>วันที่เริ่มคันรถ<input name="startDate" type="date" required></label>
+   <label>วันที่สิ้นสุดคันรถ<input name="endDate" type="date" required></label>
+  </div>
+  <label>ชื่อคันรถ<input name="name" maxlength="160" required></label>
+  <label>จังหวัด<input name="province" maxlength="80" required></label>
+  <label>หมายเหตุพื้นที่ / งาน<input name="workNote" maxlength="160"></label>
+  <section class="carGroupMembers" aria-labelledby="carGroupMembersTitle">
+   <h3 id="carGroupMembersTitle">สมาชิกในคันรถ</h3>
+   <div class="carGroupGrid">
+    <label>คนที่ 1 · หัวหน้าคัน<input name="member1" maxlength="80" required></label>
+    <label>คนที่ 2<input name="member2" maxlength="80"></label>
+    <label>คนที่ 3<input name="member3" maxlength="80"></label>
+    <label>คนที่ 4<input name="member4" maxlength="80"></label>
+   </div>
+   <small id="carGroupMemberCount"></small>
+  </section>
+  <div class="carGroupGrid">
+   <label>ใช้รถ (ตำแหน่งเจ้าของ)<select name="owner" required></select></label>
+   <label>ตัวเอง (ข้อมูลจำลอง)<select name="self"></select></label>
+  </div>
+  <label>งบประมาณ (บาทเต็ม)<input name="budget" type="number" step="1"></label>
+  <small>ค่าน้ำมัน: ยังไม่คำนวณในหน้านี้</small>
+  <section id="carGroupReview" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
+  <p id="carGroupError" role="alert"></p>
+  <div class="carGroupActions">
+   <button type="button" class="resetBtn" data-close-group>ยกเลิก</button>
+   <button type="submit" class="resetBtn" id="carGroupReviewButton">ตรวจทานข้อมูล</button>
+   <button type="button" class="carGroupPrimary" id="carGroupSave" hidden>บันทึกคันรถ</button>
+  </div>
+ </form>
+</dialog>
+<script type="module">
+import { carStore, connectGroupForm } from './group-form.js';
 (function(){
 'use strict';
 const get=id=>document.getElementById(id);
 const icon=(name,cls='')=>'<svg'+(cls?' class="'+cls+'"':'')+' aria-hidden="true"><use href="#i-'+name+'"/></svg>';
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const CAR_FIXTURES=[
- {id:'DEMO-CAR-01',title:'คันรถตัวอย่าง ก',destination:'เชียงใหม่',year:2569,month:11,week:2,start:'2026-11-09',end:'2026-11-13',expense:1230,pool:480,closed:false,archived:false,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3','สมาชิก 4'],leader:0,owner:2},
- {id:'DEMO-CAR-02',title:'คันรถตัวอย่าง ข',destination:'ลำปาง',year:2569,month:11,week:1,start:'2026-11-02',end:'2026-11-06',expense:950,pool:200,closed:true,archived:false,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3'],leader:0,owner:0},
- {id:'DEMO-CAR-03',title:'คันรถตัวอย่าง ค',destination:'เชียงราย',year:2569,month:10,week:4,start:'2026-10-26',end:'2026-10-30',expense:480,pool:150,closed:false,archived:false,members:['สมาชิก 1','สมาชิก 2'],leader:0,owner:1},
- {id:'DEMO-CAR-04',title:'คันรถตัวอย่าง ง',destination:'พะเยา',year:2568,month:11,week:3,start:'2025-11-17',end:'2025-11-21',expense:2400,pool:700,closed:true,archived:false,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3','สมาชิก 4'],leader:0,owner:3},
- {id:'DEMO-CAR-05',title:'คันรถตัวอย่าง จ',destination:'น่าน',year:2568,month:10,week:5,start:'2025-10-27',end:'2025-10-31',expense:680,pool:0,closed:true,archived:true,members:['สมาชิก 1','สมาชิก 2','สมาชิก 3'],leader:0,owner:1}
-];
-const months={10:'ตุลาคม',11:'พฤศจิกายน'};
+let cars=[];
+const months=new Intl.DateTimeFormat('th-TH',{month:'long',timeZone:'UTC'});
+function monthName(month){return months.format(new Date(Date.UTC(2026,month-1,1)))}
 const layouts={small:['กะทัดรัด','การ์ดเล็ก แสดงชื่อ จังหวัด และวีค'],medium:['มาตรฐาน','การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย'],large:['รายละเอียด','การ์ดใหญ่ พร้อมรายชื่อสมาชิกและเงินกองกลาง'],table:['ตาราง','เรียงคันรถเป็นแถว']};
-const money=n=>new Intl.NumberFormat('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
 const day=s=>new Date(s+'T12:00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
-const period=t=>'วีค '+t.week+' · '+months[t.month]+' '+t.year;
+const period=t=>'วีค '+t.week+' · '+monthName(t.month)+' '+t.year;
 let query='',state='all',year='',month='',week='',layout='medium',dialogTrigger=null;
 function doTheme(t,persist){
  const next=t==='light'?'light':'dark';document.documentElement.dataset.theme=next;
@@ -194,17 +254,17 @@ function navAction(action){
  info((titles[action]||'เมนู')+' · ตัวอย่าง','เมนูนี้มีไว้ทดลองตำแหน่งการนำทางเท่านั้น ยังไม่มีหน้าทำงานจริง ข้อมูลหรือ Business Workflow ไม่ได้ถูกกำหนดโดย UI PM3');
 }
 function render(){
- const rows=CAR_FIXTURES.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
- get('resultCount').textContent='แสดง '+rows.length+' จาก '+CAR_FIXTURES.length+' คันรถตัวอย่าง';
+ const rows=cars.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
+ get('resultCount').textContent='แสดง '+rows.length+' จาก '+cars.length+' คันรถ';
  get('carGrid').hidden=!rows.length||layout==='table';get('tableWrap').hidden=!rows.length||layout!=='table';get('empty').hidden=!!rows.length;get('carGrid').className='v1Grid v1-'+layout;
  get('layoutHelp').textContent=layouts[layout].join(' · ');
  for(const b of document.querySelectorAll('[data-layout]')){b.classList.toggle('active',b.dataset.layout===layout);b.setAttribute('aria-pressed',String(b.dataset.layout===layout))}
  for(const b of document.querySelectorAll('[data-state]')){b.classList.toggle('active',b.dataset.state===state);b.setAttribute('aria-pressed',String(b.dataset.state===state))}
- const actions=t=>'<div class="v1Actions"><button data-action="expense" data-id="'+t.id+'">ค่าใช้จ่าย</button><button data-action="holding" data-id="'+t.id+'">ถืองาน</button></div>';
+ const actions=t=>'<div class="v1Actions"><button data-action="expense" data-id="'+escapeHtml(t.id)+'">ค่าใช้จ่าย</button><button data-action="holding" data-id="'+escapeHtml(t.id)+'">ถืองาน</button></div>';
  if(layout==='table'){
-  get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name" data-car="'+t.id+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>'+money(t.expense)+' ฿</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
+  get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name" data-car="'+escapeHtml(t.id)+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>—</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
  }else{
-  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card"><button class="v1Open" data-car="'+t.id+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>⌖ '+escapeHtml(t.destination)+'</span><span>▣ '+period(t)+'</span>'+(layout==='small'?'':'<span>◷ '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>'+money(t.expense)+' ฿</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>'+money(t.pool)+' ฿</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
+  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>⌖ '+escapeHtml(t.destination)+'</span><span>▣ '+period(t)+'</span>'+(layout==='small'?'':'<span>◷ '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
  }
  for(const root of [get('carGrid'),get('tableWrap')]){for(const b of root.querySelectorAll('[data-car]'))b.onclick=()=>openCar(b.dataset.car);for(const b of root.querySelectorAll('[data-action]'))b.onclick=()=>openAction(b.dataset.id,b.dataset.action)}
 }
@@ -219,12 +279,30 @@ function showDialog(title,subtitle,body,buttonTitle){
 }
 function closeDialog(){get('dialogShade').classList.remove('open');get('dialogBody').innerHTML='';if(dialogTrigger?.focus)dialogTrigger.focus();dialogTrigger=null}
 function info(title,body){showDialog(title,'UI-ONLY · DEMO ONLY','<p class="infoText">'+escapeHtml(body)+'</p>','เข้าใจแล้ว')}
-function openCar(id){
- const t=CAR_FIXTURES.find(x=>x.id===id);if(!t)return;
- const members=t.members.map((m,i)=>'<div class="member"><span class="memberNumber">'+(i+1)+'</span><strong>'+escapeHtml(m)+'</strong><span class="memberTags">'+(i===t.leader?'<span class="memberTag">หัวหน้าคัน</span>':'')+(i===t.owner?'<span class="memberTag">เจ้าของรถ</span>':'')+'</span></div>').join('');
- showDialog('ตั้งค่าคันรถ · '+t.title,period(t)+' · '+t.id,'<div class="dialogNote">ตัวอย่างปลายทาง V1 · UI-05 ยังไม่ได้รับอนุมัติให้สร้างขั้นตอนแก้ไขคันรถ</div><div class="detailRoles"><div class="roleBox"><small>หัวหน้าคัน</small><strong>'+escapeHtml(t.members[t.leader])+'</strong></div><div class="roleBox"><small>เจ้าของรถ</small><strong>'+escapeHtml(t.members[t.owner])+'</strong></div></div><h3 class="membersTitle">สมาชิกทั้งหมด ('+t.members.length+' คน)</h3><div class="memberList">'+members+'</div>');
+const status=message=>{get('carStorageStatus').textContent=message};
+function fillPeriods(id,items,selected,all){
+ const field=get(id);
+ field.replaceChildren(new Option(all,''));
+ for(const [value,label] of items)field.add(new Option(label,String(value)));
+ field.value=selected;
 }
-function openAction(id,action){const t=CAR_FIXTURES.find(x=>x.id===id);if(!t)return;info((action==='expense'?'ค่าใช้จ่าย':'ถืองาน')+' · '+t.title,'ปุ่มตาม V1 Snapshot แต่การบันทึกค่าใช้จ่ายหรือถืองานจริงไม่อยู่ใน UI-04 Preview นี้');}
+async function refreshCars(message=''){
+ try {
+  cars=(await carStore.list()).map(car=>({...car,title:car.name,destination:car.province,start:car.startDate,end:car.endDate}));
+  const years=[...new Set(cars.map(car=>car.year))].sort((a,b)=>b-a);
+  if(year && !years.includes(Number(year)))year='';
+  fillPeriods('filterYear',years.map(y=>[y,'พ.ศ. '+y]),year,'ทุกปี');
+  fillPeriods('filterMonth',Array.from({length:12},(_,i)=>[i+1,monthName(i+1)]),month,'ทุกเดือน');
+  render();
+  status(message);
+ } catch {
+  status(message ? message+' · โหลดรายการใหม่ไม่ได้' : 'โหลดคันรถในเครื่องไม่ได้ กรุณารีโหลดแล้วลองอีกครั้ง');
+ }
+}
+const editGroup=connectGroupForm(refreshCars,status);
+function openCar(id){void editGroup(id)}
+get('createCar').onclick=()=>void editGroup();
+function openAction(id,action){const t=cars.find(x=>x.id===id);if(!t)return;info((action==='expense'?'ค่าใช้จ่าย':'ถืองาน')+' · '+t.title,'ปุ่มตาม V1 Snapshot แต่การบันทึกค่าใช้จ่ายหรือถืองานจริงไม่อยู่ใน UI-04 Preview นี้');}
 get('searchCars').oninput=()=>{query=get('searchCars').value.trim();render()};
 for(const b of document.querySelectorAll('[data-layout]'))b.onclick=()=>setLayout(b.dataset.layout);
 for(const b of document.querySelectorAll('[data-state]'))b.onclick=()=>{state=b.dataset.state;render()};
@@ -236,10 +314,10 @@ get('notification').onclick=()=>info('การแจ้งเตือนตั
 get('profile').onclick=()=>info('บัญชีสาธิต','DEMO ONLY · ไม่มีการเข้าสู่ระบบจริง โปรดอย่ากรอกข้อมูลส่วนตัว');
 get('sideExpense').onclick=()=>navAction('expense');
 get('agentTab').onclick=()=>{get('main').scrollTop=0;get('searchCars').focus()};
-get('customerTab').onclick=()=>info('งานลูกค้า · หน้าตัวอย่าง','CarDirectory เป็นหน้างานตัวแทนเท่านั้น สามารถกลับ Back-office R1.6 หรือเปิด Dashboard R1 เพื่อทดลองการนำทางงานลูกค้า การสลับพื้นที่ทำงานจริงยังไม่อยู่ใน Scope นี้');
+get('customerTab').onclick=()=>info('งานลูกค้า · หน้าตัวอย่าง','CarDirectory เป็นหน้างานตัวแทนเท่านั้น สามารถกลับ Dashboard เพื่อทดลองการนำทางงานลูกค้า การสลับพื้นที่ทำงานจริงยังไม่อยู่ใน Scope นี้');
 get('navToggle').onclick=()=>{if(matchMedia('(max-width:720px)').matches)openDrawer();else get('app').classList.toggle('rail')};
 get('closeDrawer').onclick=closeDrawer;get('scrim').onclick=closeDrawer;
-get('bottomHome').onclick=()=>{location.href='../backoffice/'};
+get('bottomHome').onclick=()=>{location.href='../dashboard/'};
 get('bottomAgent').onclick=()=>openSubmenu('agent');
 get('bottomCustomer').onclick=()=>openSubmenu('customer');
 get('bottomMore').onclick=openDrawer;
@@ -247,12 +325,23 @@ get('submenuClose').onclick=closeSubmenu;get('submenuScrim').onclick=closeSubmen
 get('submenuItems').onclick=e=>{const b=e.target.closest('[data-sub-action]');if(b)navAction(b.dataset.subAction)};
 get('dialogX').onclick=get('dialogOK').onclick=closeDialog;
 get('dialogShade').onclick=e=>{if(e.target===get('dialogShade'))closeDialog()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(get('dialogShade').classList.contains('open'))closeDialog();else if(!get('mobileSubmenu').hidden)closeSubmenu();else closeDrawer()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!get('carGroupDialog').open){if(get('dialogShade').classList.contains('open'))closeDialog();else if(!get('mobileSubmenu').hidden)closeSubmenu();else closeDrawer()}});
 window.addEventListener('resize',()=>{if(!matchMedia('(max-width:720px)').matches){closeSubmenu();closeDrawer()}});
 window.addEventListener('storage',e=>{if(e.key==='priteagent.ui.theme.v1')doTheme(e.newValue,false)});
 window.addEventListener('pageshow',()=>{try{doTheme(localStorage.getItem('priteagent.ui.theme.v1'),false)}catch(_){doTheme('dark',false)}});
 doTheme(document.documentElement.dataset.theme,false);
 render();
+void refreshCars().then(()=>{
+ const url=new URL(location.href);
+ const id=url.searchParams.get('car');
+ const create=url.searchParams.get('create')==='1';
+ if(id || create){
+  url.searchParams.delete('car');
+  url.searchParams.delete('create');
+  history.replaceState(history.state,'',url);
+  void editGroup(id || undefined);
+ }
+});
 })();
 </script>
 </body>
