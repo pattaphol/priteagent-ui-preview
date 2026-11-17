@@ -1,3 +1,4 @@
+import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pm36-mobile';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');
@@ -25,7 +26,7 @@ const pendingStorage = ()=>{
 const pendingKeys = ()=>Object.keys(pendingStorage()).filter((key)=>key === pendingKey.slice(0, -1) || key.startsWith(pendingKey));
 let page = 'cars', device = deviceFor(innerWidth), layout = prefs.read(page, device);
 let filters = initialFilters(), cars = [], state = 'ready', revision = 0;
-let prefError = '', menuOpen = false, selected = null;
+let prefError = '', selected = null;
 const months = [
     'มกราคม',
     'กุมภาพันธ์',
@@ -40,18 +41,7 @@ const months = [
     'พฤศจิกายน',
     'ธันวาคม'
 ];
-const names = {
-    home: 'หน้าหลัก',
-    cars: 'คันรถของฉัน',
-    expenses: 'ค่าใช้จ่าย',
-    'holding-cars': 'เลือกคันรถเพื่อดูงานที่ถือ',
-    performance: 'ผลงาน',
-    bonuses: 'โบนัสและคุณวุฒิ',
-    customers: 'ลูกค้า',
-    planning: 'วางแผนประกัน',
-    policies: 'กรมธรรม์',
-    coverage: 'สรุปความคุ้มครอง'
-};
+const names = {...workspaceMenus.agent, ...workspaceMenus.customer};
 const layoutNames = {
     small: 'กะทัดรัด',
     medium: 'มาตรฐาน',
@@ -75,46 +65,12 @@ const date = (s)=>s ? new Date(s + 'T12:00:00').toLocaleDateString('th-TH', {
         year: 'numeric'
     }) : 'ยังไม่ระบุ';
 const period = (c)=>c.group ? `วีค ${c.group.week} · ${months[c.group.month - 1]} ${c.group.year}` : 'ยังไม่ระบุปี เดือน และวีค';
-const areas = {
-    agent: [
-        'home',
-        'cars',
-        'expenses',
-        'holding-cars',
-        'performance',
-        'bonuses'
-    ],
-    customer: [
-        'home',
-        'customers',
-        'planning',
-        'policies',
-        'coverage'
-    ]
-};
-let area = 'agent';
-let screen = 'home';
+const route = new URL(location.href);
+let area = route.searchParams.get('area') === 'customer' ? 'customer' : 'agent';
+const requestedView = route.searchParams.get('view');
+let screen = Object.hasOwn(workspaceMenus[area],requestedView) && requestedView !== 'cars' ? requestedView : 'home';
 let detailCarId = null;
-let profileOpen = false;
-const themeKey = 'priteagent-v2:shell:theme';
-try {
-    const savedTheme = storage.getItem(themeKey) || storage.getItem('priteagent.ui.theme.v1');
-    if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.dataset.theme = savedTheme;
-} catch  {}
-function setDrawerOpen(open, returnFocus = false) {
-    menuOpen = open;
-    const drawer = document.querySelector('#sidebar');
-    const backdrop = document.querySelector('#nav-backdrop');
-    const trigger = document.querySelector('#menu');
-    if (!drawer || !backdrop || !trigger) return;
-    drawer.classList.toggle('open', open);
-    backdrop.classList.toggle('open', open);
-    backdrop.setAttribute('aria-hidden', String(!open));
-    backdrop.tabIndex = open ? 0 : -1;
-    trigger.setAttribute('aria-expanded', String(open));
-    trigger.setAttribute('aria-label', open ? 'ปิดเมนูนำทาง' : 'เปิดเมนูนำทาง');
-    if (returnFocus) trigger.focus();
-}
+let unmountShell;
 function openCarDirectory(params = {}) {
     const target = new URL('../car-directory/', window.location.href);
     for (const [key, value] of Object.entries(params)) target.searchParams.set(key, value);
@@ -125,21 +81,10 @@ function navigate(destination) {
         openCarDirectory();
         return;
     }
-    const apply = () => {
-        screen = destination;
-        detailCarId = null;
-        menuOpen = false;
-        profileOpen = false;
-        render();
-        document.querySelector('main h1')?.focus();
-    };
-    if (menuOpen && matchMedia('(max-width:1199px)').matches) {
-        setDrawerOpen(false);
-        window.setTimeout(apply, 320);
-    } else apply();
-}
-function menuMarkup(ids) {
-    return ids.map((id)=>`<button data-page="${id}" ${screen === id || screen === 'car-detail' && id === 'cars' ? 'aria-current="page"' : ''}>${names[id]}</button>`).join('');
+    screen = destination;
+    detailCarId = null;
+    render();
+    document.querySelector('main h1')?.focus();
 }
 const nav = {
     open (target) {
@@ -191,28 +136,8 @@ function render() {
     const areaName = area === 'agent' ? 'งานตัวแทน' : 'งานลูกค้า';
     const detail = cars.find((car)=>car.id === detailCarId);
     const directory = screen === 'cars';
-    const accountInfo = `<div class="sidebar-account-info" id="shell-profile" role="region" aria-label="ข้อมูลการใช้งาน" ${profileOpen ? '' : 'hidden'}><strong>ข้อมูลการใช้งาน</strong><p>ข้อมูลคันรถเก็บเฉพาะอุปกรณ์นี้ ยังไม่เชื่อมบัญชีผู้ใช้</p></div>`;
-    const themeLabel = document.documentElement.dataset.theme === 'light' ? 'เปลี่ยนเป็นโหมดมืด' : 'เปลี่ยนเป็นโหมดสว่าง';
-    root.innerHTML = `<header class="shell-header">
- <button id="menu" type="button" aria-label="เปิดเมนูนำทาง" aria-expanded="${menuOpen}" aria-controls="sidebar">☰ <span>เมนู</span></button>
- <strong class="brand">prite<span>agent</span> <small>V2</small></strong>
- <div class="shell-current">${activeName}</div>
- <div class="shell-actions">
- <button id="theme" type="button" class="theme-icon-button" aria-label="${themeLabel}" title="${themeLabel}"><span class="theme-switch-icon" aria-hidden="true">
- <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
- <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486A9 9 0 0 1 11.514 3.015a9 9 0 1 0 9.471 9.471Z"/></svg>
- </span></button>
- </div></header>
-  <button type="button" id="nav-backdrop" class="nav-backdrop ${menuOpen?'open':''}" aria-label="ปิดเมนูนำทาง" aria-hidden="${!menuOpen}" tabindex="${menuOpen?0:-1}"></button>
- <aside id="sidebar" class="${menuOpen ? 'open' : ''}"><div class="sidebar-scroll"><div class="work-area" role="group" aria-label="เลือกพื้นที่ทำงาน">
- <button data-area="agent" aria-pressed="${area === 'agent'}">งานตัวแทน</button>
- <button data-area="customer" aria-pressed="${area === 'customer'}">งานลูกค้า</button></div>
- <nav aria-label="เมนูพื้นที่ทำงาน">${menuMarkup(areas[area])}</nav></div>
- <div class="sidebar-footer" aria-label="เมนูบัญชี">
- <button id="profile" type="button" aria-expanded="${profileOpen}" aria-controls="shell-profile"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span>บัญชี</span></button>
- ${accountInfo}
- <button id="trial-logout" type="button" title="กลับหน้าเข้าสู่ระบบ"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span>ออกจากระบบ</span></button>
- </div></aside>
+    unmountShell?.();
+    root.innerHTML = `<header id="workspace-header"></header><aside id="workspace-menu" aria-label="เมนูนำทาง"></aside>
 
  <main id="main" tabindex="-1">
  <nav class="shell-breadcrumb" aria-label="เส้นทาง"><button data-page="home">${areaName}</button>
@@ -256,6 +181,15 @@ function render() {
  <footer>PriteAgent V2 · พื้นที่ทำงาน</footer></main>
  <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>ยังไม่เปิดใช้งาน</strong><p>ฟีเจอร์นี้อยู่ระหว่างพัฒนา ยังไม่สามารถบันทึกหรือจัดการข้อมูลในส่วนนี้ได้</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
     if (directory) result();
+    unmountShell = mountWorkspaceShell({
+        header: document.querySelector('#workspace-header'),
+        sidebar: document.querySelector('#workspace-menu'),
+        area, screen,
+        onNavigate(nextArea, nextScreen) {
+            area = nextArea;
+            navigate(nextScreen);
+        }
+    });
     showPendingRecovery();
     document.querySelector('#search')?.addEventListener('input', (ev)=>{
         filters.query = ev.target.value;
@@ -341,39 +275,12 @@ root.addEventListener('click', (ev)=>{
     } else if (b.dataset.area) {
         area = b.dataset.area;
         navigate('home');
-    } else if (b.id === 'trial-logout') {
-        window.location.assign(new URL('../', window.location.href));
-    } else if (b.id === 'profile') {
-        profileOpen = !profileOpen;
-        b.setAttribute('aria-expanded', String(profileOpen));
-        document.querySelector('#shell-profile').hidden = !profileOpen;
     } else if (b.dataset.sim) showSimulation(b.dataset.sim);
     else if (b.hasAttribute('data-retry')) void load('ready');
     else if (b.hasAttribute('data-reset')) {
         filters = initialFilters();
         render();
         document.querySelector('#search').focus();
-    } else if (b.id === 'nav-backdrop') {
-        setDrawerOpen(false, true);
-    } else if (b.id === 'menu') {
-        setDrawerOpen(!menuOpen);
-    } else if (b.id === 'theme') {
-        const dark = document.documentElement.dataset.theme === 'dark' || !document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches;
-        const next = dark ? 'light' : 'dark';
-        document.documentElement.dataset.theme = next;
-        const label = next === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
-        b.setAttribute('aria-label', label);
-        b.setAttribute('title', label);
-        b.classList.remove('theme-switch-tap');
-        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            void b.offsetWidth;
-            b.classList.add('theme-switch-tap');
-            b.addEventListener('animationend', () => b.classList.remove('theme-switch-tap'), {once:true});
-        }
-        try {
-            storage.setItem(themeKey, next);
-            storage.setItem('priteagent.ui.theme.v1', next);
-        } catch  {}
     }
 });
 document.addEventListener('keydown', (ev)=>{
@@ -381,16 +288,12 @@ document.addEventListener('keydown', (ev)=>{
         ev.preventDefault();
         document.querySelector('#close-dialog').focus();
     }
-    if (ev.key === 'Escape' && menuOpen) {
-        setDrawerOpen(false, true);
-    }
 });
 addEventListener('resize', ()=>{
     const next = deviceFor(innerWidth);
     if (next !== device) {
         device = next;
         layout = prefs.read(page, device);
-        menuOpen = false;
         render();
     }
 });

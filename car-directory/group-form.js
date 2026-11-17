@@ -9,10 +9,28 @@ const commit = operation => operation.id
     ? carStore.update(operation.id, operation.revision, operation.draft, operation.requestId)
     : carStore.create(operation.draft, operation.requestId);
 
+const thaiMonth = new Intl.DateTimeFormat('th-TH', { month: 'long', timeZone: 'Asia/Bangkok' });
+const thaiDay = new Intl.DateTimeFormat('th-TH', { dateStyle: 'full', timeZone: 'UTC' });
+const periodClock = new Intl.DateTimeFormat('en-GB-u-ca-buddhist', { year: 'numeric', month: 'numeric', timeZone: 'Asia/Bangkok' });
+const provinces = ('กรุงเทพมหานคร กระบี่ กาญจนบุรี กาฬสินธุ์ กำแพงเพชร ขอนแก่น จันทบุรี ฉะเชิงเทรา ชลบุรี ชัยนาท ชัยภูมิ ชุมพร เชียงราย เชียงใหม่ ตรัง ตราด ตาก นครนายก นครปฐม นครพนม นครราชสีมา นครศรีธรรมราช นครสวรรค์ นนทบุรี นราธิวาส น่าน บึงกาฬ บุรีรัมย์ ปทุมธานี ประจวบคีรีขันธ์ ปราจีนบุรี ปัตตานี พระนครศรีอยุธยา พะเยา พังงา พัทลุง พิจิตร พิษณุโลก เพชรบุรี เพชรบูรณ์ แพร่ ภูเก็ต มหาสารคาม มุกดาหาร แม่ฮ่องสอน ยะลา ยโสธร ร้อยเอ็ด ระนอง ระยอง ราชบุรี ลพบุรี ลำปาง ลำพูน เลย ศรีสะเกษ สกลนคร สงขลา สตูล สมุทรปราการ สมุทรสงคราม สมุทรสาคร สระแก้ว สระบุรี สิงห์บุรี สุโขทัย สุพรรณบุรี สุราษฎร์ธานี สุรินทร์ หนองคาย หนองบัวลำภู อ่างทอง อำนาจเจริญ อุดรธานี อุตรดิตถ์ อุทัยธานี อุบลราชธานี').split(' ');
+function thaiDate(value) {
+    const date = new Date(value + 'T12:00:00Z');
+    return Number.isFinite(date.getTime()) ? thaiDay.format(date) : '';
+}
+
 export function connectGroupForm(onSaved, report) {
     const dialog = document.querySelector('#carGroupDialog');
     const form = dialog.querySelector('form');
     const input = name => form.elements.namedItem(name);
+    const scroll = dialog.querySelector('.carGroupScroll');
+    const dateHint = dialog.querySelector('#carGroupDatesHint');
+    const defaultDateHint = dateHint.textContent;
+    const monthChoices = Array.from({length:12}, (_, i) =>
+        new Option(thaiMonth.format(new Date(Date.UTC(2026,i,15))), String(i+1)));
+    input('month').replaceChildren(new Option('เลือกเดือน',''), ...monthChoices);
+    input('week').replaceChildren(new Option('เลือกวีค',''), ...Array.from({length:5}, (_, i) =>
+        new Option('วีค ' + (i+1),String(i+1))));
+    dialog.querySelector('#carGroupProvinces').replaceChildren(...provinces.map(province => new Option(province,province)));
     const members = [1, 2, 3, 4].map(n => input('member' + n));
     const review = dialog.querySelector('#carGroupReview');
     const reviewText = review.querySelector('p');
@@ -30,7 +48,7 @@ export function connectGroupForm(onSaved, report) {
         message.id = 'car-group-error-' + control.name;
         message.hidden = true;
         control.after(message);
-        control.setAttribute('aria-describedby', message.id);
+        control.setAttribute('aria-describedby', [control.getAttribute('aria-describedby'), message.id].filter(Boolean).join(' '));
         feedback.set(control.name, message);
     }
 
@@ -40,6 +58,38 @@ export function connectGroupForm(onSaved, report) {
     let dirty = false;
     let busy = false;
     let initialFocus = null;
+
+    function setPeriodOptions() {
+        const now = Object.fromEntries(periodClock.formatToParts().map(part => [part.type, part.value]));
+        const year = Number(now.year);
+        const options = [...new Set([current?.year, ...Array.from({length:23},(_,i) => year + 2 - i)].filter(Number.isInteger))]
+            .sort((a,b) => b-a);
+        input('year').replaceChildren(...options.map(value => new Option(String(value),String(value))));
+        input('year').value = String(current?.year ?? year);
+        input('month').value = String(current?.month ?? Number(now.month));
+    }
+    function updateDateHint() {
+        const start = thaiDate(input('startDate').value);
+        const end = thaiDate(input('endDate').value);
+        const week = input('week').value;
+        dateHint.textContent = start && end
+            ? (week ? 'วีค ' + week + ' · ' : '') + start + ' – ' + end : defaultDateHint;
+    }
+
+    const viewport = window.visualViewport;
+    function fitViewport() {
+        if (!dialog.open || !viewport) return;
+        dialog.style.setProperty('--car-viewport-height', Math.floor(viewport.height) + 'px');
+        dialog.style.setProperty('--car-viewport-top', Math.floor(viewport.offsetTop) + 'px');
+        const focused = document.activeElement;
+        if (viewport.height < window.innerHeight - 100 && scroll.contains(focused)) {
+            const field = focused.getBoundingClientRect();
+            const region = scroll.getBoundingClientRect();
+            if (field.bottom > region.bottom || field.top < region.top) focused.scrollIntoView({block:'nearest'});
+        }
+    }
+    viewport?.addEventListener('resize',fitViewport);
+    viewport?.addEventListener('scroll',fitViewport);
 
     function refreshChoices() {
         const named = members.filter(el => el.value.trim() !== '');
@@ -121,6 +171,8 @@ export function connectGroupForm(onSaved, report) {
         dirty = true;
         clearReview();
         const field = event.target;
+        if (members.includes(field) && field.value.trim()) refreshChoices();
+        if (['startDate','endDate','week'].includes(field.name)) updateDateHint();
         const message = feedback.get(field.name);
         if (message) {
             message.hidden = true;
@@ -157,9 +209,9 @@ export function connectGroupForm(onSaved, report) {
         const selfPosition = input('self').value;
         const budget = input('budget');
         const draft = {
-            year: input('year').valueAsNumber,
-            month: input('month').valueAsNumber,
-            week: input('week').valueAsNumber,
+            year: Number(input('year').value),
+            month: Number(input('month').value),
+            week: Number(input('week').value),
             startDate: input('startDate').value,
             endDate: input('endDate').value,
             name: input('name').value.trim(),
@@ -286,6 +338,7 @@ export function connectGroupForm(onSaved, report) {
                 return;
             }
             form.reset();
+            setPeriodOptions();
             lock(false);
             clearReview();
             markErrors({});
@@ -307,7 +360,9 @@ export function connectGroupForm(onSaved, report) {
             input('owner').value = current?.ownerIndex === undefined ? '' : String(current.ownerIndex);
             input('self').value = current?.selfPosition === undefined ? '' : String(current.selfPosition);
             dialog.showModal();
-            dialog.scrollTop = 0;
+            scroll.scrollTop = 0;
+            updateDateHint();
+            fitViewport();
             dialog.querySelector('#carGroupTitle').focus({preventScroll:true});
         } catch {
             report('เปิดแบบฟอร์มไม่ได้ กรุณาตรวจพื้นที่จัดเก็บของเบราว์เซอร์แล้วลองอีกครั้ง');

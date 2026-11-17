@@ -53,25 +53,38 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
 .carCreate,.carGroupPrimary{background:#108158;color:#fff;border:1px solid #108158;border-radius:10px;padding:8px 14px;min-height:44px;font-weight:750}
 .carCreate{flex:none}.resultsHead{flex-wrap:wrap}
 #carStorageStatus:not(:empty),#carPending:not([hidden]){margin:0 0 12px;color:var(--cyan)}#carPending p{margin:0 0 4px}
-.carGroupDialog{color:var(--text);background:var(--side);border:1px solid var(--line2);border-radius:19px;box-shadow:0 22px 75px var(--shadow);width:min(680px,calc(100% - 24px));max-width:none;max-height:min(88dvh,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px));padding:0;overflow:auto;overscroll-behavior:contain}
+.carGroupDialog{color:var(--text);background:var(--side);border:1px solid var(--line2);border-radius:18px;box-shadow:0 22px 75px var(--shadow);width:min(680px,calc(100% - 24px));max-width:none;max-height:min(86dvh,calc(100dvh - 24px));padding:0;overflow:hidden}
+.carGroupDialog[open]{display:flex;flex-direction:column}
 .carGroupDialog::backdrop{background:#01121fbb}.carGroupDialog [hidden]{display:none!important}
-.carGroupHeader{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--side);border-bottom:1px solid var(--line);padding:12px 16px}
+.carGroupHeader{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:10px 16px}
 .carGroupHeader h2{margin:0;font-size:clamp(16px,4.2vw,21px);line-height:1.35}
-.carGroupForm{display:grid;gap:13px;padding:16px;min-width:0}.carGroupForm p,.carGroupForm h3{margin:0}
-.carGroupForm label{display:grid;align-content:start;gap:5px;min-width:0;font-weight:650}
-.carGroupForm input,.carGroupForm select{width:100%;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--surface);border:1px solid var(--line2);border-radius:9px;padding:7px 8px;scroll-margin-block:16px}
+.carGroupHeader button{width:44px;height:44px;border:1px solid var(--line2);color:var(--cyan)}
+.carGroupForm{display:flex;flex-direction:column;min-height:0;margin:0;flex:1}
+.carGroupScroll{display:grid;gap:14px;align-content:start;min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding-block:16px;padding:14px 16px 18px}
+.carGroupForm p,.carGroupForm h3{margin:0}
+.carGroupForm label{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:5px;min-width:0;font-weight:650}
+.carGroupForm :is(input,select){display:block;width:100%;max-width:100%;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--surface);border:1px solid var(--line2);border-radius:9px;padding:7px 8px}
+.carGroupForm input[type=date]{appearance:none;-webkit-appearance:none;text-align:start}
+.carGroupForm input[type=date]::-webkit-date-and-time-value{min-width:0;text-align:start}
 .carGroupForm :is(input,select,button):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .carGroupForm [aria-invalid=true]{border-color:#e35c64}
 .carGroupForm #carGroupError:not(:empty),.carGroupFieldError{font-weight:700;color:var(--text);border-inline-start:3px solid #e35c64;padding-inline-start:7px}
-.carGroupForm small{color:var(--muted);font-weight:500}
+.carGroupForm small{color:var(--muted);font-weight:500;overflow-wrap:anywhere}
 .carGroupPeriod,.carGroupGrid{display:grid;gap:9px;grid-template-columns:repeat(3,minmax(0,1fr))}
 .carGroupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.carGroupMembers,#carGroupReview{display:grid;gap:8px;border:1px solid var(--line);border-radius:11px;padding:10px;background:var(--panel)}
+.carGroupMembers,#carGroupReview,.carGroupAccount{display:grid;gap:8px;border:1px solid var(--line);border-radius:11px;padding:10px;background:var(--panel)}
 #carGroupReview p{white-space:pre-line;overflow-wrap:anywhere}
-.carGroupActions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding-bottom:env(safe-area-inset-bottom)}
+.carGroupActions{flex:none;display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;padding:8px 16px max(8px, env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--side)}
 .carGroupActions .resetBtn{min-height:44px}
-@media(max-width:390px){.carGroupForm,.carGroupHeader{padding-inline:11px}.carGroupGrid{gap:8px}.carGroupPeriod{gap:6px}}
+@media(max-width:767px){
+ .carGroupDialog{position:fixed;inset:var(--car-viewport-top,0px) auto auto 0;margin:0;width:100%;height:var(--car-viewport-height,100dvh);max-height:none;border:0;border-radius:0}
+ .carGroupHeader{padding: max(7px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 7px max(12px,env(safe-area-inset-left))}
+ .carGroupScroll,.carGroupActions{padding-inline:max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-right))}
+}
+@media(max-width:480px){.carGroupDates,.carGroupRoles{grid-template-columns:minmax(0,1fr)}.carGroupPeriod{gap:6px}}
+@media(max-height:420px){.carGroupHeader button,.carGroupActions button{min-height:44px}.carGroupScroll{gap:10px}}
 </style>
+<link rel="stylesheet" href="../dashboard/workspace-shell.css?rev=pm36-mobile">
 </head>
 <body>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -90,34 +103,10 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 20 6v6c0 5-3 8-8 10-5-2-8-5-8-10V6z"/></symbol>
 </svg>
-<div class="shell" id="app">
- <aside class="side" id="side" aria-label="เมนูด้านข้าง">
-  <div class="brand"><span class="logo">P</span><span class="brandCopy"><strong>PriteAgent</strong><small>CAR WORKSPACE · UI-04</small></span><button class="iconBtn closeDrawer" id="closeDrawer" aria-label="ปิดเมนู"><svg><use href="#i-x"/></svg></button></div>
-  <div class="sideItems">
-   <div class="sideHeading">พื้นที่ทำงาน</div>
-   <a class="sideItem" href="../dashboard/" title="Dashboard"><svg><use href="#i-grid"/></svg><span>Dashboard</span></a>
-   <a class="sideItem active" href="./" aria-current="page" title="คันรถตัวอย่าง"><svg><use href="#i-car"/></svg><span>คันรถ</span></a>
-   <button class="sideItem" id="sideExpense" title="เมนูค่าใช้จ่ายตัวอย่าง"><svg><use href="#i-grid"/></svg><span>ค่าใช้จ่าย (ตัวอย่าง)</span></button>
-   <div class="sideHeading">ตัวอย่าง</div>
-   <a class="sideItem" href="../" title="Login Preview"><svg><use href="#i-home"/></svg><span>หน้า Login</span></a>
-  </div>
-  <div class="sideFoot"><strong>UI-04 ข้อมูลจำลอง</strong></div>
- </aside>
- <div class="scrim" id="scrim" hidden></div>
+<div class="shell pa-directory" id="app">
  <div class="frame">
-  <header class="top">
-   <button class="iconBtn" id="navToggle" aria-label="เปิดหรือย่อเมนู" aria-expanded="false"><svg><use href="#i-menu"/></svg></button>
-   <div class="mobileLogo"><span class="logo">P</span>PriteAgent</div>
-   <div class="topTitle"><small>หลังบ้าน / งานตัวแทน</small><strong>พื้นที่ทำงาน</strong></div>
-   <div class="modes" role="group" aria-label="พื้นที่ทำงาน"><button class="active" id="agentTab" aria-pressed="true">งานตัวแทน</button><button id="customerTab" aria-pressed="false">งานลูกค้า</button></div>
-   <div class="topActions">
-    <button class="searchTop" id="searchTop"><svg class="smallIcon"><use href="#i-search"/></svg>ค้นหารายการ...</button>
-    <button class="iconBtn searchIcon" id="searchIcon" aria-label="ค้นหารายการคันรถ"><svg><use href="#i-search"/></svg></button>
-    <button class="iconBtn" id="themeToggle" aria-label="เปลี่ยนธีม" aria-pressed="false"><svg><use id="themeGlyph" href="#i-moon"/></svg></button>
-    <button class="iconBtn" id="notification" aria-label="ดูการแจ้งเตือนตัวอย่าง"><svg><use href="#i-bell"/></svg></button>
-    <button class="avatar" id="profile" aria-label="บัญชีสาธิต">DE</button>
-   </div>
-  </header>
+  <header id="workspace-header"></header>
+  <aside id="workspace-menu" aria-label="เมนูนำทาง"></aside>
   <main id="main" class="main" tabindex="-1">
    <div class="inner">
      <div class="backline"><a href="../dashboard/">หน้าหลัก</a> / งานตัวแทน / คันรถ</div>
@@ -138,18 +127,6 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
   </main>
  </div>
 </div>
-<div class="submenuScrim" id="submenuScrim" hidden></div>
-<section class="mobileSubmenu" id="mobileSubmenu" aria-label="เมนูย่อยมือถือ" hidden>
- <div class="subHead"><strong id="submenuTitle">เมนูย่อย</strong><button class="iconBtn" id="submenuClose" aria-label="ปิดเมนูย่อย"><svg><use href="#i-x"/></svg></button></div>
- <div class="subItems" id="submenuItems"></div>
-</section>
-<nav class="mobileBottom" aria-label="เมนูหลักมือถือ">
- <button id="bottomHome"><svg><use href="#i-home"/></svg>หน้าแรก</button>
- <button class="active" id="bottomAgent" aria-controls="mobileSubmenu" aria-expanded="false"><svg><use href="#i-grid"/></svg>งานตัวแทน</button>
- <button id="bottomCustomer" aria-controls="mobileSubmenu" aria-expanded="false"><svg><use href="#i-users"/></svg>งานลูกค้า</button>
- <button id="bottomMore"><svg><use href="#i-menu"/></svg>เพิ่มเติม</button>
-</nav>
-<div class="notice" role="note">UI-04 CarDirectory ข้อมูลจำลอง</div>
 <div class="dialogShade" id="dialogShade" role="presentation">
  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
   <div class="dialogHead"><div><h2 id="dialogTitle">รายละเอียดคันรถ</h2><div class="detailSub" id="dialogSubtitle"></div></div><button class="iconBtn" id="dialogX" aria-label="ปิดรายละเอียด"><svg><use href="#i-x"/></svg></button></div>
@@ -160,38 +137,41 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
 <dialog id="carGroupDialog" class="carGroupDialog" aria-labelledby="carGroupTitle">
  <header class="carGroupHeader"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="iconBtn" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
  <form class="carGroupForm" novalidate>
-  <p>เพิ่มรายชื่อและสร้างคันรถด้วยข้อมูลจำลอง โดยไม่ต้องเชื่อมบัญชีสมาชิก</p>
-  <label>รหัสคันรถ GRP-ID<input name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"></label>
+  <div class="carGroupScroll">
+  <label>รหัสคันรถ GRP-ID<input name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"><small>เมื่อบันทึกครั้งแรก ระบบจะสร้างรหัสนี้ และใช้รหัสเดิมเมื่อแก้ไข</small></label>
   <div class="carGroupPeriod">
-   <label>ปี พ.ศ.<input name="year" type="number" min="1" step="1" required></label>
-   <label>เดือน<input name="month" type="number" min="1" max="12" step="1" required></label>
-   <label>วีค<input name="week" type="number" min="1" max="5" step="1" required></label>
+   <label>ปี พ.ศ.<select name="year" required></select></label>
+   <label>เดือน<select name="month" required></select></label>
+   <label>วีค<select name="week" required></select></label>
   </div>
-  <div class="carGroupGrid">
-   <label>วันที่เริ่มคันรถ<input name="startDate" type="date" required></label>
-   <label>วันที่สิ้นสุดคันรถ<input name="endDate" type="date" required></label>
+  <div class="carGroupGrid carGroupDates">
+   <label>วันที่เริ่มคันรถ<input name="startDate" type="date" aria-describedby="carGroupDatesHint" required></label>
+   <label>วันที่สิ้นสุดคันรถ<input name="endDate" type="date" aria-describedby="carGroupDatesHint" required></label>
   </div>
+  <small id="carGroupDatesHint">เลือกวันที่ทำงานจริงของวีคที่ระบุ ระบบจะไม่เปลี่ยนวันที่ให้เอง</small>
   <label>ชื่อคันรถ<input name="name" maxlength="160" required></label>
-  <label>จังหวัด<input name="province" maxlength="80" required></label>
-  <label>หมายเหตุพื้นที่ / งาน<input name="workNote" maxlength="160"></label>
+  <label>จังหวัด<input name="province" list="carGroupProvinces" maxlength="80" placeholder="พิมพ์ค้นหาชื่อจังหวัด" required><datalist id="carGroupProvinces"></datalist></label>
+  <label>หมายเหตุพื้นที่ / งาน<input name="workNote" maxlength="160" placeholder="เช่น จุดนัดพบหรือพื้นที่ทำงาน"></label>
+  <div class="carGroupAccount"><strong>ข้อมูลจำลอง</strong><small>เลือกตำแหน่งตัวเองจากสมาชิกที่กรอกไว้ ข้อมูลนี้ไม่ผูกกับบัญชีผู้ใช้</small></div>
   <section class="carGroupMembers" aria-labelledby="carGroupMembersTitle">
    <h3 id="carGroupMembersTitle">สมาชิกในคันรถ</h3>
    <div class="carGroupGrid">
     <label>คนที่ 1 · หัวหน้าคัน<input name="member1" maxlength="80" required></label>
-    <label>คนที่ 2<input name="member2" maxlength="80"></label>
-    <label>คนที่ 3<input name="member3" maxlength="80"></label>
-    <label>คนที่ 4<input name="member4" maxlength="80"></label>
+    <label>คนที่ 2<input name="member2" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 3<input name="member3" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 4<input name="member4" maxlength="80" placeholder="เว้นว่างได้"></label>
    </div>
-   <small id="carGroupMemberCount"></small>
+   <small id="carGroupMemberCount" aria-live="polite"></small>
   </section>
-  <div class="carGroupGrid">
-   <label>ใช้รถ (ตำแหน่งเจ้าของ)<select name="owner" required></select></label>
+  <div class="carGroupGrid carGroupRoles">
+   <label>เจ้าของรถ<select name="owner" required></select><small>เลือกจากสมาชิกในคันรถ แยกจากหัวหน้าคันได้</small></label>
    <label>ตัวเอง (ข้อมูลจำลอง)<select name="self"></select></label>
   </div>
-  <label>งบประมาณ (บาทเต็ม)<input name="budget" type="number" step="1"></label>
+  <label>งบประมาณ (บาทไทย · THB)<input name="budget" type="number" step="1" placeholder="ยังไม่ตั้งงบ"></label>
   <small>ค่าน้ำมัน: ยังไม่คำนวณในหน้านี้</small>
   <section id="carGroupReview" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
   <p id="carGroupError" role="alert"></p>
+  </div>
   <div class="carGroupActions">
    <button type="button" class="resetBtn" data-close-group>ยกเลิก</button>
    <button type="submit" class="resetBtn" id="carGroupReviewButton">ตรวจทานข้อมูล</button>
@@ -200,7 +180,8 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
  </form>
 </dialog>
 <script type="module">
-import { carStore, connectGroupForm } from './group-form.js';
+import { carStore, connectGroupForm } from './group-form.js?rev=pm36-mobile';
+import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pm36-mobile';
 (function(){
 'use strict';
 const get=id=>document.getElementById(id);
@@ -213,46 +194,6 @@ const layouts={small:['กะทัดรัด','การ์ดเล็ก �
 const day=s=>new Date(s+'T12:00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
 const period=t=>'วีค '+t.week+' · '+monthName(t.month)+' '+t.year;
 let query='',state='all',year='',month='',week='',layout='medium',dialogTrigger=null;
-function doTheme(t,persist){
- const next=t==='light'?'light':'dark';document.documentElement.dataset.theme=next;
- get('themeToggle').setAttribute('aria-pressed',String(next==='light'));
- get('themeToggle').setAttribute('aria-label',next==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');
- get('themeGlyph').setAttribute('href',next==='light'?'#i-sun':'#i-moon');
- if(persist){try{localStorage.setItem('priteagent.ui.theme.v1',next)}catch(_){}}
-}
-function closeDrawer(){get('app').classList.remove('drawerOpen');get('scrim').hidden=true;get('navToggle').setAttribute('aria-expanded','false')}
-function openDrawer(){closeSubmenu();const opening=!get('app').classList.contains('drawerOpen');get('app').classList.toggle('drawerOpen',opening);get('scrim').hidden=!opening;get('navToggle').setAttribute('aria-expanded',String(opening));if(opening)get('closeDrawer').focus()}
-function closeSubmenu(){get('mobileSubmenu').hidden=true;get('submenuScrim').hidden=true;get('bottomAgent').setAttribute('aria-expanded','false');get('bottomCustomer').setAttribute('aria-expanded','false')}
-const agentMenu=[
- {label:'Dashboard',icon:'grid',action:'dashboard'},
- {label:'คันรถ',icon:'car',action:'cars'},
- {label:'ค่าใช้จ่าย (ตัวอย่าง)',icon:'grid',action:'expense'},
- {label:'ระบบคำนวณเบี้ยประกัน (ล็อก)',icon:'shield',action:'premium'}
-];
-const customerMenu=[
- {label:'ลูกค้าทั้งหมด (ตัวอย่าง)',icon:'users',action:'customers'},
- {label:'ติดตามลูกค้า (ตัวอย่าง)',icon:'grid',action:'followup'},
- {label:'ปฏิทินงาน (ตัวอย่าง)',icon:'grid',action:'calendar'},
- {label:'กรมธรรม์ (ตัวอย่าง)',icon:'grid',action:'policies'}
-];
-function openSubmenu(type){
- if(!matchMedia('(max-width:720px)').matches)return;
- const key=type==='agent'?'bottomAgent':'bottomCustomer';
- if(!get('mobileSubmenu').hidden&&get(key).getAttribute('aria-expanded')==='true'){closeSubmenu();return}
- closeDrawer();closeSubmenu();
- get('submenuTitle').textContent=type==='agent'?'เมนูงานตัวแทน':'เมนูงานลูกค้า';
- const items=type==='agent'?agentMenu:customerMenu;
- get('submenuItems').innerHTML=items.map(x=>'<button type="button" data-sub-action="'+x.action+'">'+icon(x.icon)+'<span>'+escapeHtml(x.label)+'</span></button>').join('');
- get('mobileSubmenu').hidden=false;get('submenuScrim').hidden=false;get(key).setAttribute('aria-expanded','true');
-}
-function navAction(action){
- closeSubmenu();closeDrawer();
- if(action==='dashboard'){location.href='../dashboard/';return}
- if(action==='cars'){get('main').scrollTop=0;get('searchCars').focus();return}
- if(action==='premium'){info('ระบบคำนวณเบี้ยประกัน — ไม่มีสิทธิ์','DEMO ONLY · เมนูนี้ถูกล็อกใน Public Preview และไม่มีสูตร เบี้ยหรือข้อมูลภายใน การเข้าถึงจริงต้องได้รับอนุมัติสิทธิ์จาก Owner/Admin');return}
- const titles={expense:'ค่าใช้จ่าย',customers:'ลูกค้าทั้งหมด',followup:'ติดตามลูกค้า',calendar:'ปฏิทินงาน',policies:'กรมธรรม์'};
- info((titles[action]||'เมนู')+' · ตัวอย่าง','เมนูนี้มีไว้ทดลองตำแหน่งการนำทางเท่านั้น ยังไม่มีหน้าทำงานจริง ข้อมูลหรือ Business Workflow ไม่ได้ถูกกำหนดโดย UI PM3');
-}
 function render(){
  const rows=cars.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
  get('resultCount').textContent='แสดง '+rows.length+' จาก '+cars.length+' คันรถ';
@@ -270,7 +211,6 @@ function render(){
 }
 function setLayout(v){if(!layouts[v])return;layout=v;render()}
 function showDialog(title,subtitle,body,buttonTitle){
- closeDrawer();closeSubmenu();
  dialogTrigger=document.activeElement;
  get('dialogTitle').textContent=title;get('dialogSubtitle').textContent=subtitle||'';
  get('dialogBody').innerHTML=body;
@@ -308,28 +248,15 @@ for(const b of document.querySelectorAll('[data-layout]'))b.onclick=()=>setLayou
 for(const b of document.querySelectorAll('[data-state]'))b.onclick=()=>{state=b.dataset.state;render()};
 for(const id of ['Year','Month','Week'])get('filter'+id).onchange=()=>{year=get('filterYear').value;month=get('filterMonth').value;week=get('filterWeek').value;render()};
 get('resetSearch').onclick=()=>{query='';state='all';year='';month='';week='';get('searchCars').value='';for(const id of ['Year','Month','Week'])get('filter'+id).value='';render();get('searchCars').focus()};
-get('searchTop').onclick=get('searchIcon').onclick=()=>{get('main').scrollTop=0;get('searchCars').focus();get('searchCars').scrollIntoView({block:'center',behavior:'smooth'})};
-get('themeToggle').onclick=()=>doTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',true);
-get('notification').onclick=()=>info('การแจ้งเตือนตัวอย่าง','ไม่มีระบบแจ้งเตือนจริง และไม่มีข้อมูลลูกค้าหรือสมาชิกใน Public Preview');
-get('profile').onclick=()=>info('บัญชีสาธิต','DEMO ONLY · ไม่มีการเข้าสู่ระบบจริง โปรดอย่ากรอกข้อมูลส่วนตัว');
-get('sideExpense').onclick=()=>navAction('expense');
-get('agentTab').onclick=()=>{get('main').scrollTop=0;get('searchCars').focus()};
-get('customerTab').onclick=()=>info('งานลูกค้า · หน้าตัวอย่าง','CarDirectory เป็นหน้างานตัวแทนเท่านั้น สามารถกลับ Dashboard เพื่อทดลองการนำทางงานลูกค้า การสลับพื้นที่ทำงานจริงยังไม่อยู่ใน Scope นี้');
-get('navToggle').onclick=()=>{if(matchMedia('(max-width:720px)').matches)openDrawer();else get('app').classList.toggle('rail')};
-get('closeDrawer').onclick=closeDrawer;get('scrim').onclick=closeDrawer;
-get('bottomHome').onclick=()=>{location.href='../dashboard/'};
-get('bottomAgent').onclick=()=>openSubmenu('agent');
-get('bottomCustomer').onclick=()=>openSubmenu('customer');
-get('bottomMore').onclick=openDrawer;
-get('submenuClose').onclick=closeSubmenu;get('submenuScrim').onclick=closeSubmenu;
-get('submenuItems').onclick=e=>{const b=e.target.closest('[data-sub-action]');if(b)navAction(b.dataset.subAction)};
+mountWorkspaceShell({
+ header:get('workspace-header'),sidebar:get('workspace-menu'),area:'agent',screen:'cars',
+ onSearch(){get('searchCars').focus();get('searchCars').scrollIntoView({block:'center'})}
+});
 get('dialogX').onclick=get('dialogOK').onclick=closeDialog;
 get('dialogShade').onclick=e=>{if(e.target===get('dialogShade'))closeDialog()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!get('carGroupDialog').open){if(get('dialogShade').classList.contains('open'))closeDialog();else if(!get('mobileSubmenu').hidden)closeSubmenu();else closeDrawer()}});
-window.addEventListener('resize',()=>{if(!matchMedia('(max-width:720px)').matches){closeSubmenu();closeDrawer()}});
-window.addEventListener('storage',e=>{if(e.key==='priteagent.ui.theme.v1')doTheme(e.newValue,false)});
-window.addEventListener('pageshow',()=>{try{doTheme(localStorage.getItem('priteagent.ui.theme.v1'),false)}catch(_){doTheme('dark',false)}});
-doTheme(document.documentElement.dataset.theme,false);
+document.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&!get('carGroupDialog').open&&get('dialogShade').classList.contains('open'))closeDialog();
+});
 render();
 void refreshCars().then(()=>{
  const url=new URL(location.href);
