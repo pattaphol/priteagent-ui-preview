@@ -6,102 +6,101 @@
 <meta name="color-scheme" content="dark light">
 <title>PriteAgent V2 — คันรถของฉัน</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="../ui/design-system.css?rev=pm37-car-form">
 <style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",system-ui,sans-serif;color-scheme:dark;--bg:#071521;--side:#0b1c2e;--surface:#0c1c2d;--panel:#0f2437;--panel2:#122b42;--text:#eef7ff;--muted:#9ab2c6;--line:#24435d;--line2:#335a73;--accent:#39adfa;--cyan:#80e1ff;--teal:#73ded4;--soft:rgba(57,173,250,.13);--shadow:rgba(0,0,0,.25)}
-html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#fff;--panel:#fff;--panel2:#eff5fb;--text:#1a3248;--muted:#647e92;--line:#dce6ef;--line2:#bdd5e7;--accent:#117acc;--cyan:#096ca5;--teal:#077b82;--soft:#e7f4ff;--shadow:rgba(35,67,99,.13)}
-*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{background:var(--bg);color:var(--text);font-size:14px;line-height:1.55}button,input{font:inherit}button{cursor:pointer;background:none;border:0;color:inherit}a{color:inherit;text-decoration:none}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #46b8fa;outline-offset:2px}svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;fill:none;flex-shrink:0}.smallIcon{width:17px;height:17px}
-.shell{height:100dvh;min-height:0;display:flex;padding-bottom:26px}.side{width:240px;flex:0 0 240px;display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line);background:var(--side);transition:width .15s,flex-basis .15s;z-index:22}.brand{min-height:69px;display:flex;gap:10px;align-items:center;padding:0 18px}.logo{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#18b4f5,#3069f7);color:#fff;font-size:20px;font-weight:900;flex-shrink:0}.brandCopy strong{font-size:18px;letter-spacing:-.45px}.brandCopy small{display:block;letter-spacing:.09em;color:var(--muted);font-size:9px}.sideItems{padding:10px;overflow-y:auto;flex:1;scrollbar-width:thin}.sideHeading{font-size:10px;letter-spacing:.1em;font-weight:800;color:var(--muted);padding:12px 12px 7px}.sideItem{display:flex;width:100%;align-items:center;gap:11px;min-height:44px;padding:9px 11px;border-radius:11px;text-align:left;font-size:12px;font-weight:700;color:var(--muted)}.sideItem:hover,.sideItem.active{background:var(--soft);color:var(--cyan)}.sideItem span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sideFoot{border-top:1px solid var(--line);padding:14px;color:var(--muted);font-size:10px}.sideFoot strong{color:var(--text)}.closeDrawer{display:none;margin-left:auto}
-.shell.rail .side{width:72px;flex-basis:72px}.shell.rail .brand{padding:0 18px}.shell.rail .brandCopy,.shell.rail .sideHeading,.shell.rail .sideItem span,.shell.rail .sideFoot{display:none}.shell.rail .sideItem{justify-content:center}
-.frame{flex:1;min-width:0;display:flex;flex-direction:column}.top{min-height:69px;height:69px;padding:0 22px;display:flex;align-items:center;gap:13px;border-bottom:1px solid var(--line);background:var(--surface)}.iconBtn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:11px;color:var(--muted);flex-shrink:0}.iconBtn:hover{background:var(--soft);color:var(--cyan)}.topTitle{flex:1;min-width:130px}.topTitle small{display:block;color:var(--muted);font-size:10px}.topTitle strong{display:block;font-size:17px;line-height:1.4}.mobileLogo{display:none}.modes{display:flex;align-items:center;gap:3px;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:12px;flex-shrink:0}.modes button{padding:6px 11px;border-radius:9px;font-weight:800;font-size:12px;color:var(--muted);min-height:32px;white-space:nowrap}.modes .active{background:#147ac9;color:white}.topActions{display:flex;align-items:center;gap:5px}.searchTop{height:37px;display:flex;align-items:center;gap:9px;padding:0 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--muted);min-width:146px}.searchIcon{display:none}.avatar{height:34px;width:34px;background:linear-gradient(140deg,#218dc8,#155892);color:#fff;border-radius:10px;font-size:11px;font-weight:800}
-.main{flex:1;min-height:0;overflow-y:auto;padding:21px clamp(17px,3vw,34px) 55px;scrollbar-width:thin}.inner{max-width:1120px;margin:0 auto}.backline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin-bottom:13px}.backline a:hover{color:var(--cyan)}.pageHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:19px}.eyebrow{font-size:10px;font-weight:850;letter-spacing:.105em;color:var(--cyan)}.pageHead h1{font-size:clamp(25px,3vw,35px);line-height:1.2;letter-spacing:-.85px;margin:5px 0 6px}.pageHead p{margin:0;color:var(--muted);font-size:12px;max-width:550px}.demoPill{border:1px solid var(--line2);background:var(--panel);color:var(--cyan);font-size:10px;font-weight:800;border-radius:999px;padding:8px 12px;white-space:nowrap}
-.intro{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(230px,.65fr);gap:13px;margin-bottom:18px}.introA{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid #247ba9;background:linear-gradient(112deg,#104471,#0c678c);color:#fff;padding:18px 21px;border-radius:17px;min-width:0}.introA span{font-size:10px;letter-spacing:.1em;color:#bdefff;font-weight:800}.introA strong{display:block;margin-top:5px;font-size:18px;line-height:1.3}.introA small{display:block;font-size:11px;color:#d0edff;margin-top:5px}.introIcon{height:51px;width:51px;border:1px solid #72c7ff7a;border-radius:14px;display:grid;place-items:center;flex-shrink:0}.introIcon svg{height:28px;width:28px}.introB{display:flex;gap:10px;align-items:center;border-radius:17px;border:1px solid var(--line);background:var(--panel);padding:16px}.introB .bubble{width:38px;height:38px;display:grid;place-items:center;background:var(--soft);border-radius:11px;color:var(--cyan);flex-shrink:0}.introB strong{display:block;font-size:12px}.introB small{font-size:10px;color:var(--muted)}
-.tools{border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:15px;display:grid;grid-template-columns:minmax(200px,1fr) auto;gap:13px;align-items:end;margin-bottom:15px}.tools label{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-bottom:6px}.searchWrap{position:relative}.searchWrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}.searchWrap input{padding:11px 12px 11px 41px;min-height:44px;width:100%;border:1px solid var(--line2);border-radius:11px;background:var(--surface);color:var(--text);font-size:13px}.searchWrap input::placeholder{color:var(--muted)}.counts{display:flex;gap:5px;flex-wrap:wrap}.counts button{padding:9px 12px;min-height:41px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:11px;color:var(--muted);font-weight:750;white-space:nowrap}.counts button.active{background:#1579c6;border-color:#1579c6;color:#fff}
-.resultsHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 1px 12px}.resultsHead strong{font-size:16px}.resultsHead span{font-size:11px;color:var(--muted)}.carGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.carGrid[hidden]{display:none}.carCard{width:100%;border:1px solid var(--line);background:var(--panel);border-radius:18px;text-align:left;min-height:218px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .15s,border-color .15s;min-width:0}.carCard:hover{transform:translateY(-2px);border-color:var(--accent)}.carTop{display:flex;align-items:center;gap:12px}.carBadge{width:46px;height:46px;border-radius:13px;flex-shrink:0;display:grid;place-items:center;background:#17476f;color:#95dfff}.carBadge.alt{background:#194c50;color:#9df2e8}.carBadge.third{background:#3b3e67;color:#c8d0ff}.carBadge svg{width:25px;height:25px}.carTitles{min-width:0;flex:1}.carTitles strong{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.carTitles small{font-size:10px;color:var(--muted);letter-spacing:.02em}.sampleLabel{font-size:9px;border:1px solid var(--line2);border-radius:999px;padding:3px 7px;color:var(--cyan);flex-shrink:0}.carSummary{display:grid;grid-template-columns:1fr 1fr;gap:8px}.summaryItem{min-width:0;border:1px solid var(--line);background:var(--panel2);padding:9px 10px;border-radius:10px}.summaryItem small{display:block;font-size:10px;color:var(--muted)}.summaryItem b{display:block;margin-top:3px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.carBottom{margin-top:auto;border-top:1px solid var(--line);padding-top:11px;display:flex;align-items:center;justify-content:space-between;gap:10px}.carBottom span{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px}.carBottom b{font-size:11px;color:var(--cyan);display:flex;gap:5px;align-items:center}
-.empty{border:1px dashed var(--line2);border-radius:18px;padding:36px 20px;text-align:center;background:var(--panel)}.empty svg{height:34px;width:34px;color:var(--muted)}.empty strong{display:block;margin-top:9px;font-size:15px}.empty p{color:var(--muted);font-size:12px}.resetBtn{border:1px solid var(--line2);padding:9px 14px;border-radius:10px;color:var(--cyan);font-size:12px;font-weight:750}.resetBtn:hover{background:var(--soft)}.explainer{margin-top:18px;border:1px dashed var(--line2);padding:13px 15px;border-radius:12px;font-size:11px;color:var(--muted);line-height:1.7}.explainer b{color:var(--text)}
-.notice{position:fixed;z-index:120;bottom:0;left:0;right:0;display:grid;place-items:center;min-height:26px;background:#ffe29a;color:#253342;font-size:10px;font-weight:850;text-align:center;padding:3px 6px calc(3px + env(safe-area-inset-bottom,0px));pointer-events:none}
-.mobileBottom,.scrim,.mobileSubmenu{display:none}.dialogShade{display:none;position:fixed;z-index:110;inset:0;align-items:center;justify-content:center;background:#01121fbb;padding:14px}.dialogShade.open{display:flex}.dialog{background:var(--side);border:1px solid var(--line2);border-radius:19px;width:min(100%,510px);max-height:88dvh;overflow-y:auto;box-shadow:0 22px 75px #0006;padding:19px}.dialogHead{display:flex;align-items:center;justify-content:space-between;gap:9px}.dialogHead h2{font-size:19px;margin:0}.detailSub{font-size:11px;color:var(--muted);margin-top:3px}.detailRoles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.roleBox{background:var(--panel);border:1px solid var(--line);padding:11px;border-radius:12px}.roleBox small{display:block;font-size:10px;color:var(--muted)}.roleBox strong{display:block;margin-top:4px;font-size:13px}.roleBox small.info{margin-top:4px;color:var(--cyan)}.membersTitle{margin:17px 0 8px;font-size:13px}.memberList{display:grid;gap:7px}.member{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:var(--panel);min-height:46px}.memberNumber{width:27px;height:27px;border-radius:8px;display:grid;place-items:center;background:var(--soft);color:var(--cyan);font-size:11px;font-weight:850}.member strong{font-size:12px}.memberTags{display:flex;gap:4px;justify-content:flex-end;align-items:center;flex:1;flex-wrap:wrap}.memberTag{font-size:9px;color:var(--cyan);background:var(--soft);border-radius:999px;padding:3px 6px}.dialogNote{border:1px dashed var(--line2);margin-top:12px;padding:10px;border-radius:10px;color:var(--muted);font-size:11px}.primary{background:#157bc9;color:#fff;padding:11px 14px;border-radius:10px;font-size:12px;font-weight:800;width:100%;margin-top:15px}.primary:hover{background:#106eae}.infoText{font-size:12px;line-height:1.75;color:var(--muted);padding:10px 0 2px}.drawerClose{display:none}.submenuScrim{display:none}
-@media(max-width:1100px){.side{width:72px;flex-basis:72px}.brand{padding:0 18px}.brandCopy,.sideHeading,.sideItem span,.sideFoot{display:none}.sideItems{padding:9px 8px}.sideItem{justify-content:center}.top{padding:0 16px;gap:10px}.topTitle{min-width:105px}.topTitle strong{font-size:15px}.modes button{font-size:11px;padding:6px 8px}.searchTop{display:none}.searchIcon{display:grid}}
-@media(max-width:850px){.intro{grid-template-columns:1fr}.carGrid{grid-template-columns:1fr 1fr}.tools{grid-template-columns:1fr}.counts button{flex:1;min-width:64px}.pageHead h1{font-size:28px}}
-@media(max-width:720px){
- .shell{padding-bottom:calc(85px + env(safe-area-inset-bottom,0px))}
- .side{position:fixed;top:0;bottom:0;left:0;width:min(300px,83vw)!important;flex-basis:auto!important;transform:translateX(-102%);z-index:93;box-shadow:8px 0 34px #0005;transition:transform .2s}
- .shell.drawerOpen .side{transform:translateX(0)}.side .brandCopy,.side .sideHeading,.side .sideItem span,.side .sideFoot{display:block}.side .sideItem{justify-content:flex-start}.side .sideItems{padding:9px 10px}
- .closeDrawer{display:grid;margin-left:auto}
- .scrim:not([hidden]){display:block;position:fixed;inset:0;background:#0009;z-index:90}
- .top{min-height:59px;height:59px;padding:0 12px;gap:6px}.top .topTitle,.top .modes{display:none}.mobileLogo{display:flex;align-items:center;gap:6px;font-size:17px;font-weight:850}.mobileLogo .logo{width:29px;height:29px;font-size:16px;border-radius:9px}.topActions{margin-left:auto;gap:1px}.top .iconBtn{width:35px;height:35px}.avatar{width:31px;height:31px}
- .main{padding:15px 13px 23px}.backline{margin-bottom:10px}.pageHead{margin-bottom:14px}.pageHead h1{font-size:25px}.pageHead p{font-size:11px}.demoPill{font-size:9px;padding:5px 8px}
- .intro{gap:9px;margin-bottom:12px}.introA{padding:15px;border-radius:15px}.introA strong{font-size:17px}.introA small{font-size:10px}.introIcon{height:43px;width:43px}.introB{padding:12px;border-radius:14px}
- .tools{padding:12px;gap:10px;border-radius:14px}.counts button{font-size:10px;padding:8px 6px}.carGrid{grid-template-columns:1fr;gap:10px}.carCard{min-height:205px;padding:14px;border-radius:15px;gap:10px}.carBadge{width:41px;height:41px}.carTitles strong{font-size:14px}
- .mobileBottom{display:grid;position:fixed;z-index:84;bottom:26px;left:0;right:0;min-height:59px;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--side);border-top:1px solid var(--line);padding:3px 4px 0}.mobileBottom button{min-width:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;border-radius:9px;font-size:10px;color:var(--muted)}.mobileBottom button.active,.mobileBottom button[aria-expanded=true]{color:var(--cyan);background:var(--soft)}.mobileBottom svg{width:20px;height:20px}
- .submenuScrim:not([hidden]){display:block;position:fixed;inset:0;z-index:77;background:#0005}
- .mobileSubmenu:not([hidden]){display:block;position:fixed;bottom:calc(91px + env(safe-area-inset-bottom,0px));left:10px;right:10px;z-index:81;max-height:61dvh;overflow:hidden;border-radius:16px;border:1px solid var(--line2);background:var(--side);box-shadow:0 15px 44px #0007}
- .subHead{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;border-bottom:1px solid var(--line);font-weight:800}
- .subItems{display:grid;grid-template-columns:1fr 1fr;gap:7px;max-height:47dvh;overflow-y:auto;padding:10px}.subItems button{min-height:45px;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--panel);display:flex;align-items:center;gap:8px;text-align:left;font-size:11px}.subItems button:hover{border-color:var(--accent)}
- .dialog{padding:17px;max-height:84dvh}.roleBox{padding:10px}.member{padding:8px}.notice{font-size:9px}
+html, body { height: 100%; }
+.pa-directory { height: 100dvh; }
+.frame { height: 100%; min-width: 0; display: flex; flex-direction: column; }
+.main { min-height: 0; overflow-y: auto; padding: var(--pa-space-4) var(--pa-gutter); }
+.inner { max-width: var(--pa-content-width); margin-inline: auto; }
+.backline, .v1Heading p, .explainer, #resultCount { color: var(--pa-muted); font-size: var(--pa-small); }
+.backline { margin-block-end: var(--pa-space-3); }
+.v1Heading, .resultsHead { display: flex; justify-content: space-between; align-items: start; gap: var(--pa-space-3); }
+.v1Heading h1 { margin: var(--pa-space-1) 0; }
+.v1Heading p { margin: 0; }
+.eyebrow, .v1Code, #layoutHelp { color: var(--pa-muted); font-size: var(--pa-caption); }
+.demoPill, .v1Badge { display: inline-block; border-radius: 999px; padding: var(--pa-space-1) var(--pa-space-2); background: var(--pa-soft); color: var(--pa-accent); font-size: var(--pa-caption); white-space: nowrap; }
+.v1Badge.closed { color: var(--pa-muted); background: var(--pa-surface-alt); }
+.v1Tools, .v1Periods { display: flex; gap: var(--pa-space-2); }
+.v1Tools { justify-content: space-between; margin-block: var(--pa-space-4); }
+.v1Search { position: relative; width: min(100%, 435px); }
+.v1Search .smallIcon { position: absolute; inset: 14px auto auto var(--pa-space-3); pointer-events: none; }
+.v1Search input { padding-inline-start: var(--pa-space-6); }
+.smallIcon, .v1Icon svg, #dialogX svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.v1Periods .pa-control { font-size: var(--pa-small); }
+.v1Modes { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--pa-space-2); margin-block: var(--pa-space-4); }
+.v1ModeBtns, .v1Status { display: flex; gap: var(--pa-space-1); }
+#layoutHelp { grid-column: 1/-1; margin: 0; }
+.v1Status { flex-wrap: wrap; margin-block-end: var(--pa-space-4); }
+.resultsHead { align-items: center; flex-wrap: wrap; margin-block-end: var(--pa-space-3); }
+#carStorageStatus:not(:empty), #carPending:not([hidden]) { margin-block-end: var(--pa-space-3); color: var(--pa-accent); }
+#carPending p { margin: 0 0 var(--pa-space-1); }
+.v1Grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--pa-space-3); }
+.v1Grid.v1-small { grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); }
+.v1Grid.v1-large { grid-template-columns: 1fr; }
+.v1Grid[hidden], .v1TableWrap[hidden], .empty[hidden] { display: none; }
+.v1Card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.v1Card:hover { border-color: var(--pa-accent); }
+.v1Open { display: flex; flex: 1; flex-direction: column; align-items: stretch; text-align: start; border: 0; background: transparent; padding: var(--pa-space-4); }
+.v1Open:focus-visible { outline-offset: -3px; }
+.v1CardTop, .v1Total { display: flex; justify-content: space-between; align-items: center; gap: var(--pa-space-2); }
+.v1Icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--pa-control-radius); background: var(--pa-soft); color: var(--pa-accent); }
+.v1Card h2 { margin: var(--pa-space-3) 0 var(--pa-space-2); }
+.v1Facts { display: grid; gap: var(--pa-space-1); margin-block-end: var(--pa-space-3); color: var(--pa-muted); font-size: var(--pa-small); overflow-wrap: anywhere; }
+.v1Total { border-block-start: 1px solid var(--pa-line); padding-block-start: var(--pa-space-2); margin-block-start: auto; }
+.v1Total span { font-size: var(--pa-caption); color: var(--pa-muted); }
+.v1Total strong { display: block; color: var(--pa-text); font-size: var(--pa-section-title); }
+.v1Actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--pa-space-2); padding: var(--pa-space-3); border-block-start: 1px solid var(--pa-line); background: var(--pa-surface-alt); }
+.v1-small .v1Open { padding: var(--pa-space-3); }
+.v1-small .v1Icon { display: none; }
+.v1-small .v1Card h2 { font-size: var(--pa-body); }
+.v1-small .v1Facts { margin: 0; }
+.v1-large .v1Actions { grid-template-columns: repeat(2,minmax(0,200px)); }
+.v1Members { display: flex; flex-wrap: wrap; gap: var(--pa-space-2); margin-block: var(--pa-space-3); }
+.v1Members span { display: flex; align-items: center; gap: var(--pa-space-1); font-size: var(--pa-small); }
+.v1Members i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--pa-soft); color: var(--pa-accent); font-style: normal; }
+.v1TableWrap { overflow-x: auto; }
+.v1Table { min-width: 710px; width: 100%; border-collapse: collapse; }
+.v1Table th, .v1Table td { padding: var(--pa-space-3); text-align: start; border-block-end: 1px solid var(--pa-line); }
+.v1Table th { background: var(--pa-surface-alt); }
+.v1Table small { display: block; }
+.v1Table .v1Actions { padding: 0; border: 0; background: transparent; }
+.empty { padding: var(--pa-space-5); text-align: center; }
+.explainer { margin-block-start: var(--pa-space-4); }
+.carGroupForm { display: flex; flex: 1; flex-direction: column; min-height: 0; margin: 0; }
+.carGroupScroll { display: grid; gap: var(--pa-space-3); align-content: start; }
+.carGroupForm :is(p,h3) { margin: 0; }
+.carGroupForm label { display: grid; grid-template-columns: minmax(0,1fr); align-content: start; gap: var(--pa-space-1); min-width: 0; font-weight: 650; }
+.carGroupForm input[type=date] { appearance: none; -webkit-appearance: none; text-align: start; }
+.carGroupForm input[type=date]::-webkit-date-and-time-value { min-width: 0; text-align: start; }
+#carGroupError:not(:empty), .carGroupFieldError { font-weight: 700; color: var(--pa-danger); }
+.carGroupPeriod, .carGroupGrid { display: grid; gap: var(--pa-space-2); grid-template-columns: repeat(3,minmax(0,1fr)); }
+.carGroupGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.carGroupMembers, #carGroupReview, .carGroupAccount { display: grid; gap: var(--pa-space-2); padding: var(--pa-space-3); }
+#carGroupReview p { white-space: pre-line; overflow-wrap: anywhere; }
+@media (max-width:1000px) {
+    .v1Grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .v1Tools { flex-wrap: wrap; }
+    .v1Search { width: 100%; }
 }
-@media(max-width:355px){.demoPill{display:none}.counts button{min-width:0}.detailRoles{grid-template-columns:1fr}.subItems{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-
-/* V1 Source Snapshot parity: filters, statuses, four card layouts, table. */
-.v1Heading{display:flex;justify-content:space-between;align-items:start;gap:12px;margin:3px 0 18px}.v1Heading h1{font-size:29px;margin:5px 0}.v1Heading p{font-size:12px;color:var(--muted);margin:0}.v1Tools{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:15px 0}.v1Search{display:flex;align-items:center;gap:7px;padding:0 12px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);min-height:45px;width:min(100%,435px)}.v1Search input{width:100%;min-width:0;border:0;background:none;color:var(--text);font-size:13px;outline:none}.v1Periods{display:flex;gap:7px}.v1Periods select{height:42px;border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:9px;padding:0 7px;font-size:12px;max-width:150px}
-.v1Modes{display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:17px 0}.v1Modes strong{font-size:13px}.v1Modes p{grid-column:1/-1;font-size:11px;color:var(--muted);margin:0}.v1ModeBtns{display:flex;gap:4px;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:11px}.v1ModeBtns button{display:flex;gap:4px;align-items:center;justify-content:center;border:1px solid transparent;padding:7px 9px;border-radius:8px;font-size:11px;min-height:40px;color:var(--muted)}.v1ModeBtns button.active{border-color:var(--accent);background:var(--soft);color:var(--cyan)}.v1Status{display:flex;overflow-x:auto;gap:7px;padding-bottom:5px;margin:0 0 16px}.v1Status button{padding:9px 12px;border:1px solid var(--line2);border-radius:9px;white-space:nowrap;font-size:12px;color:var(--muted)}.v1Status button.active{background:var(--soft);border-color:var(--accent);color:var(--cyan)}
-.v1Grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.v1Grid.v1-small{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}.v1Grid.v1-large{grid-template-columns:1fr}.v1Grid[hidden],.v1TableWrap[hidden],.empty[hidden]{display:none!important}
-.v1Card{display:flex;flex-direction:column;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.v1Card:hover{border-color:var(--accent)}.v1Open{display:flex;flex:1;flex-direction:column;text-align:left;align-items:stretch;padding:20px;color:var(--text)}.v1CardTop{display:flex;align-items:center;justify-content:space-between}.v1Icon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:var(--soft);color:var(--cyan)}.v1Badge{font-size:10px;color:var(--teal);background:var(--soft);padding:4px 8px;border-radius:99px}.v1Badge.closed{color:var(--muted);background:var(--panel2)}.v1Card h2{font-size:18px;margin:16px 0 12px}.v1Facts{display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:12px;margin-bottom:15px}.v1Total{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:14px;margin-top:auto}.v1Total span{font-size:11px;color:var(--muted)}.v1Total strong{display:block;font-size:18px;color:var(--text);margin-top:4px}.v1Actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:11px;border-top:1px solid var(--line);background:var(--panel2)}.v1Actions button{font-size:11px;min-height:38px;background:var(--panel);border:1px solid var(--line);border-radius:8px}.v1Actions button:hover{border-color:var(--accent);color:var(--cyan)}.v1-small .v1Open{padding:12px}.v1-small .v1Icon{display:none}.v1-small .v1Card h2{font-size:15px;margin:11px 0}.v1-small .v1Facts{gap:5px;margin:0;font-size:11px}.v1-large .v1Open{padding:27px}.v1-large .v1Card h2{font-size:26px}.v1-large .v1Actions{grid-template-columns:repeat(2,minmax(0,200px));padding:15px 27px}.v1Members{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0}.v1Members span{display:flex;align-items:center;gap:6px;font-size:11px}.v1Members i{font-style:normal;background:#247d94;color:white;border-radius:50%;width:30px;height:30px;display:grid;place-items:center}.v1Code{font-size:11px;color:var(--muted);margin-bottom:15px}.v1TableWrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}.v1Table{min-width:760px;width:100%;border-collapse:collapse;font-size:12px}.v1Table th,.v1Table td{padding:13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}.v1Table th{background:var(--panel2);color:var(--muted)}.v1Table small{display:block;color:var(--muted)}.v1Name{font-weight:700;color:var(--cyan)}.v1Table .v1Actions{padding:0;border:0;background:none}
-@media(max-width:1000px){.v1Grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v1Tools{flex-wrap:wrap}.v1Search{width:100%}}
-@media(max-width:720px){.v1Heading h1{font-size:25px}.v1Heading p{font-size:11px}.v1Tools{margin:10px 0}.v1Periods{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.v1Periods select{width:100%;max-width:100%;font-size:11px;padding:0 4px}.v1Modes{grid-template-columns:1fr}.v1ModeBtns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.v1ModeBtns button{flex-direction:column;padding:6px 1px;font-size:10px}.v1Status{gap:5px}.v1Status button{padding:8px 9px;font-size:11px}.v1Grid{grid-template-columns:1fr;gap:10px}.v1Grid.v1-small{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v1-small .v1Actions{grid-template-columns:1fr}.v1-small .v1Card h2{font-size:13px}.v1-small .v1Badge{font-size:9px}.v1-large .v1Open{padding:20px}.v1-large .v1Actions{padding:11px}}
-
-.carCreate,.carGroupPrimary{background:#108158;color:#fff;border:1px solid #108158;border-radius:10px;padding:8px 14px;min-height:44px;font-weight:750}
-.carCreate{flex:none}.resultsHead{flex-wrap:wrap}
-#carStorageStatus:not(:empty),#carPending:not([hidden]){margin:0 0 12px;color:var(--cyan)}#carPending p{margin:0 0 4px}
-.carGroupDialog{color:var(--text);background:var(--side);border:1px solid var(--line2);border-radius:18px;box-shadow:0 22px 75px var(--shadow);width:min(680px,calc(100% - 24px));max-width:none;max-height:min(86dvh,calc(100dvh - 24px));padding:0;overflow:hidden}
-.carGroupDialog[open]{display:flex;flex-direction:column}
-.carGroupDialog::backdrop{background:#01121fbb}.carGroupDialog [hidden]{display:none!important}
-.carGroupHeader{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:10px 16px}
-.carGroupHeader h2{margin:0;font-size:clamp(16px,4.2vw,21px);line-height:1.35}
-.carGroupHeader button{width:44px;height:44px;border:1px solid var(--line2);color:var(--cyan)}
-.carGroupForm{display:flex;flex-direction:column;min-height:0;margin:0;flex:1}
-.carGroupScroll{display:grid;gap:14px;align-content:start;min-height:0;overflow:auto;overscroll-behavior:contain;scroll-padding-block:16px;padding:14px 16px 18px}
-.carGroupForm p,.carGroupForm h3{margin:0}
-.carGroupForm label{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:5px;min-width:0;font-weight:650}
-.carGroupForm :is(input,select){display:block;width:100%;max-width:100%;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--surface);border:1px solid var(--line2);border-radius:9px;padding:7px 8px}
-.carGroupForm input[type=date]{appearance:none;-webkit-appearance:none;text-align:start}
-.carGroupForm input[type=date]::-webkit-date-and-time-value{min-width:0;text-align:start}
-.carGroupForm :is(input,select,button):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.carGroupForm [aria-invalid=true]{border-color:#e35c64}
-.carGroupForm #carGroupError:not(:empty),.carGroupFieldError{font-weight:700;color:var(--text);border-inline-start:3px solid #e35c64;padding-inline-start:7px}
-.carGroupForm small{color:var(--muted);font-weight:500;overflow-wrap:anywhere}
-.carGroupPeriod,.carGroupGrid{display:grid;gap:9px;grid-template-columns:repeat(3,minmax(0,1fr))}
-.carGroupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.carGroupMembers,#carGroupReview,.carGroupAccount{display:grid;gap:8px;border:1px solid var(--line);border-radius:11px;padding:10px;background:var(--panel)}
-#carGroupReview p{white-space:pre-line;overflow-wrap:anywhere}
-.carGroupActions{flex:none;display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;padding:8px 16px max(8px, env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--side)}
-.carGroupActions .resetBtn{min-height:44px}
-@media(max-width:767px){
- .carGroupDialog{position:fixed;inset:var(--car-viewport-top,0px) auto auto 0;margin:0;width:100%;height:var(--car-viewport-height,100dvh);max-height:none;border:0;border-radius:0}
- .carGroupHeader{padding: max(7px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 7px max(12px,env(safe-area-inset-left))}
- .carGroupScroll,.carGroupActions{padding-inline:max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-right))}
+@media (max-width:767px) {
+    .v1Grid { grid-template-columns: 1fr; }
+    .v1Grid.v1-small { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .v1-small .v1Actions { grid-template-columns: 1fr; }
+    .v1Modes { grid-template-columns: 1fr; }
+    .v1ModeBtns, .v1Periods { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); width: 100%; }
+    .v1Periods { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .v1Heading { flex-wrap: wrap; }
 }
-@media(max-width:480px){.carGroupDates,.carGroupRoles{grid-template-columns:minmax(0,1fr)}.carGroupPeriod{gap:6px}}
-@media(max-height:420px){.carGroupHeader button,.carGroupActions button{min-height:44px}.carGroupScroll{gap:10px}}
+@media (max-width:480px) { .carGroupDates, .carGroupRoles { grid-template-columns: minmax(0,1fr); } }
 </style>
-<link rel="stylesheet" href="../dashboard/workspace-shell.css?rev=pm36-mobile">
+<link rel="stylesheet" href="./workspace-shell.css?rev=pm37-car-form">
 </head>
 <body>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
- <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
- <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3 21 11v10H3zM9 21v-8h6v8"/></symbol>
- <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 15 7 7h10l2 8M4 15h16v4H4zM7 19v2M17 19v2M8 12h.1M16 12h.1"/></symbol>
- <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21c0-4 2-7 6-7s6 3 6 7M17 5c4 0 4 6 0 6M17 15c3 0 4 2 4 6"/></symbol>
  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
- <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
- <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 13a8 8 0 0 1-9-9 8 8 0 1 0 9 9"/></symbol>
- <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9M10 21h4"/></symbol>
- <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
- <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v5M12 7h.1"/></symbol>
- <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
- <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 20 6v6c0 5-3 8-8 10-5-2-8-5-8-10V6z"/></symbol>
 </svg>
 <div class="shell pa-directory" id="app">
  <div class="frame">
@@ -112,76 +111,87 @@ html[data-theme=light]{color-scheme:light;--bg:#f5f8fc;--side:#fff;--surface:#ff
      <div class="backline"><a href="../dashboard/">หน้าหลัก</a> / งานตัวแทน / คันรถ</div>
      <div class="v1Heading"><div><div class="eyebrow">งานตัวแทน</div><h1>คันรถของฉัน</h1><p>กดตัวการ์ดเพื่อตั้งค่าคันรถ หรือเลือกค่าใช้จ่ายและถืองานด้านล่าง</p></div><span class="demoPill">ข้อมูลจำลอง</span></div>
      <section class="v1Tools" aria-label="ค้นหาคันรถ">
-      <label class="v1Search"><svg class="smallIcon"><use href="#i-search"/></svg><input id="searchCars" type="search" autocomplete="off" aria-label="ค้นหาคันรถ จังหวัด รหัส และสมาชิก" placeholder="ค้นหาคันรถ จังหวัด หรือสมาชิก"/></label>
-      <div class="v1Periods"><select id="filterYear" aria-label="กรองปี"><option value="">ทุกปี</option><option value="2569">พ.ศ. 2569</option><option value="2568">พ.ศ. 2568</option></select><select id="filterMonth" aria-label="กรองเดือน"><option value="">ทุกเดือน</option><option value="11">พฤศจิกายน</option><option value="10">ตุลาคม</option></select><select id="filterWeek" aria-label="กรองวีค"><option value="">ทุกวีค</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
+      <label class="v1Search"><svg class="smallIcon"><use href="#i-search"/></svg><input class="pa-control" id="searchCars" type="search" autocomplete="off" aria-label="ค้นหาคันรถ จังหวัด รหัส และสมาชิก" placeholder="ค้นหาคันรถ จังหวัด หรือสมาชิก"/></label>
+      <div class="v1Periods"><select class="pa-control" id="filterYear" aria-label="กรองปี"><option value="">ทุกปี</option><option value="2569">พ.ศ. 2569</option><option value="2568">พ.ศ. 2568</option></select><select class="pa-control" id="filterMonth" aria-label="กรองเดือน"><option value="">ทุกเดือน</option><option value="11">พฤศจิกายน</option><option value="10">ตุลาคม</option></select><select class="pa-control" id="filterWeek" aria-label="กรองวีค"><option value="">ทุกวีค</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
      </section>
-     <section class="v1Modes" aria-label="รูปแบบคันรถ"><strong>รูปแบบการแสดงคันรถ</strong><div class="v1ModeBtns" role="group" aria-label="เลือกรูปแบบการแสดงคันรถ"><button data-layout="small" aria-pressed="false">▦ <span>กะทัดรัด</span></button><button data-layout="medium" aria-pressed="true">▣ <span>มาตรฐาน</span></button><button data-layout="large" aria-pressed="false">▤ <span>รายละเอียด</span></button><button data-layout="table" aria-pressed="false">☷ <span>ตาราง</span></button></div><p id="layoutHelp" aria-live="polite">มาตรฐาน · การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย</p></section>
-     <div class="v1Status" role="group" aria-label="กรองสถานะ"><button data-state="all" aria-pressed="true">ทั้งหมด</button><button data-state="open" aria-pressed="false">กำลังดำเนินการ</button><button data-state="closed" aria-pressed="false">ปิดแล้ว</button><button data-state="archived" aria-pressed="false">คลังคันรถ</button></div>
-     <div class="resultsHead"><strong>รายการคันรถ</strong><span id="resultCount" aria-live="polite"></span><button type="button" id="createCar" class="carCreate">+ สร้างคันรถ</button></div>
+     <section class="v1Modes" aria-label="รูปแบบคันรถ"><strong>รูปแบบการแสดงคันรถ</strong><div class="v1ModeBtns" role="group" aria-label="เลือกรูปแบบการแสดงคันรถ"><button class="pa-button" data-layout="small" aria-pressed="false">▦ <span>กะทัดรัด</span></button><button class="pa-button" data-layout="medium" aria-pressed="true">▣ <span>มาตรฐาน</span></button><button class="pa-button" data-layout="large" aria-pressed="false">▤ <span>รายละเอียด</span></button><button class="pa-button" data-layout="table" aria-pressed="false">☷ <span>ตาราง</span></button></div><p id="layoutHelp" aria-live="polite">มาตรฐาน · การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย</p></section>
+     <div class="v1Status" role="group" aria-label="กรองสถานะ"><button class="pa-button" data-state="all" aria-pressed="true">ทั้งหมด</button><button class="pa-button" data-state="open" aria-pressed="false">กำลังดำเนินการ</button><button class="pa-button" data-state="closed" aria-pressed="false">ปิดแล้ว</button><button class="pa-button" data-state="archived" aria-pressed="false">คลังคันรถ</button></div>
+     <div class="resultsHead"><strong>รายการคันรถ</strong><span id="resultCount" aria-live="polite"></span><button type="button" id="createCar" class="pa-button pa-button--primary">+ สร้างคันรถ</button></div>
      <div id="carStorageStatus" role="status" aria-live="polite"></div>
-     <div id="carPending" hidden><p>มีคำขอบันทึกที่ยังไม่ได้ยืนยัน</p><button type="button" class="resetBtn">ตรวจผลและลองคำขอเดิม</button></div>
-     <section id="carGrid" class="v1Grid" aria-label="การ์ดคันรถ"></section><div id="tableWrap" class="v1TableWrap" role="region" tabindex="0" aria-label="ตารางคันรถ เลื่อนซ้ายขวาได้" hidden></div>
-     <section class="empty" id="empty" hidden><strong>ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้</strong><p>ลองเปลี่ยนปี เดือน วีค หรือสถานะ</p><button id="resetSearch" class="resetBtn">ล้างตัวกรอง</button></section>
+     <div id="carPending" hidden><p>มีคำขอบันทึกที่ยังไม่ได้ยืนยัน</p><button type="button" class="pa-button">ตรวจผลและลองคำขอเดิม</button></div>
+     <section id="carGrid" class="v1Grid" aria-label="การ์ดคันรถ"></section><div id="tableWrap" class="v1TableWrap pa-card" role="region" tabindex="0" aria-label="ตารางคันรถ เลื่อนซ้ายขวาได้" hidden></div>
+     <section class="empty pa-card" id="empty" hidden><strong>ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้</strong><p>ลองเปลี่ยนปี เดือน วีค หรือสถานะ</p><button id="resetSearch" class="pa-button">ล้างตัวกรอง</button></section>
      <div class="explainer">เว็บทดลอง V2 · ใช้ข้อมูลจำลองเท่านั้น ข้อมูลคันรถเก็บในเบราว์เซอร์นี้ ปุ่มค่าใช้จ่ายและถืองานยังไม่เชื่อมธุรกรรม</div>
    </div>
   </main>
  </div>
 </div>
-<div class="dialogShade" id="dialogShade" role="presentation">
- <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
-  <div class="dialogHead"><div><h2 id="dialogTitle">รายละเอียดคันรถ</h2><div class="detailSub" id="dialogSubtitle"></div></div><button class="iconBtn" id="dialogX" aria-label="ปิดรายละเอียด"><svg><use href="#i-x"/></svg></button></div>
-  <div id="dialogBody"></div>
-  <button class="primary" id="dialogOK">ปิดรายละเอียด</button>
- </div>
-</div>
-<dialog id="carGroupDialog" class="carGroupDialog" aria-labelledby="carGroupTitle">
- <header class="carGroupHeader"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="iconBtn" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
+<dialog id="dialogShade" class="pa-dialog" aria-labelledby="dialogTitle">
+ <header class="pa-dialog-heading"><div><h2 id="dialogTitle">รายละเอียดคันรถ</h2><small id="dialogSubtitle"></small></div><button type="button" class="pa-button" id="dialogX" aria-label="ปิดรายละเอียด"><svg><use href="#i-x"/></svg></button></header>
+ <div class="pa-dialog-scroll" id="dialogBody"></div>
+ <div class="pa-dialog-actions"><button type="button" class="pa-button" id="dialogOK">ปิดรายละเอียด</button></div>
+</dialog>
+<dialog id="carGroupDialog" class="pa-dialog pa-dialog--mobile-full" aria-labelledby="carGroupTitle">
+ <header class="pa-dialog-heading"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="pa-button" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
  <form class="carGroupForm" novalidate>
-  <div class="carGroupScroll">
-  <label>รหัสคันรถ GRP-ID<input name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"><small>เมื่อบันทึกครั้งแรก ระบบจะสร้างรหัสนี้ และใช้รหัสเดิมเมื่อแก้ไข</small></label>
+  <div class="carGroupScroll pa-dialog-scroll">
+  <label>รหัสคันรถ GRP-ID<input class="pa-control" name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"><small>เมื่อบันทึกครั้งแรก ระบบจะสร้างรหัสนี้ และใช้รหัสเดิมเมื่อแก้ไข</small></label>
   <div class="carGroupPeriod">
-   <label>ปี พ.ศ.<select name="year" required></select></label>
-   <label>เดือน<select name="month" required></select></label>
-   <label>วีค<select name="week" required></select></label>
+   <label>ปี พ.ศ.<select class="pa-control" name="year" required></select></label>
+   <label>เดือน<select class="pa-control" name="month" required></select></label>
+   <label>วีค<select class="pa-control" name="week" required></select></label>
   </div>
   <div class="carGroupGrid carGroupDates">
-   <label>วันที่เริ่มคันรถ<input name="startDate" type="date" aria-describedby="carGroupDatesHint" required></label>
-   <label>วันที่สิ้นสุดคันรถ<input name="endDate" type="date" aria-describedby="carGroupDatesHint" required></label>
+   <label>วันที่เริ่มคันรถ<input class="pa-control" name="startDate" type="date" aria-describedby="carGroupDatesHint" required></label>
+   <label>วันที่สิ้นสุดคันรถ<input class="pa-control" name="endDate" type="date" aria-describedby="carGroupDatesHint" required></label>
   </div>
-  <small id="carGroupDatesHint">เลือกวันที่ทำงานจริงของวีคที่ระบุ ระบบจะไม่เปลี่ยนวันที่ให้เอง</small>
-  <label>ชื่อคันรถ<input name="name" maxlength="160" required></label>
-  <label>จังหวัด<input name="province" list="carGroupProvinces" maxlength="80" placeholder="พิมพ์ค้นหาชื่อจังหวัด" required><datalist id="carGroupProvinces"></datalist></label>
-  <label>หมายเหตุพื้นที่ / งาน<input name="workNote" maxlength="160" placeholder="เช่น จุดนัดพบหรือพื้นที่ทำงาน"></label>
-  <div class="carGroupAccount"><strong>ข้อมูลจำลอง</strong><small>เลือกตำแหน่งตัวเองจากสมาชิกที่กรอกไว้ ข้อมูลนี้ไม่ผูกกับบัญชีผู้ใช้</small></div>
-  <section class="carGroupMembers" aria-labelledby="carGroupMembersTitle">
+  <button type="button" class="pa-button" id="carApplyWeekDates">ใช้วันที่ตามวีค (จันทร์–ศุกร์)</button>
+  <small id="carGroupDatesHint" aria-live="polite">เมื่อเปลี่ยนปี เดือน หรือวีค ระบบจะใส่วันที่จันทร์–ศุกร์ให้ คุณยังแก้วันที่เองได้</small>
+  <label>ชื่อคันรถ<input class="pa-control" name="name" maxlength="160" required></label>
+  <div class="pa-picker" id="carProvincePicker">
+   <label for="carProvince">จังหวัด</label>
+   <input class="pa-control" id="carProvince" name="province" type="search" autocomplete="off" maxlength="80" placeholder="พิมพ์ค้นหาชื่อจังหวัด" aria-controls="carProvinceResults" aria-expanded="false" required>
+   <div class="pa-picker-results" id="carProvinceResults" hidden>
+    <small role="status"></small>
+    <ul aria-label="รายชื่อจังหวัด"></ul>
+   </div>
+  </div>
+  <label>หมายเหตุพื้นที่ / งาน<input class="pa-control" name="workNote" maxlength="160" placeholder="เช่น จุดนัดพบหรือพื้นที่ทำงาน"></label>
+  <div class="carGroupAccount pa-card"><strong>ข้อมูลจำลอง</strong><small>เลือกตำแหน่งตัวเองจากสมาชิกที่กรอกไว้ ข้อมูลนี้ไม่ผูกกับบัญชีผู้ใช้</small></div>
+  <section class="carGroupMembers pa-card" aria-labelledby="carGroupMembersTitle">
    <h3 id="carGroupMembersTitle">สมาชิกในคันรถ</h3>
    <div class="carGroupGrid">
-    <label>คนที่ 1 · หัวหน้าคัน<input name="member1" maxlength="80" required></label>
-    <label>คนที่ 2<input name="member2" maxlength="80" placeholder="เว้นว่างได้"></label>
-    <label>คนที่ 3<input name="member3" maxlength="80" placeholder="เว้นว่างได้"></label>
-    <label>คนที่ 4<input name="member4" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 1 · หัวหน้าคัน<input class="pa-control" name="member1" maxlength="80" required></label>
+    <label>คนที่ 2<input class="pa-control" name="member2" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 3<input class="pa-control" name="member3" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 4<input class="pa-control" name="member4" maxlength="80" placeholder="เว้นว่างได้"></label>
    </div>
    <small id="carGroupMemberCount" aria-live="polite"></small>
   </section>
   <div class="carGroupGrid carGroupRoles">
-   <label>เจ้าของรถ<select name="owner" required></select><small>เลือกจากสมาชิกในคันรถ แยกจากหัวหน้าคันได้</small></label>
-   <label>ตัวเอง (ข้อมูลจำลอง)<select name="self"></select></label>
+   <label>เจ้าของรถ<select class="pa-control" name="owner" required></select><small>เลือกจากสมาชิกในคันรถ แยกจากหัวหน้าคันได้</small></label>
+   <label>ตัวเอง (ข้อมูลจำลอง)<select class="pa-control" name="self"></select></label>
   </div>
-  <label>งบประมาณ (บาทไทย · THB)<input name="budget" type="number" step="1" placeholder="ยังไม่ตั้งงบ"></label>
-  <small>ค่าน้ำมัน: ยังไม่คำนวณในหน้านี้</small>
-  <section id="carGroupReview" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
+  <section class="carGroupAccount pa-card" aria-labelledby="carFuelHeading">
+   <h3 id="carFuelHeading">หลักเกณฑ์การแบ่งค่าน้ำมัน</h3>
+   <small>เมื่อเจ้าของรถร่วมรับผิดชอบ สัดส่วนของเจ้าของรถคือ วิ่ง 2 คน 30% · วิ่ง 3 คน 16% · วิ่ง 4 คน 0%</small>
+   <small id="carFuelContext" hidden></small>
+   <small>ถ้าเจ้าของรถไม่ร่วมรับผิดชอบ ให้เริ่มแบ่งเท่ากันในกลุ่มผู้รับผิดชอบ และปรับสัดส่วนเองได้ตามกฎเดิม</small>
+  </section>
+  <label>งบประมาณ (บาทไทย · THB)<input class="pa-control" name="budget" type="number" step="1" placeholder="ยังไม่ตั้งงบ"></label>
+  <section id="carGroupReview" class="pa-card" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
   <p id="carGroupError" role="alert"></p>
   </div>
-  <div class="carGroupActions">
-   <button type="button" class="resetBtn" data-close-group>ยกเลิก</button>
-   <button type="submit" class="resetBtn" id="carGroupReviewButton">ตรวจทานข้อมูล</button>
-   <button type="button" class="carGroupPrimary" id="carGroupSave" hidden>บันทึกคันรถ</button>
+  <div class="pa-dialog-actions">
+   <button type="button" class="pa-button" data-close-group>ยกเลิก</button>
+   <button type="submit" class="pa-button" id="carGroupReviewButton">ตรวจทานข้อมูล</button>
+   <button type="button" class="pa-button pa-button--primary" id="carGroupSave" hidden>บันทึกคันรถ</button>
   </div>
  </form>
 </dialog>
 <script type="module">
-import { carStore, connectGroupForm } from './group-form.js?rev=pm36-mobile';
-import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pm36-mobile';
+import { carStore, connectGroupForm } from './group-form.js?rev=pm37-car-form';
+import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pm37';
 (function(){
 'use strict';
 const get=id=>document.getElementById(id);
@@ -201,11 +211,11 @@ function render(){
  get('layoutHelp').textContent=layouts[layout].join(' · ');
  for(const b of document.querySelectorAll('[data-layout]')){b.classList.toggle('active',b.dataset.layout===layout);b.setAttribute('aria-pressed',String(b.dataset.layout===layout))}
  for(const b of document.querySelectorAll('[data-state]')){b.classList.toggle('active',b.dataset.state===state);b.setAttribute('aria-pressed',String(b.dataset.state===state))}
- const actions=t=>'<div class="v1Actions"><button data-action="expense" data-id="'+escapeHtml(t.id)+'">ค่าใช้จ่าย</button><button data-action="holding" data-id="'+escapeHtml(t.id)+'">ถืองาน</button></div>';
+ const actions=t=>'<div class="v1Actions"><button class="pa-button" data-action="expense" data-id="'+escapeHtml(t.id)+'">ค่าใช้จ่าย</button><button class="pa-button" data-action="holding" data-id="'+escapeHtml(t.id)+'">ถืองาน</button></div>';
  if(layout==='table'){
-  get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name" data-car="'+escapeHtml(t.id)+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>—</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
+  get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name pa-button" data-car="'+escapeHtml(t.id)+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>—</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
  }else{
-  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>⌖ '+escapeHtml(t.destination)+'</span><span>▣ '+period(t)+'</span>'+(layout==='small'?'':'<span>◷ '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
+  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card pa-card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>⌖ '+escapeHtml(t.destination)+'</span><span>▣ '+period(t)+'</span>'+(layout==='small'?'':'<span>◷ '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
  }
  for(const root of [get('carGrid'),get('tableWrap')]){for(const b of root.querySelectorAll('[data-car]'))b.onclick=()=>openCar(b.dataset.car);for(const b of root.querySelectorAll('[data-action]'))b.onclick=()=>openAction(b.dataset.id,b.dataset.action)}
 }
@@ -215,9 +225,10 @@ function showDialog(title,subtitle,body,buttonTitle){
  get('dialogTitle').textContent=title;get('dialogSubtitle').textContent=subtitle||'';
  get('dialogBody').innerHTML=body;
  get('dialogOK').textContent=buttonTitle||'ปิดรายละเอียด';
- get('dialogShade').classList.add('open');get('dialogX').focus();
+ get('dialogShade').showModal();get('dialogX').focus();
 }
-function closeDialog(){get('dialogShade').classList.remove('open');get('dialogBody').innerHTML='';if(dialogTrigger?.focus)dialogTrigger.focus();dialogTrigger=null}
+function closeDialog(){get('dialogShade').close()}
+get('dialogShade').addEventListener('close',()=>{get('dialogBody').innerHTML='';if(dialogTrigger?.focus)dialogTrigger.focus();dialogTrigger=null});
 function info(title,body){showDialog(title,'UI-ONLY · DEMO ONLY','<p class="infoText">'+escapeHtml(body)+'</p>','เข้าใจแล้ว')}
 const status=message=>{get('carStorageStatus').textContent=message};
 function fillPeriods(id,items,selected,all){
@@ -254,9 +265,6 @@ mountWorkspaceShell({
 });
 get('dialogX').onclick=get('dialogOK').onclick=closeDialog;
 get('dialogShade').onclick=e=>{if(e.target===get('dialogShade'))closeDialog()};
-document.addEventListener('keydown',event=>{
- if(event.key==='Escape'&&!get('carGroupDialog').open&&get('dialogShade').classList.contains('open'))closeDialog();
-});
 render();
 void refreshCars().then(()=>{
  const url=new URL(location.href);

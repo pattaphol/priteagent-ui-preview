@@ -1,5 +1,7 @@
 import { LocalCarGroupStore } from '../dashboard/adapters.js';
 import { validateCarGroup } from '../dashboard/domain.js';
+import { currentCarPeriod, weeksForMonth } from './car-period.js';
+import { connectProvincePicker, isThaiProvince } from '../ui/province-picker.js';
 
 export const carStore = new LocalCarGroupStore();
 const pendingPrefix = 'priteagent-v2:phase1:pending-operation:';
@@ -11,8 +13,6 @@ const commit = operation => operation.id
 
 const thaiMonth = new Intl.DateTimeFormat('th-TH', { month: 'long', timeZone: 'Asia/Bangkok' });
 const thaiDay = new Intl.DateTimeFormat('th-TH', { dateStyle: 'full', timeZone: 'UTC' });
-const periodClock = new Intl.DateTimeFormat('en-GB-u-ca-buddhist', { year: 'numeric', month: 'numeric', timeZone: 'Asia/Bangkok' });
-const provinces = ('กรุงเทพมหานคร กระบี่ กาญจนบุรี กาฬสินธุ์ กำแพงเพชร ขอนแก่น จันทบุรี ฉะเชิงเทรา ชลบุรี ชัยนาท ชัยภูมิ ชุมพร เชียงราย เชียงใหม่ ตรัง ตราด ตาก นครนายก นครปฐม นครพนม นครราชสีมา นครศรีธรรมราช นครสวรรค์ นนทบุรี นราธิวาส น่าน บึงกาฬ บุรีรัมย์ ปทุมธานี ประจวบคีรีขันธ์ ปราจีนบุรี ปัตตานี พระนครศรีอยุธยา พะเยา พังงา พัทลุง พิจิตร พิษณุโลก เพชรบุรี เพชรบูรณ์ แพร่ ภูเก็ต มหาสารคาม มุกดาหาร แม่ฮ่องสอน ยะลา ยโสธร ร้อยเอ็ด ระนอง ระยอง ราชบุรี ลพบุรี ลำปาง ลำพูน เลย ศรีสะเกษ สกลนคร สงขลา สตูล สมุทรปราการ สมุทรสงคราม สมุทรสาคร สระแก้ว สระบุรี สิงห์บุรี สุโขทัย สุพรรณบุรี สุราษฎร์ธานี สุรินทร์ หนองคาย หนองบัวลำภู อ่างทอง อำนาจเจริญ อุดรธานี อุตรดิตถ์ อุทัยธานี อุบลราชธานี').split(' ');
 function thaiDate(value) {
     const date = new Date(value + 'T12:00:00Z');
     return Number.isFinite(date.getTime()) ? thaiDay.format(date) : '';
@@ -30,7 +30,9 @@ export function connectGroupForm(onSaved, report) {
     input('month').replaceChildren(new Option('เลือกเดือน',''), ...monthChoices);
     input('week').replaceChildren(new Option('เลือกวีค',''), ...Array.from({length:5}, (_, i) =>
         new Option('วีค ' + (i+1),String(i+1))));
-    dialog.querySelector('#carGroupProvinces').replaceChildren(...provinces.map(province => new Option(province,province)));
+    const province = connectProvincePicker(dialog.querySelector('#carProvincePicker'));
+    const applyWeekButton = dialog.querySelector('#carApplyWeekDates');
+    const fuelContext = dialog.querySelector('#carFuelContext');
     const members = [1, 2, 3, 4].map(n => input('member' + n));
     const review = dialog.querySelector('#carGroupReview');
     const reviewText = review.querySelector('p');
@@ -58,22 +60,63 @@ export function connectGroupForm(onSaved, report) {
     let dirty = false;
     let busy = false;
     let initialFocus = null;
+    let periodChanged = false;
 
     function setPeriodOptions() {
-        const now = Object.fromEntries(periodClock.formatToParts().map(part => [part.type, part.value]));
-        const year = Number(now.year);
+        const now = currentCarPeriod();
+        const year = now.year;
         const options = [...new Set([current?.year, ...Array.from({length:23},(_,i) => year + 2 - i)].filter(Number.isInteger))]
             .sort((a,b) => b-a);
         input('year').replaceChildren(...options.map(value => new Option(String(value),String(value))));
         input('year').value = String(current?.year ?? year);
-        input('month').value = String(current?.month ?? Number(now.month));
+        input('month').value = String(current?.month ?? now.month);
+        input('week').value = String(current?.week ?? now.week);
+        if (!current) {
+            input('startDate').value = now.start;
+            input('endDate').value = now.end;
+        }
     }
     function updateDateHint() {
         const start = thaiDate(input('startDate').value);
         const end = thaiDate(input('endDate').value);
         const week = input('week').value;
         dateHint.textContent = start && end
-            ? (week ? 'วีค ' + week + ' · ' : '') + start + ' – ' + end : defaultDateHint;
+            ? (week ? 'วีค ' + week + ' · ' : '') + start + ' – ' + end + ' · ' + defaultDateHint : defaultDateHint;
+    }
+
+    function selectedWeek() {
+        return weeksForMonth(Number(input('year').value), Number(input('month').value))
+            .find(range => range.week === Number(input('week').value));
+    }
+    function applyWeekDates() {
+        if (busy || operation) return;
+        dirty = true;
+        periodChanged = true;
+        clearReview();
+        const range = selectedWeek();
+        if (!range) {
+            dateHint.textContent = 'เลือกปี เดือน และวีคที่มีในเดือนนั้น ระบบจะเก็บวันที่เดิมไว้';
+            return;
+        }
+        input('startDate').value = range.start;
+        input('endDate').value = range.end;
+        for (const name of ['startDate','endDate','week']) {
+            feedback.get(name).hidden = true;
+            input(name).removeAttribute('aria-invalid');
+        }
+        updateDateHint();
+    }
+    for (const name of ['year','month','week']) input(name).addEventListener('change', applyWeekDates);
+    applyWeekButton.addEventListener('click', applyWeekDates);
+
+    function updateFuelContext() {
+        const count = members.filter(member => member.value.trim()).length;
+        const share = {2: 30, 3: 16, 4: 0}[count];
+        const show = share !== undefined && input('owner').value !== '';
+        fuelContext.hidden = !show;
+        fuelContext.textContent = show
+            ? 'คันนี้มีสมาชิก ' + count + ' คน หากเจ้าของรถร่วมรับผิดชอบ สัดส่วนของเจ้าของรถคือ ' + share + '%'
+            : '';
     }
 
     const viewport = window.visualViewport;
@@ -103,6 +146,7 @@ export function connectGroupForm(onSaved, report) {
             });
             if (Array.from(select.options).some(option => option.value === previous)) select.value = previous;
         }
+        updateFuelContext();
     }
     function markErrors(errors) {
         let first = null;
@@ -130,6 +174,8 @@ export function connectGroupForm(onSaved, report) {
     function lock(value) {
         for (const el of controls) el.disabled = value;
         reviewButton.disabled = value;
+        applyWeekButton.disabled = value;
+        if (value) province.close();
     }
     function syncPending() {
         try {
@@ -156,6 +202,7 @@ export function connectGroupForm(onSaved, report) {
     dialog.addEventListener('close', () => {
         if (initialFocus?.isConnected) initialFocus.focus();
         else document.querySelector('#createCar').focus();
+        province.close();
         syncPending();
     });
     for (const button of dialog.querySelectorAll('[data-close-group]')) button.addEventListener('click', close);
@@ -172,7 +219,8 @@ export function connectGroupForm(onSaved, report) {
         clearReview();
         const field = event.target;
         if (members.includes(field) && field.value.trim()) refreshChoices();
-        if (['startDate','endDate','week'].includes(field.name)) updateDateHint();
+        if (field.name === 'owner') updateFuelContext();
+        if (['startDate','endDate'].includes(field.name) && (!periodChanged || selectedWeek())) updateDateHint();
         const message = feedback.get(field.name);
         if (message) {
             message.hidden = true;
@@ -223,6 +271,8 @@ export function connectGroupForm(onSaved, report) {
             ...(budget.value === '' ? {} : {budget: budget.valueAsNumber})
         };
         const errors = validateCarGroup(draft);
+        if (!isThaiProvince(draft.province)) errors.province = 'เลือกจังหวัดที่อยู่ในรายการ';
+        if (periodChanged && !selectedWeek()) errors.week = 'เลือกวีคที่มีในเดือนนี้';
         if (!names[0]) errors.member1 = 'กรอกชื่อสมาชิกคนที่ 1 ซึ่งเป็นหัวหน้าคัน';
         if (errors.ownerIndex) errors.owner = errors.ownerIndex;
         if (errors.selfPosition) errors.self = errors.selfPosition;
@@ -338,6 +388,7 @@ export function connectGroupForm(onSaved, report) {
                 return;
             }
             form.reset();
+            periodChanged = false;
             setPeriodOptions();
             lock(false);
             clearReview();
@@ -348,10 +399,11 @@ export function connectGroupForm(onSaved, report) {
             dialog.querySelector('#carGroupTitle').textContent = current ? 'ตั้งค่าคันรถ / คันรถ Group' : 'สร้างคันรถ / คันรถ Group';
             input('groupId').value = current?.id ?? '';
             if (current) {
-                for (const key of ['year', 'month', 'week', 'startDate', 'endDate', 'name', 'province', 'workNote', 'budget']) {
+                for (const key of ['year', 'month', 'week', 'startDate', 'endDate', 'name', 'workNote', 'budget']) {
                     input(key).value = current[key] ?? '';
                 }
             }
+            province.set(current?.province ?? '');
             members.forEach((el, index) => {
                 el.value = current?.members[index] ?? '';
                 el.dataset.previous = el.value;
@@ -359,6 +411,7 @@ export function connectGroupForm(onSaved, report) {
             refreshChoices();
             input('owner').value = current?.ownerIndex === undefined ? '' : String(current.ownerIndex);
             input('self').value = current?.selfPosition === undefined ? '' : String(current.selfPosition);
+            updateFuelContext();
             dialog.showModal();
             scroll.scrollTop = 0;
             updateDateHint();
