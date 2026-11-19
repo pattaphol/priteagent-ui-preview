@@ -1,0 +1,45 @@
+{
+  "version": "login-native-3f69a5c3",
+  "source_base": "08e2bba76b29851baf9abec71a3aa05289902f7b",
+  "source_content_tree": "3f69a5c3f0a01b2446e154eb552689295b1c6afb",
+  "preview_transform": "Namespace all localStorage/IndexedDB identifiers in app.js, adapters.js and ui/theme-control.js. No application source writes. Resolve root app.js theme import to ./ui/theme-control.js; namespace IndexedDB database name.",
+  "namespace": "priteagent-preview:login-native-3f69a5c3:",
+  "rollback_base": "b9e7f2ef163548424c99b78165929bac7a743002",
+  "files": [
+    {
+      "path": "adapters.js",
+      "size": 9943,
+      "sha256": "fe02c470d8d8497d89de74f14e472dda4c46161ed3ebefa9151d3a0d66ceda96"
+    },
+    {
+      "path": "app.js",
+      "size": 37348,
+      "sha256": "6a4effcc8c2af8273ef0756cbd8f919f57b60d66b12c559fcf7e4bbfb3505975"
+    },
+    {
+      "path": "domain.js",
+      "size": 3100,
+      "sha256": "cea8c600c8c3902fbee82113d58e6e254b88dba8c3c7a2e90bd15d12a6a8627a"
+    },
+    {
+      "path": "index.html",
+      "size": 670,
+      "sha256": "eeca8c4f59767c232ce92fa24f1ef3f5d5a7d09dece55e62085a8dd9d0e379ab"
+    },
+    {
+      "path": "styles.css",
+      "size": 12513,
+      "sha256": "d19ea546cd3e6501cad805c811dceb816904e31352ccbf5958eebc42d5bac835"
+    },
+    {
+      "path": "ui/theme-control.css",
+      "size": 1515,
+      "sha256": "8c625a728c5058ffd63f496659df262ff29399788bf7594f8556d0213f0b203d"
+    },
+    {
+      "path": "ui/theme-control.js",
+      "size": 2481,
+      "sha256": "9f4ccad8e02984c58296de7719e2ca2beb9d4737227a573cdf6a0b2a080d271c"
+    }
+  ]
+}

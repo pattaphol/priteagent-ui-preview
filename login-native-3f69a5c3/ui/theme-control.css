@@ -1,0 +1,46 @@
+button.pa-theme-control,
+.pa-header button.pa-theme-control {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 44px;
+    inline-size: 44px;
+    block-size: 44px;
+    padding: 0;
+    border: 1px solid var(--pa-line, var(--line));
+    border-radius: 10px;
+    background: transparent;
+    color: var(--pa-text, var(--text));
+    cursor: pointer;
+    transition: background-color .18s ease, color .18s ease;
+}
+
+button.pa-theme-control:hover,
+.pa-header button.pa-theme-control:hover {
+    background: var(--pa-bg, var(--bg));
+}
+
+button.pa-theme-control:focus-visible {
+    outline: 2px solid var(--pa-accent, var(--accent, currentColor));
+    outline-offset: 2px;
+}
+
+.pa-theme-control .pa-theme-icon {
+    font: 21px/1 system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button.pa-theme-control,
+    .pa-header button.pa-theme-control {
+        transition: none;
+    }
+}
+
+#loginApp {max-width: 32rem; margin: clamp(1rem, 8vh, 5rem) auto; padding: 1.25rem; min-width: 0;}
+#loginApp .login-heading {display:flex; align-items:center; justify-content:space-between; gap:1rem;}
+#loginApp form, #loginApp label {display:grid; gap:.6rem;}
+#loginApp form {gap:1rem;}
+#loginApp input {box-sizing:border-box; width:100%; min-width:0; font:inherit;}
+#loginApp .password-control {display:flex; gap:.5rem;}
+#loginApp .password-control input {flex:1; min-width:0;}
+#loginApp .login-secondary {display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;}
+#loginApp [role=alert]:empty {display:none;}
