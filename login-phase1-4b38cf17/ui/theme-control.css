@@ -1,0 +1,36 @@
+button.pa-theme-control,
+.pa-header button.pa-theme-control {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 44px;
+    inline-size: 44px;
+    block-size: 44px;
+    padding: 0;
+    border: 1px solid var(--pa-line, var(--line));
+    border-radius: 10px;
+    background: transparent;
+    color: var(--pa-text, var(--text));
+    cursor: pointer;
+    transition: background-color .18s ease, color .18s ease;
+}
+
+button.pa-theme-control:hover,
+.pa-header button.pa-theme-control:hover {
+    background: var(--pa-bg, var(--bg));
+}
+
+button.pa-theme-control:focus-visible {
+    outline: 2px solid var(--pa-accent, var(--accent, currentColor));
+    outline-offset: 2px;
+}
+
+.pa-theme-control .pa-theme-icon {
+    font: 21px/1 system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button.pa-theme-control,
+    .pa-header button.pa-theme-control {
+        transition: none;
+    }
+}

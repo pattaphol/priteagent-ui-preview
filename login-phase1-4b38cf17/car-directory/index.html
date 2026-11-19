@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="th" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>PriteAgent V2 — คันรถของฉัน</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('priteagent-preview:login-phase1-4b38cf17:priteagent.ui.theme.v1')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="../ui/design-system.css?rev=pm37-car-form">
+<style>
+html, body { height: 100%; }
+.pa-directory { height: 100dvh; }
+.frame { height: 100%; min-width: 0; display: flex; flex-direction: column; }
+.main { min-height: 0; overflow-y: auto; padding: var(--pa-space-4) var(--pa-gutter); }
+.inner { max-width: var(--pa-content-width); margin-inline: auto; }
+.backline, .v1Heading p, .explainer, #resultCount { color: var(--pa-muted); font-size: var(--pa-small); }
+.backline { margin-block-end: var(--pa-space-3); }
+.v1Heading, .resultsHead { display: flex; justify-content: space-between; align-items: start; gap: var(--pa-space-3); }
+.v1Heading h1 { margin: var(--pa-space-1) 0; }
+.v1Heading p { margin: 0; }
+.eyebrow, .v1Code, #layoutHelp { color: var(--pa-muted); font-size: var(--pa-caption); }
+.demoPill, .v1Badge { display: inline-block; border-radius: 999px; padding: var(--pa-space-1) var(--pa-space-2); background: var(--pa-soft); color: var(--pa-accent); font-size: var(--pa-caption); white-space: nowrap; }
+.v1Badge.closed { color: var(--pa-muted); background: var(--pa-surface-alt); }
+.v1Tools, .v1Periods { display: flex; gap: var(--pa-space-2); }
+.v1Tools { justify-content: space-between; margin-block: var(--pa-space-4); }
+.v1Search { position: relative; width: min(100%, 435px); }
+.v1Search .smallIcon { position: absolute; inset: 14px auto auto var(--pa-space-3); pointer-events: none; }
+.v1Search input { padding-inline-start: var(--pa-space-6); }
+.smallIcon, .v1Icon svg, #dialogX svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.v1Periods .pa-control { font-size: var(--pa-small); }
+.v1Modes { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--pa-space-2); margin-block: var(--pa-space-4); }
+.v1ModeBtns, .v1Status { display: flex; gap: var(--pa-space-1); }
+#layoutHelp { grid-column: 1/-1; margin: 0; }
+.v1Status { flex-wrap: wrap; margin-block-end: var(--pa-space-4); }
+.resultsHead { align-items: center; flex-wrap: wrap; margin-block-end: var(--pa-space-3); }
+#carStorageStatus:not(:empty), #carPending:not([hidden]) { margin-block-end: var(--pa-space-3); color: var(--pa-accent); }
+#carPending p { margin: 0 0 var(--pa-space-1); }
+.v1Grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--pa-space-3); }
+.v1Grid.v1-small { grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); }
+.v1Grid.v1-large { grid-template-columns: 1fr; }
+.v1Grid[hidden], .v1TableWrap[hidden], .empty[hidden] { display: none; }
+.v1Card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.v1Card:hover { border-color: var(--pa-accent); }
+.v1Open { display: flex; flex: 1; flex-direction: column; align-items: stretch; text-align: start; border: 0; background: transparent; padding: var(--pa-space-4); }
+.v1Open:focus-visible { outline-offset: -3px; }
+.v1CardTop, .v1Total { display: flex; justify-content: space-between; align-items: center; gap: var(--pa-space-2); }
+.v1Icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--pa-control-radius); background: var(--pa-soft); color: var(--pa-accent); }
+.v1Card h2 { margin: var(--pa-space-3) 0 var(--pa-space-2); }
+.v1Facts { display: grid; gap: var(--pa-space-1); margin-block-end: var(--pa-space-3); color: var(--pa-muted); font-size: var(--pa-small); overflow-wrap: anywhere; }
+.v1Total { border-block-start: 1px solid var(--pa-line); padding-block-start: var(--pa-space-2); margin-block-start: auto; }
+.v1Total span { font-size: var(--pa-caption); color: var(--pa-muted); }
+.v1Total strong { display: block; color: var(--pa-text); font-size: var(--pa-section-title); }
+.v1Actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--pa-space-2); padding: var(--pa-space-3); border-block-start: 1px solid var(--pa-line); background: var(--pa-surface-alt); }
+.v1-small .v1Open { padding: var(--pa-space-3); }
+.v1-small .v1Icon { display: none; }
+.v1-small .v1Card h2 { font-size: var(--pa-body); }
+.v1-small .v1Facts { margin: 0; }
+.v1-large .v1Actions { grid-template-columns: repeat(2,minmax(0,200px)); }
+.v1Members { display: flex; flex-wrap: wrap; gap: var(--pa-space-2); margin-block: var(--pa-space-3); }
+.v1Members span { display: flex; align-items: center; gap: var(--pa-space-1); font-size: var(--pa-small); }
+.v1Members i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--pa-soft); color: var(--pa-accent); font-style: normal; }
+.v1TableWrap { overflow-x: auto; }
+.v1Table { min-width: 710px; width: 100%; border-collapse: collapse; }
+.v1Table th, .v1Table td { padding: var(--pa-space-3); text-align: start; border-block-end: 1px solid var(--pa-line); }
+.v1Table th { background: var(--pa-surface-alt); }
+.v1Table small { display: block; }
+.v1Table .v1Actions { padding: 0; border: 0; background: transparent; }
+.empty { padding: var(--pa-space-5); text-align: center; }
+.explainer { margin-block-start: var(--pa-space-4); }
+.carGroupForm { display: flex; flex: 1; flex-direction: column; min-height: 0; margin: 0; }
+.carGroupScroll { display: grid; gap: var(--pa-space-3); align-content: start; }
+.carGroupForm :is(p,h3) { margin: 0; }
+.carGroupForm label { display: grid; grid-template-columns: minmax(0,1fr); align-content: start; gap: var(--pa-space-1); min-width: 0; font-weight: 650; }
+.carGroupForm input[type=date] { appearance: none; -webkit-appearance: none; text-align: start; }
+.carGroupForm input[type=date]::-webkit-date-and-time-value { min-width: 0; text-align: start; }
+#carGroupError:not(:empty), .carGroupFieldError { font-weight: 700; color: var(--pa-danger); }
+.carGroupPeriod, .carGroupGrid { display: grid; gap: var(--pa-space-2); grid-template-columns: repeat(3,minmax(0,1fr)); }
+.carGroupGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.carGroupMembers, #carGroupReview, .carGroupAccount { display: grid; gap: var(--pa-space-2); padding: var(--pa-space-3); }
+#carGroupReview p { white-space: pre-line; overflow-wrap: anywhere; }
+@media (max-width:1000px) {
+    .v1Grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .v1Tools { flex-wrap: wrap; }
+    .v1Search { width: 100%; }
+}
+@media (max-width:767px) {
+    .v1Grid { grid-template-columns: 1fr; }
+    .v1Grid.v1-small { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .v1-small .v1Actions { grid-template-columns: 1fr; }
+    .v1Modes { grid-template-columns: 1fr; }
+    .v1ModeBtns, .v1Periods { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); width: 100%; }
+    .v1Periods { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .v1Heading { flex-wrap: wrap; }
+}
+@media (max-width:480px) { .carGroupDates, .carGroupRoles { grid-template-columns: minmax(0,1fr); } }
+</style>
+<link rel="stylesheet" href="./workspace-shell.css?rev=pm37-car-form">
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+ <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+ <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 15 7 7h10l2 8M4 15h16v4H4zM7 19v2M17 19v2M8 12h.1M16 12h.1"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+</svg>
+<div class="shell pa-directory" id="app">
+ <div class="frame">
+  <header id="workspace-header"></header>
+  <aside id="workspace-menu" aria-label="เมนูนำทาง"></aside>
+  <main id="main" class="main" tabindex="-1">
+   <div class="inner">
+     <div class="backline"><a href="../dashboard/">หน้าหลัก</a> / งานตัวแทน / คันรถ</div>
+     <div class="v1Heading"><div><div class="eyebrow">งานตัวแทน</div><h1>คันรถของฉัน</h1><p>กดตัวการ์ดเพื่อตั้งค่าคันรถ หรือเลือกค่าใช้จ่ายและถืองานด้านล่าง</p></div><span class="demoPill">ข้อมูลจำลอง</span></div>
+     <section class="v1Tools" aria-label="ค้นหาคันรถ">
+      <label class="v1Search"><svg class="smallIcon"><use href="#i-search"/></svg><input class="pa-control" id="searchCars" type="search" autocomplete="off" aria-label="ค้นหาคันรถ จังหวัด รหัส และสมาชิก" placeholder="ค้นหาคันรถ จังหวัด หรือสมาชิก"/></label>
+      <div class="v1Periods"><select class="pa-control" id="filterYear" aria-label="กรองปี"><option value="">ทุกปี</option><option value="2569">พ.ศ. 2569</option><option value="2568">พ.ศ. 2568</option></select><select class="pa-control" id="filterMonth" aria-label="กรองเดือน"><option value="">ทุกเดือน</option><option value="11">พฤศจิกายน</option><option value="10">ตุลาคม</option></select><select class="pa-control" id="filterWeek" aria-label="กรองวีค"><option value="">ทุกวีค</option><option value="1">วีค 1</option><option value="2">วีค 2</option><option value="3">วีค 3</option><option value="4">วีค 4</option><option value="5">วีค 5</option></select></div>
+     </section>
+     <section class="v1Modes" aria-label="รูปแบบคันรถ"><strong>รูปแบบการแสดงคันรถ</strong><div class="v1ModeBtns" role="group" aria-label="เลือกรูปแบบการแสดงคันรถ"><button class="pa-button" data-layout="small" aria-pressed="false">▦ <span>กะทัดรัด</span></button><button class="pa-button" data-layout="medium" aria-pressed="true">▣ <span>มาตรฐาน</span></button><button class="pa-button" data-layout="large" aria-pressed="false">▤ <span>รายละเอียด</span></button><button class="pa-button" data-layout="table" aria-pressed="false">☷ <span>ตาราง</span></button></div><p id="layoutHelp" aria-live="polite">มาตรฐาน · การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย</p></section>
+     <div class="v1Status" role="group" aria-label="กรองสถานะ"><button class="pa-button" data-state="all" aria-pressed="true">ทั้งหมด</button><button class="pa-button" data-state="open" aria-pressed="false">กำลังดำเนินการ</button><button class="pa-button" data-state="closed" aria-pressed="false">ปิดแล้ว</button><button class="pa-button" data-state="archived" aria-pressed="false">คลังคันรถ</button></div>
+     <div class="resultsHead"><strong>รายการคันรถ</strong><span id="resultCount" aria-live="polite"></span><button type="button" id="createCar" class="pa-button pa-button--primary">+ สร้างคันรถ</button></div>
+     <div id="carStorageStatus" role="status" aria-live="polite"></div>
+     <div id="carPending" hidden><p>มีคำขอบันทึกที่ยังไม่ได้ยืนยัน</p><button type="button" class="pa-button">ตรวจผลและลองคำขอเดิม</button></div>
+     <section id="carGrid" class="v1Grid" aria-label="การ์ดคันรถ"></section><div id="tableWrap" class="v1TableWrap pa-card" role="region" tabindex="0" aria-label="ตารางคันรถ เลื่อนซ้ายขวาได้" hidden></div>
+     <section class="empty pa-card" id="empty" hidden><strong>ไม่พบคันรถตามคำค้นหาหรือตัวกรองนี้</strong><p>ลองเปลี่ยนปี เดือน วีค หรือสถานะ</p><button id="resetSearch" class="pa-button">ล้างตัวกรอง</button></section>
+     <div class="explainer">เว็บทดลอง V2 · ใช้ข้อมูลจำลองเท่านั้น ข้อมูลคันรถเก็บในเบราว์เซอร์นี้ ปุ่มค่าใช้จ่ายและถืองานยังไม่เชื่อมธุรกรรม</div>
+   </div>
+  </main>
+ </div>
+</div>
+<dialog id="dialogShade" class="pa-dialog" aria-labelledby="dialogTitle">
+ <header class="pa-dialog-heading"><div><h2 id="dialogTitle">รายละเอียดคันรถ</h2><small id="dialogSubtitle"></small></div><button type="button" class="pa-button" id="dialogX" aria-label="ปิดรายละเอียด"><svg><use href="#i-x"/></svg></button></header>
+ <div class="pa-dialog-scroll" id="dialogBody"></div>
+ <div class="pa-dialog-actions"><button type="button" class="pa-button" id="dialogOK">ปิดรายละเอียด</button></div>
+</dialog>
+<dialog id="carGroupDialog" class="pa-dialog pa-dialog--mobile-full" aria-labelledby="carGroupTitle">
+ <header class="pa-dialog-heading"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="pa-button" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
+ <form class="carGroupForm" novalidate>
+  <div class="carGroupScroll pa-dialog-scroll">
+  <label>รหัสคันรถ GRP-ID<input class="pa-control" name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"><small>เมื่อบันทึกครั้งแรก ระบบจะสร้างรหัสนี้ และใช้รหัสเดิมเมื่อแก้ไข</small></label>
+  <div class="carGroupPeriod">
+   <label>ปี พ.ศ.<select class="pa-control" name="year" required></select></label>
+   <label>เดือน<select class="pa-control" name="month" required></select></label>
+   <label>วีค<select class="pa-control" name="week" required></select></label>
+  </div>
+  <div class="carGroupGrid carGroupDates">
+   <label>วันที่เริ่มคันรถ<input class="pa-control" name="startDate" type="date" aria-describedby="carGroupDatesHint" required></label>
+   <label>วันที่สิ้นสุดคันรถ<input class="pa-control" name="endDate" type="date" aria-describedby="carGroupDatesHint" required></label>
+  </div>
+  <button type="button" class="pa-button" id="carApplyWeekDates">ใช้วันที่ตามวีค (จันทร์–ศุกร์)</button>
+  <small id="carGroupDatesHint" aria-live="polite">เมื่อเปลี่ยนปี เดือน หรือวีค ระบบจะใส่วันที่จันทร์–ศุกร์ให้ คุณยังแก้วันที่เองได้</small>
+  <label>ชื่อคันรถ<input class="pa-control" name="name" maxlength="160" required></label>
+  <div class="pa-picker" id="carProvincePicker">
+   <label for="carProvince">จังหวัด</label>
+   <input class="pa-control" id="carProvince" name="province" type="search" autocomplete="off" maxlength="80" placeholder="พิมพ์ค้นหาชื่อจังหวัด" aria-controls="carProvinceResults" aria-expanded="false" required>
+   <div class="pa-picker-results" id="carProvinceResults" hidden>
+    <small role="status"></small>
+    <ul aria-label="รายชื่อจังหวัด"></ul>
+   </div>
+  </div>
+  <label>หมายเหตุพื้นที่ / งาน<input class="pa-control" name="workNote" maxlength="160" placeholder="เช่น จุดนัดพบหรือพื้นที่ทำงาน"></label>
+  <div class="carGroupAccount pa-card"><strong>ข้อมูลจำลอง</strong><small>เลือกตำแหน่งตัวเองจากสมาชิกที่กรอกไว้ ข้อมูลนี้ไม่ผูกกับบัญชีผู้ใช้</small></div>
+  <section class="carGroupMembers pa-card" aria-labelledby="carGroupMembersTitle">
+   <h3 id="carGroupMembersTitle">สมาชิกในคันรถ</h3>
+   <div class="carGroupGrid">
+    <label>คนที่ 1 · หัวหน้าคัน<input class="pa-control" name="member1" maxlength="80" required></label>
+    <label>คนที่ 2<input class="pa-control" name="member2" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 3<input class="pa-control" name="member3" maxlength="80" placeholder="เว้นว่างได้"></label>
+    <label>คนที่ 4<input class="pa-control" name="member4" maxlength="80" placeholder="เว้นว่างได้"></label>
+   </div>
+   <small id="carGroupMemberCount" aria-live="polite"></small>
+  </section>
+  <div class="carGroupGrid carGroupRoles">
+   <label>เจ้าของรถ<select class="pa-control" name="owner" required></select><small>เลือกจากสมาชิกในคันรถ แยกจากหัวหน้าคันได้</small></label>
+   <label>ตัวเอง (ข้อมูลจำลอง)<select class="pa-control" name="self"></select></label>
+  </div>
+  <section class="carGroupAccount pa-card" aria-labelledby="carFuelHeading">
+   <h3 id="carFuelHeading">หลักเกณฑ์การแบ่งค่าน้ำมัน</h3>
+   <small>เมื่อเจ้าของรถร่วมรับผิดชอบ สัดส่วนของเจ้าของรถคือ วิ่ง 2 คน 30% · วิ่ง 3 คน 16% · วิ่ง 4 คน 0%</small>
+   <small id="carFuelContext" hidden></small>
+   <small>ถ้าเจ้าของรถไม่ร่วมรับผิดชอบ ให้เริ่มแบ่งเท่ากันในกลุ่มผู้รับผิดชอบ และปรับสัดส่วนเองได้ตามกฎเดิม</small>
+  </section>
+  <label>งบประมาณ (บาทไทย · THB)<input class="pa-control" name="budget" type="number" step="1" placeholder="ยังไม่ตั้งงบ"></label>
+  <section id="carGroupReview" class="pa-card" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
+  <p id="carGroupError" role="alert"></p>
+  </div>
+  <div class="pa-dialog-actions">
+   <button type="button" class="pa-button" data-close-group>ยกเลิก</button>
+   <button type="submit" class="pa-button" id="carGroupReviewButton">ตรวจทานข้อมูล</button>
+   <button type="button" class="pa-button pa-button--primary" id="carGroupSave" hidden>บันทึกคันรถ</button>
+  </div>
+ </form>
+</dialog>
+<script type="module">
+import { carStore, connectGroupForm } from './group-form.js?rev=pm37-car-form';
+import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pm37';
+(function(){
+'use strict';
+const get=id=>document.getElementById(id);
+const icon=(name,cls='')=>'<svg'+(cls?' class="'+cls+'"':'')+' aria-hidden="true"><use href="#i-'+name+'"/></svg>';
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let cars=[];
+const months=new Intl.DateTimeFormat('th-TH',{month:'long',timeZone:'UTC'});
+function monthName(month){return months.format(new Date(Date.UTC(2026,month-1,1)))}
+const layouts={small:['กะทัดรัด','การ์ดเล็ก แสดงชื่อ จังหวัด และวีค'],medium:['มาตรฐาน','การ์ดพร้อมช่วงวันที่และยอดค่าใช้จ่าย'],large:['รายละเอียด','การ์ดใหญ่ พร้อมรายชื่อสมาชิกและเงินกองกลาง'],table:['ตาราง','เรียงคันรถเป็นแถว']};
+const day=s=>new Date(s+'T12:00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
+const period=t=>'วีค '+t.week+' · '+monthName(t.month)+' '+t.year;
+let query='',state='all',year='',month='',week='',layout='medium',dialogTrigger=null;
+function render(){
+ const rows=cars.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
+ get('resultCount').textContent='แสดง '+rows.length+' จาก '+cars.length+' คันรถ';
+ get('carGrid').hidden=!rows.length||layout==='table';get('tableWrap').hidden=!rows.length||layout!=='table';get('empty').hidden=!!rows.length;get('carGrid').className='v1Grid v1-'+layout;
+ get('layoutHelp').textContent=layouts[layout].join(' · ');
+ for(const b of document.querySelectorAll('[data-layout]')){b.classList.toggle('active',b.dataset.layout===layout);b.setAttribute('aria-pressed',String(b.dataset.layout===layout))}
+ for(const b of document.querySelectorAll('[data-state]')){b.classList.toggle('active',b.dataset.state===state);b.setAttribute('aria-pressed',String(b.dataset.state===state))}
+ const actions=t=>'<div class="v1Actions"><button class="pa-button" data-action="expense" data-id="'+escapeHtml(t.id)+'">ค่าใช้จ่าย</button><button class="pa-button" data-action="holding" data-id="'+escapeHtml(t.id)+'">ถืองาน</button></div>';
+ if(layout==='table'){
+  get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name pa-button" data-car="'+escapeHtml(t.id)+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>—</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
+ }else{
+  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card pa-card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>⌖ '+escapeHtml(t.destination)+'</span><span>▣ '+period(t)+'</span>'+(layout==='small'?'':'<span>◷ '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
+ }
+ for(const root of [get('carGrid'),get('tableWrap')]){for(const b of root.querySelectorAll('[data-car]'))b.onclick=()=>openCar(b.dataset.car);for(const b of root.querySelectorAll('[data-action]'))b.onclick=()=>openAction(b.dataset.id,b.dataset.action)}
+}
+function setLayout(v){if(!layouts[v])return;layout=v;render()}
+function showDialog(title,subtitle,body,buttonTitle){
+ dialogTrigger=document.activeElement;
+ get('dialogTitle').textContent=title;get('dialogSubtitle').textContent=subtitle||'';
+ get('dialogBody').innerHTML=body;
+ get('dialogOK').textContent=buttonTitle||'ปิดรายละเอียด';
+ get('dialogShade').showModal();get('dialogX').focus();
+}
+function closeDialog(){get('dialogShade').close()}
+get('dialogShade').addEventListener('close',()=>{get('dialogBody').innerHTML='';if(dialogTrigger?.focus)dialogTrigger.focus();dialogTrigger=null});
+function info(title,body){showDialog(title,'UI-ONLY · DEMO ONLY','<p class="infoText">'+escapeHtml(body)+'</p>','เข้าใจแล้ว')}
+const status=message=>{get('carStorageStatus').textContent=message};
+function fillPeriods(id,items,selected,all){
+ const field=get(id);
+ field.replaceChildren(new Option(all,''));
+ for(const [value,label] of items)field.add(new Option(label,String(value)));
+ field.value=selected;
+}
+async function refreshCars(message=''){
+ try {
+  cars=(await carStore.list()).map(car=>({...car,title:car.name,destination:car.province,start:car.startDate,end:car.endDate}));
+  const years=[...new Set(cars.map(car=>car.year))].sort((a,b)=>b-a);
+  if(year && !years.includes(Number(year)))year='';
+  fillPeriods('filterYear',years.map(y=>[y,'พ.ศ. '+y]),year,'ทุกปี');
+  fillPeriods('filterMonth',Array.from({length:12},(_,i)=>[i+1,monthName(i+1)]),month,'ทุกเดือน');
+  render();
+  status(message);
+ } catch {
+  status(message ? message+' · โหลดรายการใหม่ไม่ได้' : 'โหลดคันรถในเครื่องไม่ได้ กรุณารีโหลดแล้วลองอีกครั้ง');
+ }
+}
+const editGroup=connectGroupForm(refreshCars,status);
+function openCar(id){void editGroup(id)}
+get('createCar').onclick=()=>void editGroup();
+function openAction(id,action){const t=cars.find(x=>x.id===id);if(!t)return;info((action==='expense'?'ค่าใช้จ่าย':'ถืองาน')+' · '+t.title,'ปุ่มตาม V1 Snapshot แต่การบันทึกค่าใช้จ่ายหรือถืองานจริงไม่อยู่ใน UI-04 Preview นี้');}
+get('searchCars').oninput=()=>{query=get('searchCars').value.trim();render()};
+for(const b of document.querySelectorAll('[data-layout]'))b.onclick=()=>setLayout(b.dataset.layout);
+for(const b of document.querySelectorAll('[data-state]'))b.onclick=()=>{state=b.dataset.state;render()};
+for(const id of ['Year','Month','Week'])get('filter'+id).onchange=()=>{year=get('filterYear').value;month=get('filterMonth').value;week=get('filterWeek').value;render()};
+get('resetSearch').onclick=()=>{query='';state='all';year='';month='';week='';get('searchCars').value='';for(const id of ['Year','Month','Week'])get('filter'+id).value='';render();get('searchCars').focus()};
+mountWorkspaceShell({
+ header:get('workspace-header'),sidebar:get('workspace-menu'),area:'agent',screen:'cars',
+ onSearch(){get('searchCars').focus();get('searchCars').scrollIntoView({block:'center'})}
+});
+get('dialogX').onclick=get('dialogOK').onclick=closeDialog;
+get('dialogShade').onclick=e=>{if(e.target===get('dialogShade'))closeDialog()};
+render();
+void refreshCars().then(()=>{
+ const url=new URL(location.href);
+ const id=url.searchParams.get('car');
+ const create=url.searchParams.get('create')==='1';
+ if(id || create){
+  url.searchParams.delete('car');
+  url.searchParams.delete('create');
+  history.replaceState(history.state,'',url);
+  void editGroup(id || undefined);
+ }
+});
+})();
+</script>
+</body>
+</html>

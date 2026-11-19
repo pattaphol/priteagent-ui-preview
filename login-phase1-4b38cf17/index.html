@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="th" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="color-scheme" content="dark light" />
+<script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent-preview:login-phase1-4b38cf17:priteagent.ui.theme.v1')||localStorage.getItem('priteagent-preview:login-phase1-4b38cf17:priteagent-v2:shell:theme');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
+<title>PriteAgent | เข้าสู่ระบบ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+:root{
+  --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
+  --line:#1f425d;--line2:#2b5777;--text:#edf5fb;--muted:#9db2c3;--soft:#bfd5e5;--cyan:#40b8da;
+  --cyan2:#2ed0c4;--accent:#42a4ff;--danger:#ff788b;--dangerbg:#3a1d27;--ok:#61d4ae;--okbg:#11382f;
+  --infobg:#112f45;--shadow:0 28px 78px rgba(0,0,0,.38)
+}
+*{box-sizing:border-box}html{min-width:290px;background:var(--bg)}
+body{margin:0;background:radial-gradient(circle at 15% 15%,rgba(66,164,255,.15),transparent 26%),radial-gradient(circle at 85% 85%,rgba(46,208,196,.12),transparent 25%),linear-gradient(180deg,#071521 0%,#081a28 100%);color:var(--text);font-family:'Plus Jakarta Sans','Noto Sans Thai',system-ui,sans-serif;line-height:1.6;font-size:15px}
+button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.68}a{color:inherit}button:focus-visible,input:focus-visible{outline:3px solid #65d2ff;outline-offset:3px}button,input{-webkit-tap-highlight-color:transparent}
+.app{min-height:100dvh;display:flex;flex-direction:column}.previewbar{padding:9px 18px;background:#081726;border-bottom:1px solid #16344d;font-size:11px;color:#8cb0c6;text-align:center;font-weight:700;letter-spacing:.02em}.previewbar b{color:#a7eeff}
+.layout{width:100%;max-width:1180px;margin:auto;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);min-height:min(740px,calc(100dvh - 44px));border-radius:28px;overflow:hidden;box-shadow:var(--shadow);background:rgba(11,29,43,.84);backdrop-filter:blur(10px)}
+.story{color:var(--text);background:radial-gradient(ellipse at 85% 0%,rgba(64,184,218,.18),transparent 38%),radial-gradient(circle at 20% 85%,rgba(66,164,255,.16),transparent 35%),linear-gradient(145deg,#0a1827 0%,#0d2436 52%,#0f3042 100%);display:flex;flex-direction:column;padding:44px 48px;position:relative;isolation:isolate;overflow:hidden;border-right:1px solid rgba(255,255,255,.05)}
+.story:before,.story:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(173,225,255,.08);pointer-events:none}.story:before{width:440px;height:440px;right:-200px;top:100px}.story:after{width:280px;height:280px;right:-110px;top:230px}
+.brand{display:flex;align-items:center;gap:12px;width:fit-content}.brandmark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#3bc6ea,#2967ff);color:white;font-size:25px;font-weight:900;letter-spacing:-1px;box-shadow:0 10px 30px rgba(53,133,255,.32)}
+.brandstack{display:flex;flex-direction:column;gap:2px}.brandname{font-size:24px;letter-spacing:-.7px;line-height:1.05;font-weight:800;color:#f7fbff}.brandname .accent{color:#8be8ff}.brandlabel{font-size:10px;color:#83a5bc;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.storycopy{margin:auto 0 34px}.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.5px;font-weight:760;text-transform:uppercase;color:#8ee7f7}.eyebrow:before{content:"";width:20px;height:2px;border-radius:2px;background:linear-gradient(90deg,#43a7ff,#4ce0d2)}
+.storycopy h1{font-size:clamp(30px,3.15vw,43px);line-height:1.35;letter-spacing:-1.2px;margin:18px 0 12px;font-weight:790}.storycopy h1 em{font-style:normal;color:#8ee7f7}.storycopy p{max-width:380px;font-size:14px;color:#b6cad8;line-height:1.85;margin:0}
+.storyfeatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:420px}.feature{border:1px solid rgba(122,184,215,.16);background:rgba(255,255,255,.03);padding:15px;border-radius:15px;min-height:108px}.feature i{display:block;font-style:normal;font-size:20px;margin-bottom:10px}.feature b{font-size:13px;color:#f4fbff}.feature p{font-size:11px;color:#a8c3d5;line-height:1.6;margin:4px 0 0}.storyfoot{margin-top:30px;font-size:11px;color:#8aa8bb}
+.panel{padding:48px 50px 32px;display:flex;flex-direction:column;justify-content:center;min-width:0;background:linear-gradient(180deg,rgba(13,32,46,.96),rgba(9,24,37,.98))}.smallbrand{display:none}.panelHead{margin:0 0 24px}.panel h2{font-size:31px;color:#f3f8fd;font-weight:790;letter-spacing:-.9px;line-height:1.3;margin:0 0 8px}.panel .intro{font-size:13px;color:var(--muted);margin:0}
+.form{display:grid;gap:16px}.field{display:grid;gap:7px}.fieldrow{display:flex;justify-content:space-between;gap:12px;align-items:center}.field label{font-size:13px;color:#d9e7f1;font-weight:750}.hint{font-size:11px;color:#88a5b8}.control{height:54px;position:relative}.control input{border:1.5px solid var(--line);background:#091927;border-radius:13px;padding:0 46px 0 16px;width:100%;height:100%;color:var(--text);font-size:16px;font-weight:600;letter-spacing:.2px;outline:0;transition:border .16s,box-shadow .16s,background .16s}.control input::placeholder{font-size:13px;font-weight:400;color:#6e8ba0;letter-spacing:0}.control input:focus{border-color:#3abfe3;box-shadow:0 0 0 4px rgba(58,191,227,.14);background:#0b1f30}.control input[aria-invalid="true"]{border-color:var(--danger);background:#1c1216}.control .eye{position:absolute;right:5px;top:5px;border:0;background:none;width:44px;height:44px;border-radius:10px;color:#9eb8ca;font-size:13px;font-weight:650}.control .eye:hover{background:#143046}
+.fieldError{color:#ff92a1;font-size:12px;line-height:1.45;min-height:0}.fieldError:empty{display:none}.help{border:0;color:#86dbf0;font-size:12px;background:none;font-weight:750;padding:4px 0}.status{border-radius:12px;padding:11px 13px;border:1px solid transparent;font-size:12px;line-height:1.65;display:none}.status.show{display:block}.status.error{background:var(--dangerbg);border-color:#6f3140;color:#ffb4c0}.status.ok{background:var(--okbg);border-color:#225748;color:#8be7c6}.status.info{background:var(--infobg);border-color:#24506f;color:#aadffc}
+.primary{width:100%;height:52px;background:linear-gradient(110deg,#2e6fff,#27b6e1 70%,#36d5cb);border:0;border-radius:13px;color:white;font-size:15px;font-weight:780;box-shadow:0 14px 24px rgba(35,123,211,.22);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:10px}.primary:not(:disabled):hover{filter:brightness(1.06)}.spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:white;border-radius:50%;animation:spin .75s linear infinite}.loading .spinner{display:inline-block}
+.demoHeader strong{font-size:12px;color:#8fe7ff}.credentials code{font-size:12px;font-weight:700;color:#d9f7ff;background:#0d2a3c;border:1px solid #244f6f;padding:5px 8px;border-radius:7px}.legal{margin:23px 0 0;color:#7e9aaf;font-size:11px;text-align:center}.legal strong{color:#bdd2e0;font-weight:750}.footbar{font-size:11px;color:#7490a7;margin:14px auto 20px;text-align:center;padding:0 12px}
+#desk{display:none;background:linear-gradient(180deg,#071521,#0a1826);min-height:100dvh;color:var(--text)}.deskTop{display:flex;align-items:center;justify-content:space-between;background:#0b1f2e;border-bottom:1px solid #173b55;padding:14px 28px;gap:14px}.deskBrand{display:flex;align-items:center;gap:10px;font-weight:800;color:#f0f8ff}.deskBrand .brandmark{width:34px;height:34px;font-size:22px}.deskUser{font-size:12px;color:#88a4b8}.deskMain{max-width:1040px;margin:0 auto;padding:35px 24px}.deskHeader{display:flex;justify-content:space-between;align-items:start;gap:14px;margin-bottom:25px}.deskHeader p{font-size:12px;color:#89a6bb;margin:0 0 6px}.deskHeader h2{font-size:clamp(24px,4vw,33px);color:#eff8ff;margin:0 0 8px;letter-spacing:-.6px}.deskHeader .back{border:1px solid #214964;border-radius:10px;background:#0d2434;padding:10px 14px;color:#9ee7ff;white-space:nowrap;font-weight:650;font-size:12px}.deskNotice{background:#0f3044;border:1px solid #20536e;color:#a9e6ff;padding:13px 15px;border-radius:12px;font-size:12px;margin-bottom:22px}.deskStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.deskCard{background:#0b1f2f;border:1px solid #163a54;border-radius:15px;padding:21px;min-height:148px}.deskCard small{font-size:12px;color:#8da7bb;display:block}.deskCard b{font-size:33px;color:#f2f8ff;display:block;margin-top:6px}.deskCard p{font-size:11px;color:#7cdad1;margin:7px 0 0}.deskBlock{background:#0b1f2e;border:1px solid #163a54;border-radius:16px;padding:24px;margin-top:18px}.deskBlock h3{margin:0 0 8px;color:#eef8ff}.deskBlock p{font-size:13px;color:#96aebf;margin:0}.deskLinks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.deskLink{padding:17px;border:1px solid #173954;background:#0d2434;border-radius:11px;text-align:left;display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#a7bed0}.deskLink b{font-size:13px;color:#eef8ff}.deskLink small{font-size:11px;color:#87a3b7}.deskLink:hover{background:#103049}.modalWrap{position:fixed;inset:0;background:#030b1490;z-index:10;display:none;align-items:center;justify-content:center;padding:22px}.modalWrap.open{display:flex}.modal{width:min(100%,390px);background:#0d2434;border:1px solid #1c4764;border-radius:18px;padding:23px;box-shadow:0 24px 80px rgba(0,0,0,.45)}.modal h3{margin:0 0 10px;color:#eef8ff}.modal p{color:#a4bbcb;font-size:13px;margin:0 0 16px}.modal button{border:0;background:linear-gradient(110deg,#2e6fff,#27b6e1);color:white;font-weight:700;border-radius:10px;padding:10px 18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:900px){.layout{max-width:100%;min-height:calc(100dvh - 44px);border-radius:0;box-shadow:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.story{padding:38px 27px}.panel{padding:30px 29px}.storycopy h1{font-size:30px}.storyfeatures{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.layout{display:block;min-height:calc(100dvh - 40px)}.story{display:none}.panel{padding:max(28px,env(safe-area-inset-top)) 24px max(22px,env(safe-area-inset-bottom));max-width:480px;margin:auto;min-height:calc(100dvh - 40px);justify-content:flex-start;background:transparent}.smallbrand{display:flex;align-items:center;gap:11px;margin-bottom:42px}.smallbrand .brandmark{width:42px;height:42px}.smallbrand .brandname{color:#f5faff}.smallbrand .brandlabel{color:#819db1}.panelHead{margin-bottom:26px}.panel h2{font-size:31px}.legal{margin-top:auto;padding-top:22px}.footbar{display:none}.deskTop{padding:13px 17px}.deskMain{padding:25px 16px 90px}.deskHeader{align-items:flex-start}.deskStats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.deskStats .deskCard:last-child{grid-column:1/-1}.deskCard{min-height:130px;padding:16px}.deskCard b{font-size:28px}.deskBlock{padding:19px}.deskLinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:360px){.panel{padding-inline:17px}.smallbrand{margin-bottom:30px}.panel h2{font-size:27px}.control{height:50px}.deskLink{padding:12px}}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
+
+/* Login R3 focused viewport correction: initial login fills screen without page scroll.
+   Only when the onscreen keyboard or accessibility zoom is active may the form scroll
+   to keep focused controls reachable. Post-login sample remains a separate screen. */
+html,body{height:100%;overflow-x:hidden}
+body:has(#loginApp:not([style*="none"])){overflow-y:hidden}
+#loginApp.app{height:100dvh;min-height:0;overflow:hidden;justify-content:center}
+#loginApp .previewbar,#loginApp .footbar{display:none}
+#loginApp .layout{height:min(760px,100dvh);min-height:0;max-height:100dvh;margin:auto;border-radius:25px}
+#loginApp .panel{min-height:0;justify-content:center;padding-top:clamp(18px,3vh,46px);padding-bottom:clamp(18px,3vh,46px)}
+#loginApp .panelHead{margin-bottom:clamp(18px,2.6vh,26px)}
+#loginApp .panelHead h2{margin-bottom:0}
+
+#loginApp .legal{margin-top:clamp(12px,1.8vh,22px)}
+@media (max-width:900px){
+ #loginApp .layout{height:100dvh;max-height:100dvh;border-radius:0}
+ #loginApp .story{padding:clamp(18px,3.4vh,38px) 27px}
+ #loginApp .panel{padding:clamp(18px,3vh,32px) 28px}
+}
+@media (max-width:700px){
+ #loginApp .layout{width:100%;max-width:100%;height:100dvh;min-height:0;display:flex;align-items:stretch;justify-content:center;overflow:hidden}
+ #loginApp .story{display:none}
+ #loginApp .panel{width:100%;max-width:440px;height:100%;min-height:0;margin:auto;justify-content:center;overflow:hidden;padding:clamp(11px,2.5vh,24px) clamp(16px,5.2vw,26px);background:transparent}
+ #loginApp .smallbrand{display:flex;margin:0 0 clamp(14px,3vh,28px)}
+ #loginApp .panelHead{margin:0 0 clamp(13px,2.4vh,25px)}
+ #loginApp .panelHead h2{font-size:clamp(26px,4.7vh,32px);line-height:1.3}
+ #loginApp .form{gap:clamp(9px,1.7vh,15px)}
+ #loginApp .field{gap:5px}
+ #loginApp .control{height:clamp(45px,6.2vh,53px)}
+ #loginApp .control .eye{top:3px;height:calc(100% - 6px)}
+ #loginApp .primary{height:clamp(45px,6.2vh,52px)}
+ 
+ #loginApp .demo p,
+ 
+ #loginApp .demoHeader strong{font-size:11px}
+ 
+ #loginApp .legal{margin:clamp(8px,1.5vh,14px) 0 0;padding:0;font-size:10px}
+}
+@media (max-width:360px){
+ #loginApp .panel{padding-inline:15px}
+ #loginApp .smallbrand{margin-bottom:clamp(11px,2.4vh,18px)}
+ #loginApp .demoHeader strong{font-size:10px}
+ 
+}
+@media (max-width:700px) and (max-height:700px){
+ #loginApp .smallbrand{margin-bottom:14px}
+ #loginApp .panelHead{margin-bottom:13px}
+ #loginApp .form{gap:9px}
+ #loginApp .field{gap:3px}
+ 
+ #loginApp .demoHeader strong{display:none}
+ 
+ #loginApp .legal{margin-top:9px}
+}
+@media (max-width:700px) and (max-height:560px){
+ #loginApp .smallbrand{margin-bottom:8px}
+ #loginApp .brandmark{height:36px;width:36px;font-size:21px}
+ #loginApp .brandname{font-size:22px}
+ #loginApp .panelHead{margin-bottom:8px}
+ #loginApp .panelHead h2{font-size:24px}
+ #loginApp .form{gap:6px}
+ #loginApp .control{height:43px}
+ #loginApp .primary{height:43px}
+ 
+ #loginApp .legal{display:none}
+}
+/* Landscape phones and tablets with a shallow viewport: only the login panel.
+   Inputs remain interactive; no hero or second page is shown in the available height. */
+@media (min-width:701px) and (max-height:550px){
+ #loginApp .layout{display:flex;max-width:580px}
+ #loginApp .story{display:none}
+ #loginApp .panel{width:100%;padding:11px 28px;overflow:hidden}
+ #loginApp .smallbrand{display:flex;margin:0 0 9px}
+ #loginApp .panelHead{margin:0 0 9px}
+ #loginApp .panelHead h2{font-size:24px}
+ #loginApp .form{gap:7px}
+ #loginApp .field{gap:3px}
+ #loginApp .control{height:41px}
+ #loginApp .primary{height:42px}
+ 
+ #loginApp .legal{display:none}
+}
+/* Small-device soft keyboard can reduce visual viewport below what fits a form.
+   Permit scrolling only during field focus, rather than clipping an active input. */
+@media (max-width:700px){
+ body:has(#loginForm input:focus){overflow-y:auto}
+ #loginApp.app:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh}
+ #loginApp .layout:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh;max-height:none}
+ #loginApp .panel:has(#loginForm input:focus){overflow:visible;height:auto;min-height:100dvh}
+}
+
+/* PUBLIC STATIC PREVIEW, no real authentication. Sticky safety notice */
+#publicPreviewNotice{position:fixed;inset:auto 0 0 0;z-index:9999;box-sizing:border-box;background:#ffe5a0;color:#172b37;border-top:1px solid #d9b65c;box-shadow:0 -4px 16px rgba(0,0,0,.15);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));font:700 12px/1.35 'Plus Jakarta Sans','Noto Sans Thai',system-ui,sans-serif;text-align:center;pointer-events:none}
+#publicPreviewNotice strong{font-weight:900;letter-spacing:.03em}
+/* R4: preserve the R3 palette, center hero content/cards and login heading */
+#loginApp .story{position:relative;justify-content:center}
+#loginApp .story>.brand{position:absolute;top:clamp(20px,5vh,44px);left:clamp(22px,4vw,48px)}
+#loginApp .storyfoot{position:absolute;bottom:clamp(25px,5vh,38px);left:clamp(22px,4vw,48px);margin:0}
+#loginApp .storycopy{margin:0 0 24px}
+#loginApp .panelHead{text-align:center;margin-bottom:clamp(19px,3vh,26px)}
+#loginApp .panelHead h2{text-align:center}
+/* R4: independent recovery and sign-up interaction surfaces */
+#loginApp .signupPrompt{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:19px;color:#a5c0d3;font-size:13px;flex-wrap:wrap}
+#loginApp .textAction{border:0;background:none;color:#8ce8ff;padding:8px 6px;font:750 13px/1.3 inherit;cursor:pointer}
+#loginApp .textAction:focus-visible,.modal button:focus-visible{outline:3px solid #72defd;outline-offset:3px}
+#loginApp .signupView{display:none}
+#loginApp.signupMode .signupView{display:block}
+#loginApp.signupMode .panelHead,#loginApp.signupMode #loginForm,#loginApp.signupMode .signupPrompt,#loginApp.signupMode .legal{display:none}
+#loginApp.signupMode .panel{justify-content:center}
+#loginApp.signupMode{height:auto;min-height:100dvh;overflow:visible}
+#loginApp.signupMode .layout{height:auto;max-height:none;min-height:100dvh;overflow:visible}
+#loginApp.signupMode .panel{height:auto;max-height:none;min-height:100dvh;padding-top:28px;padding-bottom:calc(45px + env(safe-area-inset-bottom))}
+body:has(#loginApp.signupMode){overflow-y:auto}
+#loginApp .signupView h2{text-align:center;margin:0 0 6px;font-size:27px}
+#loginApp .signupView .signupSub{text-align:center;color:#a0b8ca;font-size:12px;line-height:1.6;margin:0 0 20px}
+#loginApp .signupView form{display:grid;gap:12px}
+#loginApp .signupView .field{gap:5px}
+#loginApp .signupView .control{height:49px}
+#loginApp .signupView .control input{padding-right:16px}
+#loginApp .signupReturn{text-align:center;margin-top:13px}
+#loginApp .signupReturn button{color:#9feaff;font-size:13px;padding:9px;border:0;background:none}
+#loginApp .signupStatus{border:1px solid #285473;background:#123448;border-radius:10px;font-size:12px;color:#bceaff;line-height:1.65;display:none;padding:10px 12px}
+#loginApp .signupStatus.show{display:block}
+#loginApp .signupStatus.bad{background:#3b1d2b;border-color:#713447;color:#ffc0ce}
+.modal .choiceGroup{display:grid;gap:10px;margin-top:15px}
+.modal .choice{width:100%;padding:12px 13px;background:#102d43;border:1px solid #28516b;border-radius:11px;text-align:left;color:#e1f4fd;display:flex;flex-direction:column;gap:2px}
+.modal .choice strong{font-size:13px}
+.modal .choice small{font-size:11px;color:#a1bed1}
+.modal .recoveryForm{display:none;margin-top:12px}
+.modal .recoveryForm label{color:#e6f7ff;font-size:12px;display:block;margin-bottom:7px}
+.modal .recoveryForm input{width:100%;height:45px;min-height:45px;border:1px solid #315775;border-radius:10px;background:#091d2b;color:white;padding:0 12px;font-size:16px;outline:none}
+.modal .recoveryForm .modalPrimary{width:100%;margin-top:11px;background:linear-gradient(105deg,#2e6fff,#26b7df);color:white;border:0}
+.modal .recoveryForm .recoveryBack{margin-top:9px;background:#183c54;color:#b4e9fb}
+.modal .recoveryMsg{font-size:12px;line-height:1.7;padding:10px 12px;background:#12394a;color:#b5ebf5;border:1px solid #285c72;border-radius:10px;margin:12px 0 0;display:none}
+.modal .recoveryMsg.show{display:block}
+.modal .recoveryMsg.bad{background:#3b1b2a;color:#ffbccb;border-color:#723448}
+.modal .recoveryMsg.ok{background:#10392e;color:#91efcd;border-color:#255d46}
+@media(max-width:900px){#loginApp .story>.brand{left:27px;top:26px}#loginApp .storyfoot{left:27px;bottom:23px}}
+@media(max-width:700px){
+ #loginApp .signupPrompt{margin-top:clamp(10px,2vh,19px);font-size:12px;gap:5px}
+ #loginApp .signupPrompt .textAction{font-size:12px}
+ #loginApp.signupMode .panel{padding-top:25px;padding-bottom:calc(52px + env(safe-area-inset-bottom))}
+ #loginApp.signupMode .smallbrand{margin-bottom:18px}
+ #loginApp.signupMode .signupView .control{height:47px}
+}
+@media(max-width:700px) and (max-height:600px){#loginApp .signupPrompt{margin-top:6px}}
+@media(min-width:701px) and (max-height:550px){#loginApp .signupPrompt{margin-top:8px}#loginApp .legal{display:none}}
+
+/* UI-01 R4.2: shared site-wide light/dark preference, synthetic preview only */
+html[data-theme="light"]{color-scheme:light;--bg:#f5f9fd;--bg2:#eaf3fa;--bg3:#e1eff7;--panel:#fff;--panel2:#f0f6fc;--card:#fff;--line:#c5d9e8;--line2:#afcada;--text:#1c3347;--muted:#526d82;--soft:#34566f;--cyan:#006f98;--cyan2:#087e81;--accent:#126abb;--danger:#af2d4c;--dangerbg:#ffe7ed;--ok:#087753;--okbg:#e2f6ed;--infobg:#e2f3fe;--shadow:0 22px 65px rgba(31,72,105,.13)}
+html[data-theme="light"] body{background:linear-gradient(180deg,#f5f9fd,#eaf3fb);color:var(--text)}
+html[data-theme="light"] .layout{background:#fff}
+html[data-theme="light"] .story{background:linear-gradient(150deg,#eaf5fd,#f7fbff 68%,#e2f3ff);border-color:#d4e3ed;color:var(--text)}
+html[data-theme="light"] .panel{background:linear-gradient(180deg,#fff,#f8fbfe);color:var(--text)}
+html[data-theme="light"] .panel h2,html[data-theme="light"] .storycopy h1,html[data-theme="light"] .brandname,
+html[data-theme="light"] .deskHeader h2,html[data-theme="light"] .deskBrand,html[data-theme="light"] .modal h3{color:#19364e}
+html[data-theme="light"] .brandname .accent,html[data-theme="light"] .storycopy em{color:#006d9c}
+html[data-theme="light"] .brandlabel,html[data-theme="light"] .storyfoot,html[data-theme="light"] .storycopy p{color:#466c84}
+html[data-theme="light"] .field label,html[data-theme="light"] .fieldrow label{color:#274559}
+html[data-theme="light"] .control input{background:#fff;color:#1b3447}
+html[data-theme="light"] .control input::placeholder{color:#678195}
+html[data-theme="light"] .control input:focus{background:#f8fcff}
+html[data-theme="light"] .control input[aria-invalid="true"]{background:#fff2f5}
+html[data-theme="light"] .control .eye{color:#315a77}
+html[data-theme="light"] .hint,html[data-theme="light"] #loginApp .signupPrompt{color:#526f85}
+html[data-theme="light"] #loginApp .textAction,html[data-theme="light"] .help{color:#066f9b}
+html[data-theme="light"] .status.error{color:#9a2843;border-color:#f0b2c1}
+html[data-theme="light"] .status.ok{color:#0c6c4f;border-color:#a4ddc5}
+html[data-theme="light"] .status.info{color:#175e81;border-color:#aedbef}
+html[data-theme="light"] #desk{background:#f3f8fc;color:var(--text)}
+html[data-theme="light"] .deskTop{background:#fff;border-color:#d2e2ee}
+html[data-theme="light"] .deskCard,html[data-theme="light"] .deskBlock{background:#fff;color:var(--text);border-color:#d4e5f0}
+html[data-theme="light"] .deskCard b,html[data-theme="light"] .deskBlock h3{color:#19364e}
+html[data-theme="light"] .deskLink{background:#f5fafe;color:#23465b;border-color:#d4e5ef}
+html[data-theme="light"] .modal{background:#fff;border-color:#bed7e8}
+html[data-theme="light"] .modal p{color:#466b82}
+.themePicker{display:flex;align-items:center;gap:3px;padding:3px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
+.themePicker button{min-height:36px;padding:4px 10px;border:0;border-radius:99px;background:transparent;color:var(--muted);font:700 11px/1.2 inherit;cursor:pointer;white-space:nowrap}
+.themePicker button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.themePicker button:focus-visible{outline:3px solid #37aeef;outline-offset:2px}
+#loginApp .panel{position:relative}
+#loginApp .panel>.themePicker{position:absolute;right:14px;top:12px;z-index:9}
+#desk .deskTheme{flex:0 0 auto}
+#desk .deskTop{flex-wrap:wrap}
+@media(max-width:700px){html[data-theme="light"] #loginApp .panel{background:#f5f9fd}#loginApp .panel>.themePicker{right:8px;top:8px}.themePicker .themeLabel{display:none}.themePicker button{min-width:35px;padding:5px 8px;font-size:16px}}
+@media(max-width:360px){#loginApp .panel>.themePicker{top:5px;right:5px}.themePicker button{min-width:32px;padding:4px 7px}}
+
+
+/* UI-01 R4.3: registration profile fields + privileged calculator notice. */
+#loginApp .signupNameGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#loginApp .signupNameGrid .field{min-width:0}
+#loginApp .signupNameGrid .field label{font-size:12px}
+#loginApp .signupNameGrid .control input{width:100%;min-width:0}
+#loginApp .permissionNote{font-size:12px;line-height:1.6;padding:10px 12px;margin:1px 0 0;background:#11314a;border:1px solid #346482;border-radius:11px;color:#b9e6ff}
+html[data-theme="light"] #loginApp .permissionNote{background:#e9f5fe;border-color:#b4d5e8;color:#23516c}
+html[data-theme="light"] #loginApp .signupView .signupSub{color:#47687e}
+html[data-theme="light"] #loginApp .signupReturn button{color:#066f9b}
+html[data-theme="light"] #loginApp .signupStatus{background:#eaf6ff;border-color:#bbd8eb;color:#205878}
+@media(max-width:700px){#loginApp .signupNameGrid{grid-template-columns:minmax(0,1fr)}#loginApp .signupView form{gap:11px}}
+@media(min-width:701px) and (max-width:940px){#loginApp .signupNameGrid{grid-template-columns:minmax(0,1fr)}}
+
+
+#loginApp .panel>[data-theme-toggle]{position:absolute;right:14px;top:12px;z-index:9}
+#loginApp.signupMode .signupView{padding-top:26px}
+#loginApp .panel,#loginApp .story,#desk .deskTop,#desk .deskCard{transition:background-color .28s ease,color .28s ease,border-color .28s ease}
+@media(max-width:700px){#loginApp .panel>[data-theme-toggle]{right:8px;top:8px}}
+@media(prefers-reduced-motion:reduce){#loginApp .panel,#loginApp .story,#desk .deskTop,#desk .deskCard{transition:none!important}}
+
+/* UI-01 R4.6: Light-theme hero/story contrast correction, from Android Chrome Owner screenshots. */
+html[data-theme="light"] #loginApp .story .eyebrow{color:#155879}
+html[data-theme="light"] #loginApp .story .eyebrow:before{background:linear-gradient(90deg,#146eb1,#008783)}
+html[data-theme="light"] #loginApp .story .storycopy h1{color:#19364e}
+html[data-theme="light"] #loginApp .story .storycopy h1 em{color:#006b95}
+html[data-theme="light"] #loginApp .story .storycopy p{color:#36556a}
+html[data-theme="light"] #loginApp .story .storyfeatures .feature{background:#fff;border:1px solid #bfd4e3;box-shadow:0 5px 16px rgba(22,64,94,.06)}
+html[data-theme="light"] #loginApp .story .storyfeatures .feature i{color:#176c94}
+html[data-theme="light"] #loginApp .story .storyfeatures .feature b{color:#183b55}
+html[data-theme="light"] #loginApp .story .storyfeatures .feature p{color:#415f75}
+html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
+/* R4.6: Stronger, deliberate feedback on tap, including mobile browser touch.
+   Reduced-motion user preference must remain honored. */
+
+
+/* UI PM7 R3.7: product-style status presentation; no false account or data claims. */
+#publicPreviewNotice{background:rgba(10,25,38,.96);color:#bacdda;border-top:1px solid #25445d;box-shadow:none;padding:7px 12px;font-size:11px;letter-spacing:0;line-height:1.45;font-weight:500}
+#publicPreviewNotice strong{font-weight:600;letter-spacing:0}
+#help:disabled,#startSignup:disabled{opacity:.48;cursor:not-allowed;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="publicPreviewNotice" role="note" aria-label="สถานะเชื่อมต่อบัญชี"><strong>ยังไม่รองรับบัญชีผู้ใช้จริง กรุณาอย่าใช้รหัสผ่านส่วนตัว</strong></div>
+<div id="loginApp" class="app">
+ <main class="layout">
+  <section class="story" aria-label="ข้อมูลเกี่ยวกับ PriteAgent">
+   <div class="brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
+   <div class="storycopy"><span class="eyebrow">One workspace. Smoother daily work.</span><h1>ระบบงานที่ช่วยให้<br><em>จัดการงานได้ง่ายขึ้น</em></h1><p>รองรับงานตัวแทน งานลูกค้า และการจัดการข้อมูลประจำวัน ด้วยหน้าจอที่เน้นความชัดเจน ใช้งานง่าย และพร้อมต่อยอดสู่โมดูลในอนาคต</p></div>
+   <div class="storyfeatures"><div class="feature"><i aria-hidden="true">▣</i><b>งานตัวแทน</b><p>คันรถ ค่าใช้จ่าย และการติดตามงานในที่เดียว</p></div><div class="feature"><i aria-hidden="true">◎</i><b>งานลูกค้า</b><p>เตรียมพร้อมสำหรับ CRM และการดูแลลูกค้า</p></div></div>
+   <div class="storyfoot">PriteAgent · Insurance Agent Workspace</div>
+  </section>
+  <section class="panel" aria-label="เข้าสู่ระบบ PriteAgent">
+   <button type="button" class="pa-theme-control" data-theme-toggle aria-label="โหมดสว่าง" aria-pressed="false"><span class="pa-theme-icon" aria-hidden="true">☀</span></button>
+   <div class="smallbrand brand"><span class="brandmark" aria-hidden="true">P</span><div class="brandstack"><div class="brandname">Prite<span class="accent">Agent</span></div><div class="brandlabel">Insurance Agent Workspace</div></div></div>
+   <div class="panelHead"><h2>เข้าสู่ระบบ</h2><p class="hint">เว็บทดลอง · ใช้รหัสจำลอง 123456 / 000000 เท่านั้น</p></div>
+   <form class="form" id="loginForm" novalidate autocomplete="off">
+    <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label></div><div class="control"><input id="username" name="agent-id" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="รหัสตัวแทน 6 หลัก" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help" disabled title="ยังไม่เปิดใช้งาน">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="agent-password" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
+    <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+    <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
+   </form>
+   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction" disabled title="ยังไม่เปิดใช้งาน">สมัครสมาชิก</button></div>
+   
+   <section id="signupView" class="signupView" aria-label="สมัครสมาชิก">
+    <h2 id="signupTitle">สมัครสมาชิก</h2><p class="signupSub">บริการสมัครสมาชิกยังไม่เปิดใช้งาน โปรดอย่าใส่ข้อมูลส่วนบุคคลในแบบฟอร์มนี้</p>
+    <form id="signupForm" novalidate autocomplete="off">
+     <div class="signupNameGrid">
+      <div class="field"><label for="regFirstName">ชื่อ</label><div class="control"><input id="regFirstName" type="text" maxlength="80" placeholder="ชื่อ" autocomplete="off" aria-describedby="regFirstNameError"></div><div id="regFirstNameError" class="fieldError" role="alert"></div></div>
+      <div class="field"><label for="regLastName">นามสกุล</label><div class="control"><input id="regLastName" type="text" maxlength="80" placeholder="นามสกุล" autocomplete="off" aria-describedby="regLastNameError"></div><div id="regLastNameError" class="fieldError" role="alert"></div></div>
+      <div class="field"><label for="regNickname">ชื่อเล่น (แสดงในคันรถ)</label><div class="control"><input id="regNickname" type="text" maxlength="40" placeholder="ชื่อเล่นที่ใช้แสดงในคันรถ" autocomplete="off" aria-describedby="regNicknameError"></div><div id="regNicknameError" class="fieldError" role="alert"></div></div>
+      <div class="field"><label for="regPhone">เบอร์โทรศัพท์</label><div class="control"><input id="regPhone" type="text" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="ตัวเลข 10 หลัก" autocomplete="off" aria-describedby="regPhoneError"></div><div id="regPhoneError" class="fieldError" role="alert"></div></div>
+     </div>
+     <div class="field"><label for="regAgent">รหัสตัวแทน</label><div class="control"><input id="regAgent" type="text" inputmode="numeric" maxlength="6" placeholder="ตัวเลข 6 หลัก" autocomplete="off" aria-describedby="regAgentError"></div><div id="regAgentError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regEmail">อีเมล</label><div class="control"><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="off" aria-describedby="regEmailError"></div><div id="regEmailError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regPass">รหัสผ่าน</label><div class="control"><input id="regPass" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="regPassError"></div><div id="regPassError" class="fieldError" role="alert"></div></div>
+     <div class="field"><label for="regConfirm">ยืนยันรหัสผ่าน</label><div class="control"><input id="regConfirm" type="password" minlength="4" maxlength="20" placeholder="ยืนยันรหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="regConfirmError"></div><div id="regConfirmError" class="fieldError" role="alert"></div></div>
+     <p class="permissionNote"><strong>🔒 สิทธิ์คำนวณเบี้ย:</strong> เมื่อยืนยันอีเมลแล้ว ยังต้องรอ Admin หรือเจ้าของระบบอนุญาตเป็นรายบัญชี จึงเข้าใช้งานระบบคำนวณเบี้ยประกันได้</p>
+     <div id="signupStatus" class="signupStatus" role="status" aria-live="polite"></div>
+     <button id="signupSubmit" type="submit" class="primary">สมัครสมาชิก</button>
+    </form>
+    <div class="signupReturn"><button id="returnLogin" type="button">← กลับไปเข้าสู่ระบบ</button></div>
+   </section>
+  </section>
+ </main>
+ <div class="footbar">PriteAgent © 2026</div>
+</div>
+<div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลบริการ</h3><p id="modalText"></p>
+ <div id="recoveryChoices" class="choiceGroup" hidden>
+  <button id="recoveryPasskey" type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ยังไม่เปิดให้บริการ</small></button>
+  <button id="recoveryEmailChoice" type="button" class="choice"><strong>กู้คืนด้วยอีเมล</strong><small>ยังไม่เปิดให้บริการ</small></button>
+ </div>
+ <form id="recoveryEmailForm" class="recoveryForm" novalidate><label for="recoveryEmail">อีเมลสำหรับกู้คืน</label><input id="recoveryEmail" type="email" placeholder="name@example.com" autocomplete="off"/><button id="recoveryEmailSubmit" type="submit" class="modalPrimary">ดำเนินการ</button><button id="recoveryBack" type="button" class="recoveryBack">← เลือกวิธีอื่น</button></form>
+ <div id="recoveryStatus" class="recoveryMsg" role="status" aria-live="polite"></div>
+ <button id="modalClose" type="button">ปิดหน้าต่าง</button></section></div>
+<script>
+(()=>{
+'use strict';
+
+const $=id=>document.getElementById(id);
+const form=$('loginForm'),u=$('username'),p=$('password'),status=$('formStatus'),submit=$('submit'),buttonText=$('submitText'),arrow=$('submitArrow');
+let pending=false,timer=null,lastFocus=null;
+function message(text='',type='error'){status.textContent=text;status.className='status'+(text?' show '+type:'');}
+function errors(user='',pass=''){ $('userError').textContent=user; $('passError').textContent=pass;u.setAttribute('aria-invalid',String(!!user));p.setAttribute('aria-invalid',String(!!pass));}
+function loading(b){pending=b;submit.disabled=b;u.disabled=b;p.disabled=b;$('eye').disabled=b;submit.classList.toggle('loading',b);buttonText.textContent=b?'กำลังตรวจข้อมูล…':'เข้าสู่ระบบ';arrow.style.display=b?'none':'';}
+function openModal(t,desc){lastFocus=document.activeElement;$('modalTitle').textContent=t;$('modalText').textContent=desc;$('modalWrap').classList.add('open');$('modalClose').focus();}
+function closeModal(){$('modalWrap').classList.remove('open');lastFocus?.focus?.();}
+$('modalClose').addEventListener('click',closeModal);
+$('modalWrap').addEventListener('click',e=>{if(e.target===$('modalWrap'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modalWrap').classList.contains('open'))closeModal();});
+$('help').addEventListener('click',showRecoveryChoice);
+$('eye').addEventListener('click',()=>{const next=p.type==='password'?'text':'password';p.type=next;$('eye').textContent=next==='text'?'ซ่อน':'แสดง';$('eye').setAttribute('aria-label',next==='text'?'ซ่อนรหัสผ่าน':'แสดงรหัสผ่าน');$('eye').setAttribute('aria-pressed',String(next==='text'));p.focus();});
+
+/* R4.1: inputmode="numeric" is just a keyboard hint; sanitize paste/drop/autofill too. */
+function enforceSixDigits(el){
+ const clean=el.value.replace(/[^0-9]/g,'').slice(0,6);
+ if(el.value!==clean){
+  const before=(el.selectionStart??el.value.length);
+  const left=el.value.slice(0,before).replace(/[^0-9]/g,'').slice(0,6).length;
+  el.value=clean;
+  try{el.setSelectionRange(left,left);}catch(_){}
+ }
+}
+[u,$('regAgent')].forEach(el=>{
+ el.setAttribute('pattern','[0-9]{6}');
+ el.setAttribute('inputmode','numeric');
+ el.addEventListener('beforeinput',e=>{if(e.inputType==='insertText'&&e.data&&/[^0-9]/.test(e.data))e.preventDefault();});
+ el.addEventListener('paste',e=>{
+  e.preventDefault();
+  const digits=(e.clipboardData?.getData('text/plain')||'').replace(/[^0-9]/g,'');
+  if(digits){
+   el.setRangeText(digits,el.selectionStart??0,el.selectionEnd??0,'end');
+   enforceSixDigits(el);
+   el.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+ });
+ el.addEventListener('drop',e=>{
+  e.preventDefault();
+  const digits=(e.dataTransfer?.getData('text/plain')||'').replace(/[^0-9]/g,'');
+  if(digits){
+   el.focus();el.setRangeText(digits,el.selectionStart??0,el.selectionEnd??0,'end');
+   enforceSixDigits(el);
+   el.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+ });
+ el.addEventListener('input',()=>enforceSixDigits(el));
+ el.addEventListener('change',()=>enforceSixDigits(el));
+});
+/* R4.5: phone is strictly 10 ASCII digits, including pasted/autofilled/dropped input. */
+const phoneInput=$('regPhone');
+function enforceTenDigits(){
+ const original=phoneInput.value,clean=original.replace(/[^0-9]/g,'').slice(0,10);
+ if(original!==clean){
+  const pos=phoneInput.selectionStart??original.length;
+  const caret=original.slice(0,pos).replace(/[^0-9]/g,'').slice(0,10).length;
+  phoneInput.value=clean;
+  try{phoneInput.setSelectionRange(caret,caret);}catch(_){}
+ }
+}
+phoneInput.addEventListener('beforeinput',e=>{if(e.inputType==='insertText'&&e.data&&/[^0-9]/.test(e.data))e.preventDefault();});
+phoneInput.addEventListener('paste',e=>{
+ e.preventDefault();
+ const digits=(e.clipboardData?.getData('text/plain')||'').replace(/[^0-9]/g,'');
+ if(digits){phoneInput.setRangeText(digits,phoneInput.selectionStart??0,phoneInput.selectionEnd??0,'end');enforceTenDigits();phoneInput.dispatchEvent(new Event('input',{bubbles:true}));}
+});
+phoneInput.addEventListener('drop',e=>{
+ e.preventDefault();
+ const digits=(e.dataTransfer?.getData('text/plain')||'').replace(/[^0-9]/g,'');
+ if(digits){phoneInput.focus();phoneInput.setRangeText(digits,phoneInput.selectionStart??0,phoneInput.selectionEnd??0,'end');enforceTenDigits();phoneInput.dispatchEvent(new Event('input',{bubbles:true}));}
+});
+phoneInput.addEventListener('input',enforceTenDigits);
+phoneInput.addEventListener('change',enforceTenDigits);
+[u,p].forEach(el=>el.addEventListener('input',()=>{if(!pending){errors();if(status.classList.contains('error'))message();}}));
+function openWorkspace(){
+ p.value='';
+ p.type='password';
+ $('eye').textContent='แสดง';
+ $('eye').setAttribute('aria-pressed','false');
+ window.location.assign(new URL('./dashboard/',window.location.href));
+}
+form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;message();let ue='',pe='';const name=u.value.trim(),pass=p.value;
+if(!name)ue='กรุณากรอกรหัสตัวแทน';else if(!/^\d{6}$/.test(name))ue='กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก';
+if(!pass)pe='กรุณากรอกรหัสผ่าน';else if(pass.length<4||pass.length>20)pe='รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร';
+errors(ue,pe);if(ue||pe){(ue?u:p).focus();return;}
+loading(true);timer=setTimeout(()=>{timer=null;loading(false);if(name==='123456'&&pass==='000000'){errors();message();openWorkspace();}else{message('รหัสตัวแทนหรือรหัสผ่านไม่ถูกต้อง','error');p.focus();}},780);
+});
+document.querySelectorAll('[data-placeholder]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.placeholder,'ฟีเจอร์นี้อยู่ระหว่างพัฒนาและยังไม่เปิดให้บริการ')));
+
+/* UI-01 R4 — no storage, network, email, passkey or real registration */
+let recoveryTimer=null,signupTimer=null;
+function recoveryMessage(text='',type=''){const out=$('recoveryStatus');out.textContent=text;out.className='recoveryMsg'+(text?' show':'')+(type?' '+type:'');}
+function recoveryReset(){clearTimeout(recoveryTimer);$('recoveryEmail').value='';$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';$('recoveryEmailForm').style.display='none';$('recoveryChoices').hidden=false;recoveryMessage();}
+function showRecoveryChoice(){openModal('กู้คืนรหัสผ่าน','การกู้คืนบัญชียังไม่เปิดให้บริการ');recoveryReset();$('recoveryPasskey').focus();}
+$('recoveryPasskey').addEventListener('click',()=>{clearTimeout(recoveryTimer);$('recoveryPasskey').disabled=true;recoveryMessage('กำลังตรวจสอบการให้บริการ…');recoveryTimer=setTimeout(()=>{$('recoveryPasskey').disabled=false;recoveryMessage('ยังไม่รองรับการยืนยันตัวตนด้วยพาสคีย์','ok');},500);});
+$('recoveryEmailChoice').addEventListener('click',()=>{$('recoveryChoices').hidden=true;$('recoveryEmailForm').style.display='block';recoveryMessage();$('recoveryEmail').focus();});
+$('recoveryBack').addEventListener('click',()=>{recoveryReset();$('recoveryPasskey').focus();});
+$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลให้ถูกต้อง','bad');$('recoveryEmail').focus();return;}$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังตรวจสอบ…';recoveryMessage('กำลังตรวจสอบการให้บริการ…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';recoveryMessage('ยังไม่เปิดให้บริการกู้คืนบัญชีผ่านอีเมล','ok');},520);});
+const signupFields=[['regFirstName','regFirstNameError'],['regLastName','regLastNameError'],['regNickname','regNicknameError'],['regPhone','regPhoneError'],['regAgent','regAgentError'],['regEmail','regEmailError'],['regPass','regPassError'],['regConfirm','regConfirmError']];
+function clearSignupErrors(){signupFields.forEach(([id,err])=>{$(err).textContent='';$(id).setAttribute('aria-invalid','false');});}
+function signupMessage(msg='',bad=false){$('signupStatus').textContent=msg;$('signupStatus').className='signupStatus'+(msg?' show':'')+(bad?' bad':'');}
+function resetSignup(){clearTimeout(signupTimer);$('signupForm').reset();signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';clearSignupErrors();signupMessage();}
+$('startSignup').addEventListener('click',()=>{resetSignup();$('loginApp').classList.add('signupMode');window.scrollTo(0,0);$('regFirstName').focus();});
+$('returnLogin').addEventListener('click',()=>{resetSignup();$('loginApp').classList.remove('signupMode');window.scrollTo(0,0);u.focus();});
+signupFields.forEach(([id])=>$(id).addEventListener('input',()=>{clearSignupErrors();signupMessage();}));
+$('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErrors();signupMessage();let first=null;
+ const vals={first:$('regFirstName').value.trim(),last:$('regLastName').value.trim(),nickname:$('regNickname').value.trim(),phone:$('regPhone').value.trim(),agent:$('regAgent').value.trim(),email:$('regEmail').value.trim(),pass:$('regPass').value,confirm:$('regConfirm').value};
+ const errs={regFirstName:!vals.first||vals.first.length>80?'กรุณากรอกชื่อ':'',regLastName:!vals.last||vals.last.length>80?'กรุณากรอกนามสกุล':'',regNickname:!vals.nickname||vals.nickname.length>40?'กรุณากรอกชื่อเล่นสำหรับแสดงในคันรถ':'',regPhone:!/^[0-9]{10}$/.test(vals.phone)?'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก':'',regAgent:!/^\d{6}$/.test(vals.agent)?'รหัสตัวแทนต้องเป็นตัวเลข 6 หลัก':'',regEmail:! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)?'กรุณากรอกอีเมลให้ถูกต้อง':'',regPass:vals.pass.length<4||vals.pass.length>20?'รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':'',regConfirm:!vals.confirm?'กรุณายืนยันรหัสผ่าน':vals.confirm.length<4||vals.confirm.length>20?'ยืนยันรหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':vals.pass!==vals.confirm?'รหัสผ่านไม่ตรงกัน':''};
+ signupFields.forEach(([id,err])=>{if(errs[id]){$(err).textContent=errs[id];$(id).setAttribute('aria-invalid','true');first??=$(id);}});if(first){signupMessage('กรุณาตรวจสอบข้อมูลในแบบฟอร์ม',true);first.focus();return;}
+ signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจสอบข้อมูล…';signupMessage('กำลังตรวจสอบแบบฟอร์ม…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';signupMessage('ยังไม่เปิดให้สมัครสมาชิกผ่านเว็บไซต์');},620);
+});
+
+function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){message('โปรดเข้าสู่ระบบก่อนเปิด Dashboard','info');}}
+applyHashState();
+})();
+</script>
+<script type="module">
+import { mountThemeControl } from "./ui/theme-control.js";
+mountThemeControl(document.querySelector("[data-theme-toggle]"));
+</script>
+</body>
+</html>
