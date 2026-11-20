@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 button.pa-theme-control,
 .pa-header button.pa-theme-control {
     display: inline-grid;
@@ -37,7 +38,7 @@ button.pa-theme-control:focus-visible {
 
 /* Original Login visual rules, active only while its DOM is mounted. */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');html:has(#loginApp){
+html:has(#loginApp){
   --bg:#071521;--bg2:#0b2031;--bg3:#0e2b40;--panel:#0c1f2d;--panel2:#10283b;--card:#112c40;
   --line:#1f425d;--line2:#2b5777;--text:#edf5fb;--muted:#9db2c3;--soft:#bfd5e5;--cyan:#40b8da;
   --cyan2:#2ed0c4;--accent:#42a4ff;--danger:#ff788b;--dangerbg:#3a1d27;--ok:#61d4ae;--okbg:#11382f;

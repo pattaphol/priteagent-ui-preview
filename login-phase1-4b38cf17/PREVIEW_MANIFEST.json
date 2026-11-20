@@ -1,16 +1,21 @@
 {
-  "version": "login-fidelity-r1",
-  "source_tree": "fdfe43dccb97341c7d30f12749f2ac2ff4a15866",
+  "version": "login-fidelity-r2",
+  "source_tree": "27c5257efe175a8d20623156032d54ce956255ae",
   "source_files": [
-    {
-      "path": "index.html",
-      "size": 742,
-      "sha256": "5b20c174b24178057b4853797c818b431be3ff07323c4c8e3fbe7b553faeb718"
-    },
     {
       "path": "src/app.ts",
       "size": 55722,
       "sha256": "00f5fa11401e4f9fe54f7f5d3dd6282bdd47e3338242bc21d9f42b1bbd4a2f61"
+    },
+    {
+      "path": "ui/theme-control.js",
+      "size": 3056,
+      "sha256": "d1436c8fe3814b2d06660e6773fe44ee459a0e9a0478746f04f5690d6d6f634c"
+    },
+    {
+      "path": "ui/theme-control.css",
+      "size": 32811,
+      "sha256": "008c45c704d0f7cd130bb1dd8bcab37b69c1702ce6e4a14c537595e07f4f5b69"
     },
     {
       "path": "scripts/build.mjs",
@@ -18,14 +23,9 @@
       "sha256": "0b35ce9d4838db151fd70f97b68bcc0f15be5912b39dcd03d55113d5358383ee"
     },
     {
-      "path": "ui/theme-control.css",
-      "size": 32810,
-      "sha256": "d92a2ec0a1022e13720a4c38ded818d93729f38fa9fc5a04aca290816a3fea74"
-    },
-    {
-      "path": "ui/theme-control.js",
-      "size": 3056,
-      "sha256": "d1436c8fe3814b2d06660e6773fe44ee459a0e9a0478746f04f5690d6d6f634c"
+      "path": "index.html",
+      "size": 742,
+      "sha256": "5b20c174b24178057b4853797c818b431be3ff07323c4c8e3fbe7b553faeb718"
     }
   ],
   "namespace": "priteagent-preview:login-phase1-4b38cf17:",
@@ -58,8 +58,8 @@
     },
     {
       "path": "login-phase1-4b38cf17/ui/theme-control.css",
-      "size": 32810,
-      "sha256": "d92a2ec0a1022e13720a4c38ded818d93729f38fa9fc5a04aca290816a3fea74"
+      "size": 32811,
+      "sha256": "008c45c704d0f7cd130bb1dd8bcab37b69c1702ce6e4a14c537595e07f4f5b69"
     },
     {
       "path": "login-phase1-4b38cf17/ui/theme-control.js",
