@@ -1,0 +1,9 @@
+
+html body button.paSharedThemeButton{display:inline-grid!important;place-items:center!important;box-sizing:border-box!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;border:1px solid #2b5777!important;border-radius:13px!important;background:#10283b!important;color:#edf5fb!important;box-shadow:none!important;cursor:pointer;flex-shrink:0;transition:background-color .28s,color .28s,border-color .28s}
+html[data-theme="light"] body button.paSharedThemeButton{border-color:#afcada!important;background:#f0f6fc!important;color:#1c3347!important}
+html body button.paSharedThemeButton:hover{border-color:#42a4ff!important}
+html body button.paSharedThemeButton:focus-visible{outline:3px solid #42a4ff!important;outline-offset:3px!important}
+html body button.paSharedThemeButton svg{display:block;width:19px!important;height:19px!important;transform:none!important;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@keyframes paThemeTap{0%,100%{transform:scale(1) rotate(0)}40%{transform:scale(.85) rotate(-15deg)}70%{transform:scale(1.1) rotate(8deg)}}
+html body button.paSharedThemeButton.themeTap{animation:paThemeTap .66s ease both}
+@media(prefers-reduced-motion:reduce){html body button.paSharedThemeButton{animation:none!important;transition:none!important}}
