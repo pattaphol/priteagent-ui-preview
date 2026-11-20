@@ -1,4 +1,4 @@
-import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=shared-svg-18b7168a';
+import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=shared-control-r2';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');

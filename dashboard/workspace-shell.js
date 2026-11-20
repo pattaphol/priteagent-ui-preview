@@ -1,6 +1,4 @@
-import {renderThemeIcon, animateThemeIcon} from '../ui/theme-icons.js?rev=shared-svg-csp1';
-const themeKey = 'priteagent-v2:shell:theme';
-const previousThemeKey = 'priteagent.ui.theme.v1';
+import {mountThemeControl} from '../ui/theme-icons.js?rev=shared-control-r2';
 const home = new URL('../dashboard/', import.meta.url);
 const directory = new URL('../car-directory/', import.meta.url);
 const login = new URL('../', import.meta.url);
@@ -24,14 +22,6 @@ function menuUrl(area, screen) {
     if (area === 'customer') link.searchParams.set('area', area);
     if (screen !== 'home') link.searchParams.set('view', screen);
     return link.href;
-}
-
-function currentTheme() {
-    try {
-        const preference = localStorage.getItem(themeKey) || localStorage.getItem(previousThemeKey);
-        if (preference === 'light' || preference === 'dark') return preference;
-    } catch {}
-    return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
 }
 
 export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, onSearch}) {
@@ -58,23 +48,7 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
     header.after(backdrop);
     const trigger = header.querySelector('.pa-menu');
     const theme = header.querySelector('[data-pa-theme]');
-    function updateTheme(next) {
-        document.documentElement.dataset.theme = next;
-        renderThemeIcon(theme,next);
-        const label = next === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
-        theme.setAttribute('aria-label',label);
-        theme.title = label;
-    }
-    updateTheme(currentTheme());
-    theme.onclick = () => {
-        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-        updateTheme(next);
-        animateThemeIcon(theme);
-        try {
-            localStorage.setItem(themeKey,next);
-            localStorage.setItem(previousThemeKey,next);
-        } catch {}
-    };
+    const disposeTheme = mountThemeControl(theme);
     if (onSearch) header.querySelector('[data-pa-search]').onclick = onSearch;
 
     function showDrawer(show, returnFocus = false) {
@@ -101,8 +75,6 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
         }
     };
     const syncViewport = () => showDrawer(false);
-    const syncTheme = () => updateTheme(currentTheme());
-    const onStorage = event => { if (event.key === themeKey || event.key === previousThemeKey) syncTheme(); };
     const onKey = event => {
         if (event.key === 'Escape' && !document.querySelector('dialog[open]') && !backdrop.hidden) {
             event.preventDefault();
@@ -110,8 +82,6 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
         }
     };
     compact.addEventListener('change',syncViewport);
-    window.addEventListener('storage',onStorage);
-    window.addEventListener('pageshow',syncTheme);
     document.addEventListener('keydown',onKey);
     let bottom;
     if (features.mobileBottomNavigation) {
@@ -126,8 +96,7 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
     }
     return () => {
         compact.removeEventListener('change',syncViewport);
-        window.removeEventListener('storage',onStorage);
-        window.removeEventListener('pageshow',syncTheme);
+        disposeTheme();
         document.removeEventListener('keydown',onKey);
         bottom?.remove();
     };

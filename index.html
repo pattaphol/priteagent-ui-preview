@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
-<script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent-v2:shell:theme')||localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
+
 <title>PriteAgent | เข้าสู่ระบบ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -240,16 +240,6 @@ html[data-theme="light"] #loginApp .signupStatus{background:#eaf6ff;border-color
 
 
 /* R4.5 – one icon-only moon/sun switch, matching theme across Login and Back-office. */
-.themeModeButton{display:inline-grid;place-items:center;flex-shrink:0;width:42px;height:42px;padding:0;border-radius:13px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;transition:background-color .28s ease,color .28s ease,border-color .28s ease,box-shadow .28s ease}
-.themeModeButton:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--shadow)}
-.themeModeButton:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.themeModeGlyph{width:23px;height:23px;overflow:visible;transform:rotate(0deg);transition:transform .42s cubic-bezier(.2,.85,.3,1)}
-.themeModeGlyph .themeSun,.themeModeGlyph .themeMoon{transform-origin:12px 12px;transition:opacity .32s ease,transform .42s cubic-bezier(.2,.85,.3,1)}
-.themeModeGlyph .themeSun{opacity:0;transform:rotate(-80deg) scale(.25)}
-.themeModeGlyph .themeMoon{opacity:1;transform:rotate(0deg) scale(1)}
-html[data-theme="light"] .themeModeGlyph{transform:rotate(90deg)}
-html[data-theme="light"] .themeModeGlyph .themeSun{opacity:1;transform:rotate(-90deg) scale(1)}
-html[data-theme="light"] .themeModeGlyph .themeMoon{opacity:0;transform:rotate(80deg) scale(.25)}
 #loginApp .panel>.themeModeButton{position:absolute;right:14px;top:12px;z-index:9}
 #loginApp.signupMode .signupView{padding-top:26px}
 #desk .deskTheme{position:static;flex:0 0 auto}
@@ -271,9 +261,6 @@ html[data-theme="light"] #loginApp .story .storyfeatures .feature p{color:#415f7
 html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 /* R4.6: Stronger, deliberate feedback on tap, including mobile browser touch.
    Reduced-motion user preference must remain honored. */
-@keyframes themeModeTap{0%{transform:scale(1) rotate(0deg)}34%{transform:scale(.81) rotate(-18deg)}68%{transform:scale(1.16) rotate(12deg)}100%{transform:scale(1) rotate(0deg)}}
-.themeModeButton.themeTap{animation:themeModeTap .66s cubic-bezier(.18,.7,.22,1) both}
-.themeModeGlyph,.themeModeGlyph .themeSun,.themeModeGlyph .themeMoon{transform-box:view-box;backface-visibility:hidden}
 @media(prefers-reduced-motion:reduce){.themeModeButton.themeTap{animation:none!important}}
 
 
@@ -282,13 +269,6 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 #publicPreviewNotice strong{font-weight:600;letter-spacing:0}
 #help:disabled,#startSignup:disabled{opacity:.48;cursor:not-allowed;pointer-events:none}
 
-/* Owner-approved theme-only adjustment; original Login layout retained. */
-.themeModeButton,#loginApp .panel>.themeModeButton{width:44px;height:44px;min-width:44px;min-height:44px}
-.themeModeGlyph{width:19px;height:19px}
-.themeModeGlyph .themeSun{opacity:1;transform:rotate(0deg) scale(1)}
-.themeModeGlyph .themeMoon{opacity:0;transform:rotate(-80deg) scale(.25)}
-html[data-theme="light"] .themeModeGlyph .themeSun{opacity:0;transform:rotate(-90deg) scale(.25)}
-html[data-theme="light"] .themeModeGlyph .themeMoon{opacity:1;transform:rotate(-90deg) scale(1)}
 #resetForm[hidden]{display:none}
 </style>
 </head>
@@ -354,38 +334,7 @@ html[data-theme="light"] .themeModeGlyph .themeMoon{opacity:1;transform:rotate(-
 (()=>{
 'use strict';
 
-/* R4.2: same-origin shared theme for Login, demo destination and UI-02 shell. */
-const THEME_KEY='priteagent.ui.theme.v1';
-const SHELL_THEME_KEY='priteagent-v2:shell:theme';
-function readTheme(){return localStorage.getItem(SHELL_THEME_KEY)||localStorage.getItem(THEME_KEY);}
-function applyTheme(value,persist=false){
- const selected=value==='light'?'light':'dark';
- document.documentElement.dataset.theme=selected;
- document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
-  btn.setAttribute('aria-pressed',String(selected==='light'));
-  btn.setAttribute('aria-label',selected==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');
-  btn.title=selected==='light'?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง';
- });
- if(persist){try{localStorage.setItem(THEME_KEY,selected);localStorage.setItem(SHELL_THEME_KEY,selected);}catch(_){}}
- const display=document.getElementById('demoThemeName');if(display)display.textContent=selected==='light'?'สว่าง':'มืด';
-}
-function showThemeTap(button){
- if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
- button.classList.remove('themeTap');
- void button.offsetWidth; // restart when tapped repeatedly on a touch device
- button.classList.add('themeTap');
-}
-document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
- btn.addEventListener('click',()=>{
-  applyTheme(document.documentElement.dataset.theme==='light'?'dark':'light',true);
-  showThemeTap(btn);
- });
- btn.addEventListener('animationend',e=>{if(e.target===btn&&e.animationName==='themeModeTap')btn.classList.remove('themeTap');});
-});
-window.addEventListener('storage',e=>{if(e.key===THEME_KEY||e.key===SHELL_THEME_KEY){try{applyTheme(readTheme());}catch(_){}}});
-window.addEventListener('pageshow',()=>{try{applyTheme(readTheme());}catch(_){applyTheme('dark');}});
-applyTheme(document.documentElement.dataset.theme);
-
+// Theme Control is mounted by the shared module below.
 const $=id=>document.getElementById(id);
 const form=$('loginForm'),u=$('username'),p=$('password'),status=$('formStatus'),submit=$('submit'),buttonText=$('submitText'),arrow=$('submitArrow');
 let pending=false,timer=null,lastFocus=null;
@@ -512,6 +461,6 @@ $('modalWrap').addEventListener('keydown',ev=>{if(ev.key!=='Tab')return;const it
 applyHashState();
 })();
 </script>
-<script type="module" src="./ui/theme-icons.js?rev=shared-svg-csp1"></script>
+<script type="module" src="./ui/theme-icons.js?rev=shared-control-r2"></script>
 </body>
 </html>
