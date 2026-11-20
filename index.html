@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark light" />
-<script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
+<script>/* UI-only theme preference; never store credentials */try{var t=localStorage.getItem('priteagent-v2:shell:theme')||localStorage.getItem('priteagent.ui.theme.v1');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
 <title>PriteAgent | เข้าสู่ระบบ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -356,6 +356,8 @@ html[data-theme="light"] .themeModeGlyph .themeMoon{opacity:1;transform:rotate(-
 
 /* R4.2: same-origin shared theme for Login, demo destination and UI-02 shell. */
 const THEME_KEY='priteagent.ui.theme.v1';
+const SHELL_THEME_KEY='priteagent-v2:shell:theme';
+function readTheme(){return localStorage.getItem(SHELL_THEME_KEY)||localStorage.getItem(THEME_KEY);}
 function applyTheme(value,persist=false){
  const selected=value==='light'?'light':'dark';
  document.documentElement.dataset.theme=selected;
@@ -364,7 +366,7 @@ function applyTheme(value,persist=false){
   btn.setAttribute('aria-label',selected==='light'?'ใช้โหมดสว่าง กดเพื่อเปลี่ยนเป็นโหมดมืด':'ใช้โหมดมืด กดเพื่อเปลี่ยนเป็นโหมดสว่าง');
   btn.title=selected==='light'?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง';
  });
- if(persist){try{localStorage.setItem(THEME_KEY,selected);}catch(_){}}
+ if(persist){try{localStorage.setItem(THEME_KEY,selected);localStorage.setItem(SHELL_THEME_KEY,selected);}catch(_){}}
  const display=document.getElementById('demoThemeName');if(display)display.textContent=selected==='light'?'สว่าง':'มืด';
 }
 function showThemeTap(button){
@@ -380,8 +382,8 @@ document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
  });
  btn.addEventListener('animationend',e=>{if(e.target===btn&&e.animationName==='themeModeTap')btn.classList.remove('themeTap');});
 });
-window.addEventListener('storage',e=>{if(e.key===THEME_KEY)applyTheme(e.newValue);});
-window.addEventListener('pageshow',()=>{try{applyTheme(localStorage.getItem(THEME_KEY));}catch(_){applyTheme('dark');}});
+window.addEventListener('storage',e=>{if(e.key===THEME_KEY||e.key===SHELL_THEME_KEY){try{applyTheme(readTheme());}catch(_){}}});
+window.addEventListener('pageshow',()=>{try{applyTheme(readTheme());}catch(_){applyTheme('dark');}});
 applyTheme(document.documentElement.dataset.theme);
 
 const $=id=>document.getElementById(id);
