@@ -1,3 +1,4 @@
+import {renderThemeIcon, animateThemeIcon} from '../ui/theme-icons.js';
 const themeKey = 'priteagent-v2:shell:theme';
 const previousThemeKey = 'priteagent.ui.theme.v1';
 const home = new URL('../dashboard/', import.meta.url);
@@ -59,7 +60,7 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
     const theme = header.querySelector('[data-pa-theme]');
     function updateTheme(next) {
         document.documentElement.dataset.theme = next;
-        theme.textContent = next === 'dark' ? '☀' : '☾';
+        renderThemeIcon(theme,next);
         const label = next === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
         theme.setAttribute('aria-label',label);
         theme.title = label;
@@ -68,6 +69,7 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
     theme.onclick = () => {
         const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
         updateTheme(next);
+        animateThemeIcon(theme);
         try {
             localStorage.setItem(themeKey,next);
             localStorage.setItem(previousThemeKey,next);
