@@ -1,4 +1,4 @@
-import {renderThemeIcon, animateThemeIcon} from '../ui/theme-icons.js';
+import {renderThemeIcon, animateThemeIcon} from '../ui/theme-icons.js?rev=shared-svg-csp1';
 const themeKey = 'priteagent-v2:shell:theme';
 const previousThemeKey = 'priteagent.ui.theme.v1';
 const home = new URL('../dashboard/', import.meta.url);
