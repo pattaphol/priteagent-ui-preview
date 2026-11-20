@@ -281,6 +281,15 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 #publicPreviewNotice{background:rgba(10,25,38,.96);color:#bacdda;border-top:1px solid #25445d;box-shadow:none;padding:7px 12px;font-size:11px;letter-spacing:0;line-height:1.45;font-weight:500}
 #publicPreviewNotice strong{font-weight:600;letter-spacing:0}
 #help:disabled,#startSignup:disabled{opacity:.48;cursor:not-allowed;pointer-events:none}
+
+/* Owner-approved theme-only adjustment; original Login layout retained. */
+.themeModeButton,#loginApp .panel>.themeModeButton{width:44px;height:44px;min-width:44px;min-height:44px}
+.themeModeGlyph{width:19px;height:19px}
+.themeModeGlyph .themeSun{opacity:1;transform:rotate(0deg) scale(1)}
+.themeModeGlyph .themeMoon{opacity:0;transform:rotate(-80deg) scale(.25)}
+html[data-theme="light"] .themeModeGlyph .themeSun{opacity:0;transform:rotate(-90deg) scale(.25)}
+html[data-theme="light"] .themeModeGlyph .themeMoon{opacity:1;transform:rotate(-90deg) scale(1)}
+#resetForm[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -299,11 +308,11 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
    <div class="panelHead"><h2>เข้าสู่ระบบ</h2></div>
    <form class="form" id="loginForm" novalidate autocomplete="off">
     <div class="field"><div class="fieldrow"><label for="username">รหัสตัวแทน</label></div><div class="control"><input id="username" name="agent-id" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="รหัสตัวแทน 6 หลัก" autocapitalize="off" spellcheck="false" aria-describedby="userError" /></div><div id="userError" class="fieldError" role="alert"></div></div>
-    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help" disabled title="ยังไม่เปิดใช้งาน">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="agent-password" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
+    <div class="field"><div class="fieldrow"><label for="password">รหัสผ่าน</label><button type="button" class="help" id="help" title="ทดลองแบบฟอร์มด้วยข้อมูลจำลอง">ลืมรหัสผ่าน?</button></div><div class="control"><input id="password" name="agent-password" type="password" minlength="4" maxlength="20" placeholder="รหัสผ่าน 4 - 20 หลัก" autocomplete="new-password" aria-describedby="passError" /><button type="button" class="eye" id="eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><div id="passError" class="fieldError" role="alert"></div></div>
     <div id="formStatus" class="status" role="status" aria-live="polite"></div>
     <button id="submit" type="submit" class="primary"><span class="spinner" aria-hidden="true"></span><span id="submitText">เข้าสู่ระบบ</span><span id="submitArrow" aria-hidden="true">→</span></button>
    </form>
-   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction" disabled title="ยังไม่เปิดใช้งาน">สมัครสมาชิก</button></div>
+   <div class="signupPrompt"><span>ยังไม่มีบัญชี?</span><button id="startSignup" type="button" class="textAction" title="ทดลองแบบฟอร์มด้วยข้อมูลจำลอง">สมัครสมาชิก</button></div>
    
    <section id="signupView" class="signupView" aria-label="สมัครสมาชิก">
     <h2 id="signupTitle">สมัครสมาชิก</h2><p class="signupSub">บริการสมัครสมาชิกยังไม่เปิดใช้งาน โปรดอย่าใส่ข้อมูลส่วนบุคคลในแบบฟอร์มนี้</p>
@@ -330,12 +339,17 @@ html[data-theme="light"] #loginApp .story .storyfoot{color:#4e6d83}
 </div>
 <div id="modalWrap" class="modalWrap" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">ข้อมูลบริการ</h3><p id="modalText"></p>
  <div id="recoveryChoices" class="choiceGroup" hidden>
-  <button id="recoveryPasskey" type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ยังไม่เปิดให้บริการ</small></button>
+  <button id="recoveryPasskey" disabled type="button" class="choice"><strong>กู้คืนรหัสผ่านด้วยพาสคีย์</strong><small>ยังไม่เปิดให้บริการ</small></button>
   <button id="recoveryEmailChoice" type="button" class="choice"><strong>กู้คืนด้วยอีเมล</strong><small>ยังไม่เปิดให้บริการ</small></button>
  </div>
  <form id="recoveryEmailForm" class="recoveryForm" novalidate><label for="recoveryEmail">อีเมลสำหรับกู้คืน</label><input id="recoveryEmail" type="email" placeholder="name@example.com" autocomplete="off"/><button id="recoveryEmailSubmit" type="submit" class="modalPrimary">ดำเนินการ</button><button id="recoveryBack" type="button" class="recoveryBack">← เลือกวิธีอื่น</button></form>
  <div id="recoveryStatus" class="recoveryMsg" role="status" aria-live="polite"></div>
- <button id="modalClose" type="button">ปิดหน้าต่าง</button></section></div>
+ <button type="button" id="openReset">ทดลองตั้งรหัสผ่านใหม่</button>
+<form id="resetForm" class="recoveryForm" hidden novalidate>
+<p>แบบจำลองเท่านั้น กรุณาอย่าใช้รหัสผ่านส่วนตัว</p>
+<label for="newPass">รหัสผ่านใหม่</label><input id="newPass" type="password" minlength="4" maxlength="20" autocomplete="new-password" aria-describedby="resetError">
+<label for="confirmPass">ยืนยันรหัสผ่านใหม่</label><input id="confirmPass" type="password" minlength="4" maxlength="20" autocomplete="new-password" aria-describedby="resetError">
+<p id="resetError" role="alert"></p><button type="submit">ตรวจสอบข้อมูลจำลอง</button><button type="button" id="resetBack">กลับ</button></form><button id="modalClose" type="button">ปิดหน้าต่าง</button></section></div>
 <script>
 (()=>{
 'use strict';
@@ -467,7 +481,7 @@ function showRecoveryChoice(){openModal('กู้คืนรหัสผ่า
 $('recoveryPasskey').addEventListener('click',()=>{clearTimeout(recoveryTimer);$('recoveryPasskey').disabled=true;recoveryMessage('กำลังตรวจสอบการให้บริการ…');recoveryTimer=setTimeout(()=>{$('recoveryPasskey').disabled=false;recoveryMessage('ยังไม่รองรับการยืนยันตัวตนด้วยพาสคีย์','ok');},500);});
 $('recoveryEmailChoice').addEventListener('click',()=>{$('recoveryChoices').hidden=true;$('recoveryEmailForm').style.display='block';recoveryMessage();$('recoveryEmail').focus();});
 $('recoveryBack').addEventListener('click',()=>{recoveryReset();$('recoveryPasskey').focus();});
-$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลให้ถูกต้อง','bad');$('recoveryEmail').focus();return;}$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังตรวจสอบ…';recoveryMessage('กำลังตรวจสอบการให้บริการ…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';recoveryMessage('ยังไม่เปิดให้บริการกู้คืนบัญชีผ่านอีเมล','ok');},520);});
+$('recoveryEmailForm').addEventListener('submit',e=>{e.preventDefault();let email=$('recoveryEmail').value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){recoveryMessage('กรุณากรอกอีเมลให้ถูกต้อง','bad');$('recoveryEmail').setAttribute('aria-invalid','true');$('recoveryEmail').focus();return;}$('recoveryEmail').setAttribute('aria-invalid','false');$('recoveryEmail').disabled=true;$('recoveryEmailSubmit').disabled=true;$('recoveryEmailSubmit').textContent='กำลังตรวจสอบ…';recoveryMessage('กำลังตรวจสอบการให้บริการ…');clearTimeout(recoveryTimer);recoveryTimer=setTimeout(()=>{$('recoveryEmail').disabled=false;$('recoveryEmailSubmit').disabled=false;$('recoveryEmailSubmit').textContent='ดำเนินการ';recoveryMessage('ยังไม่เชื่อมระบบส่งอีเมล / ไม่มีการส่งลิงก์กู้คืน','ok');},520);});
 const signupFields=[['regFirstName','regFirstNameError'],['regLastName','regLastNameError'],['regNickname','regNicknameError'],['regPhone','regPhoneError'],['regAgent','regAgentError'],['regEmail','regEmailError'],['regPass','regPassError'],['regConfirm','regConfirmError']];
 function clearSignupErrors(){signupFields.forEach(([id,err])=>{$(err).textContent='';$(id).setAttribute('aria-invalid','false');});}
 function signupMessage(msg='',bad=false){$('signupStatus').textContent=msg;$('signupStatus').className='signupStatus'+(msg?' show':'')+(bad?' bad':'');}
@@ -479,10 +493,20 @@ $('signupForm').addEventListener('submit',e=>{e.preventDefault();clearSignupErro
  const vals={first:$('regFirstName').value.trim(),last:$('regLastName').value.trim(),nickname:$('regNickname').value.trim(),phone:$('regPhone').value.trim(),agent:$('regAgent').value.trim(),email:$('regEmail').value.trim(),pass:$('regPass').value,confirm:$('regConfirm').value};
  const errs={regFirstName:!vals.first||vals.first.length>80?'กรุณากรอกชื่อ':'',regLastName:!vals.last||vals.last.length>80?'กรุณากรอกนามสกุล':'',regNickname:!vals.nickname||vals.nickname.length>40?'กรุณากรอกชื่อเล่นสำหรับแสดงในคันรถ':'',regPhone:!/^[0-9]{10}$/.test(vals.phone)?'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก':'',regAgent:!/^\d{6}$/.test(vals.agent)?'รหัสตัวแทนต้องเป็นตัวเลข 6 หลัก':'',regEmail:! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)?'กรุณากรอกอีเมลให้ถูกต้อง':'',regPass:vals.pass.length<4||vals.pass.length>20?'รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':'',regConfirm:!vals.confirm?'กรุณายืนยันรหัสผ่าน':vals.confirm.length<4||vals.confirm.length>20?'ยืนยันรหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':vals.pass!==vals.confirm?'รหัสผ่านไม่ตรงกัน':''};
  signupFields.forEach(([id,err])=>{if(errs[id]){$(err).textContent=errs[id];$(id).setAttribute('aria-invalid','true');first??=$(id);}});if(first){signupMessage('กรุณาตรวจสอบข้อมูลในแบบฟอร์ม',true);first.focus();return;}
- signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจสอบข้อมูล…';signupMessage('กำลังตรวจสอบแบบฟอร์ม…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';signupMessage('ยังไม่เปิดให้สมัครสมาชิกผ่านเว็บไซต์');},620);
+ signupFields.forEach(([id])=>$(id).disabled=true);$('signupSubmit').disabled=true;$('signupSubmit').textContent='กำลังตรวจสอบข้อมูล…';signupMessage('กำลังตรวจสอบแบบฟอร์ม…');clearTimeout(signupTimer);signupTimer=setTimeout(()=>{signupFields.forEach(([id])=>$(id).disabled=false);$('signupSubmit').disabled=false;$('signupSubmit').textContent='สมัครสมาชิก';signupMessage('ยังไม่เปิดสมัครสมาชิกจริง / ไม่ได้สร้างบัญชี');},620);
 });
 
 function applyHashState(){const h=(location.hash||'').replace('#',''); if(h==='error'){u.value='111';p.value='22'; errors('กรอกรหัสตัวแทนเป็นตัวเลข 6 หลัก','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); message('', 'error');} else if(h==='success'){message('โปรดเข้าสู่ระบบก่อนเปิด Dashboard','info');}}
+
+const resetForm=$('resetForm');
+function hideReset(){resetForm.hidden=true;resetForm.style.display='none';}
+$('openReset').addEventListener('click',()=>{resetForm.hidden=false;resetForm.style.display='grid';$('recoveryChoices').hidden=true;$('recoveryEmailForm').style.display='none';$('recoveryStatus').textContent='';$('newPass').focus();});
+$('resetBack').addEventListener('click',()=>{hideReset();showRecoveryChoice();});
+$('help').addEventListener('click',hideReset);
+$('modalClose').addEventListener('click',hideReset);
+resetForm.addEventListener('submit',ev=>{ev.preventDefault();const a=$('newPass'),b=$('confirmPass');const bad=a.value.length<4||a.value.length>20;const mismatch=!b.value||a.value!==b.value;a.setAttribute('aria-invalid',String(bad));b.setAttribute('aria-invalid',String(mismatch));$('resetError').textContent=bad?'รหัสผ่านต้องมีความยาว 4 - 20 ตัวอักษร':mismatch?'รหัสผ่านไม่ตรงกัน':'ยังไม่สามารถเปลี่ยนรหัสผ่านจริง';if(bad||mismatch)(bad?a:b).focus();});
+$('modalWrap').addEventListener('keydown',ev=>{if(ev.key!=='Tab')return;const items=Array.from($('modalWrap').querySelectorAll('button:not(:disabled),input')).filter(el=>el.getClientRects().length);const first=items[0],last=items[items.length-1];if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}});
+
 applyHashState();
 })();
 </script>
