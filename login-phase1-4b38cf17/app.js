@@ -1,4 +1,4 @@
-import { mountThemeControl } from './ui/theme-control.js';
+import { mountThemeControl } from './ui/theme-control.js?v=fidelity-r3';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');

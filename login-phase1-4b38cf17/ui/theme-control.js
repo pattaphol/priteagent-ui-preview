@@ -4,7 +4,7 @@ const root = document.documentElement;
 const isTheme = value => value === 'light' || value === 'dark';
 
 export function mountThemeControl(button) {
-    const stylesheet = new URL('./theme-control.css', import.meta.url).href;
+    const stylesheet = new URL('./theme-control.css?v=fidelity-r3', import.meta.url).href;
     if (!document.querySelector('[data-pa-theme-styles]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';

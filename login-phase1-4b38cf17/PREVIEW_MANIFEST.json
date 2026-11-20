@@ -1,6 +1,7 @@
 {
-  "version": "login-fidelity-r2",
-  "source_tree": "27c5257efe175a8d20623156032d54ce956255ae",
+  "version": "login-fidelity-r3",
+  "source_tree": "5a9744284a8fa06a74c5edd9e7cd629f357e9a8d",
+  "namespace": "priteagent-preview:login-phase1-4b38cf17:",
   "source_files": [
     {
       "path": "src/app.ts",
@@ -19,8 +20,8 @@
     },
     {
       "path": "scripts/build.mjs",
-      "size": 923,
-      "sha256": "0b35ce9d4838db151fd70f97b68bcc0f15be5912b39dcd03d55113d5358383ee"
+      "size": 1435,
+      "sha256": "ca978042de45dbd5f0b55fb8fe68041a59db66bd4693e159bb38bedd250963cf"
     },
     {
       "path": "index.html",
@@ -28,8 +29,6 @@
       "sha256": "5b20c174b24178057b4853797c818b431be3ff07323c4c8e3fbe7b553faeb718"
     }
   ],
-  "namespace": "priteagent-preview:login-phase1-4b38cf17:",
-  "storage": "Existing original Preview keys and IndexedDB retained",
   "files": [
     {
       "path": "login-phase1-4b38cf17/adapters.js",
@@ -38,8 +37,8 @@
     },
     {
       "path": "login-phase1-4b38cf17/app.js",
-      "size": 65095,
-      "sha256": "afa58f045db5eabef37cd7d146596156f974bbedbafe8b53776de10f9d03f9c7"
+      "size": 65109,
+      "sha256": "bbf80f21c13cea4ad2e62e67bdee0ca4b56616d558e8e2541e093163631672ee"
     },
     {
       "path": "login-phase1-4b38cf17/domain.js",
@@ -48,8 +47,8 @@
     },
     {
       "path": "login-phase1-4b38cf17/index.html",
-      "size": 742,
-      "sha256": "5b20c174b24178057b4853797c818b431be3ff07323c4c8e3fbe7b553faeb718"
+      "size": 784,
+      "sha256": "84a3f329205a73068ee500fd54def7b94bf6b24c448d20b0cf3b8f4d83140793"
     },
     {
       "path": "login-phase1-4b38cf17/styles.css",
@@ -63,8 +62,8 @@
     },
     {
       "path": "login-phase1-4b38cf17/ui/theme-control.js",
-      "size": 3138,
-      "sha256": "4771c7085965b1a238e5aa9c4f147aa42fd5e1f13191dfa2821e1b6f5fda3fae"
+      "size": 3152,
+      "sha256": "2f2a73fb9782178e145e0d7b56f7208b77cd2e80d288d8edfdb27ca195e81a71"
     }
   ]
 }
