@@ -1,4 +1,5 @@
 import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=shared-control-r2';
+import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-integrated-r23';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');
@@ -83,6 +84,12 @@ function navigate(destination) {
     }
     screen = destination;
     detailCarId = null;
+    if (screen === 'admin-demo' || new URL(location.href).searchParams.get('view') === 'admin-demo') {
+        const url = new URL(location.href);
+        if (screen === 'admin-demo') { url.searchParams.set('view', 'admin-demo'); url.searchParams.delete('area'); }
+        else url.searchParams.delete('view');
+        history.replaceState(null, '', url);
+    }
     render();
     document.querySelector('main h1')?.focus();
 }
@@ -177,7 +184,7 @@ function render() {
  <h2>รายการคันรถของฉัน</h2>${cars.length?`<div class="dashboard-car-list">${cars.slice(0,3).map(c=>`<button data-car="${e(c.id)}" data-action="body" aria-label="เปิดรายละเอียดคันรถ ${e(c.name)}"><span><strong>${e(c.name)}</strong><small>${e(c.destination||'ยังไม่ระบุจังหวัด')} · ${period(c)}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>`:'<p class="dashboard-empty">ยังไม่มีคันรถที่บันทึกไว้ เริ่มจากปุ่มสร้างคันรถ</p>'}</div>
  <p class="dashboard-footnote">ค่าใช้จ่าย ถืองาน และงานลูกค้ายังไม่เปิดใช้งานจริง ข้อมูลคันรถที่สร้างในขั้นนี้ไม่ใช่ข้อมูลกลางข้ามอุปกรณ์</p>
  `:'<div class="dashboard-work"><h2>งานลูกค้า</h2><p>ยังไม่พร้อมใช้งาน ขณะนี้ยังไม่มีข้อมูลลูกค้าหรือสิทธิ์บัญชีจริง</p><button data-area="agent">กลับงานตัวแทน</button></div>'}
- </section>` : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
+ </section>` : screen === 'admin-demo' ? adminDemoMarkup() : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
  <footer>PriteAgent V2 · พื้นที่ทำงาน</footer></main>
  <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>ยังไม่เปิดใช้งาน</strong><p>ฟีเจอร์นี้อยู่ระหว่างพัฒนา ยังไม่สามารถบันทึกหรือจัดการข้อมูลในส่วนนี้ได้</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
     if (directory) result();
@@ -190,6 +197,7 @@ function render() {
             navigate(nextScreen);
         }
     });
+    if (screen === 'admin-demo') mountAdminDemo();
     showPendingRecovery();
     document.querySelector('#search')?.addEventListener('input', (ev)=>{
         filters.query = ev.target.value;
