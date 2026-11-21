@@ -8,7 +8,8 @@ const features = Object.freeze({ mobileBottomNavigation: false });
 export const workspaceMenus = {
     agent: {
         home: 'หน้าหลัก', cars: 'คันรถของฉัน', expenses: 'ค่าใช้จ่าย',
-        'holding-cars': 'เลือกคันรถเพื่อดูงานที่ถือ', performance: 'ผลงาน', bonuses: 'โบนัสและคุณวุฒิ'
+        'holding-cars': 'เลือกคันรถเพื่อดูงานที่ถือ', performance: 'ผลงาน', bonuses: 'โบนัสและคุณวุฒิ',
+        'admin-demo': 'Admin (ทดลอง)'
     },
     customer: {
         home: 'หน้าหลัก', customers: 'ลูกค้า', planning: 'วางแผนประกัน',
