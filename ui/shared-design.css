@@ -230,3 +230,19 @@ body .pa-date-field .pa-date-native {
 .carGroupForm .carGroupScroll { min-width: 0; }
 .carGroupForm .carGroupDates,
 .carGroupForm .carGroupRoles { grid-template-columns: repeat(2,minmax(0,1fr)); }
+
+/* The legacy page theme buttons keep their existing button chrome; only SVG
+ * geometry comes from ui/theme-icons.js, exactly like Login and Dashboard. */
+.pa-shared-theme-art > svg,
+.pa-shared-theme-art > svg[data-theme-artwork],
+.pa-shared-theme-art svg[data-theme-artwork] {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
