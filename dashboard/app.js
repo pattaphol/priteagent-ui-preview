@@ -4,6 +4,7 @@ import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-po
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js?rev=pa-car-code-r1';
 const root = document.querySelector('#app');
+const expensePage = new URL('../expense-ui-r395-20261122/', import.meta.url);
 enableCarTabKeyboard();
 let storage;
 try {
@@ -80,6 +81,10 @@ function openCarDirectory(params = {}) {
     window.location.assign(target);
 }
 function navigate(destination) {
+    if (destination === 'expenses') {
+        window.location.assign(expensePage.href); // Public synthetic Expense UI; not a real car ledger
+        return;
+    }
     if (destination === 'cars') {
         openCarDirectory();
         return;
@@ -177,7 +182,7 @@ function render() {
  <div class="dashboard-intro"><div><span class="dashboard-kicker">${areaName}</span><h1 id="dashboard-title" tabindex="-1">หน้าแรก</h1><p>ภาพรวมงานของคุณใน PriteAgent V2</p></div><span class="dashboard-status">ข้อมูลบนอุปกรณ์นี้</span></div>
  ${area==='agent'?`
  <div class="dashboard-stats" aria-label="สรุปข้อมูลคันรถ"><article class="dashboard-stat"><span>คันรถที่บันทึกไว้</span><strong>${cars.length}</strong><small>ข้อมูลในเบราว์เซอร์เครื่องนี้</small></article><article class="dashboard-stat"><span>คันรถที่กำลังดำเนินการ</span><strong>${cars.filter(c=>!c.closed&&!c.archived).length}</strong><small>ไม่นับคันรถที่ปิดหรือจัดเก็บ</small></article></div>
- <div class="dashboard-work"><h2>เริ่มทำงาน</h2><div class="dashboard-actions"><button data-page="cars" class="dashboard-primary">ดูคันรถของฉัน</button><button data-action="create-group">+ สร้างคันรถ</button></div>
+ <div class="dashboard-work"><h2>เริ่มทำงาน</h2><div class="dashboard-actions"><button data-page="cars" class="dashboard-primary">ดูคันรถของฉัน</button><button data-action="create-group">+ สร้างคันรถ</button><button data-page="expenses">ค่าใช้จ่าย (ทดลอง)</button></div>
  <h2>รายการคันรถของฉัน</h2>${cars.length?`<div class="dashboard-car-list">${cars.slice(0,3).map(c=>`<button data-car="${e(c.id)}" data-action="body" aria-label="เปิดรายละเอียดคันรถ ${e(c.name)}"><span><strong>${e(c.name)}</strong><small>${e(c.destination||'ยังไม่ระบุจังหวัด')} · ${period(c)}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>`:'<p class="dashboard-empty">ยังไม่มีคันรถที่บันทึกไว้ เริ่มจากปุ่มสร้างคันรถ</p>'}</div>
  <p class="dashboard-footnote">ค่าใช้จ่าย ถืองาน และงานลูกค้ายังไม่เปิดใช้งานจริง ข้อมูลคันรถที่สร้างในขั้นนี้ไม่ใช่ข้อมูลกลางข้ามอุปกรณ์</p>
  `:'<div class="dashboard-work"><h2>งานลูกค้า</h2><p>ยังไม่พร้อมใช้งาน ขณะนี้ยังไม่มีข้อมูลลูกค้าหรือสิทธิ์บัญชีจริง</p><button data-area="agent">กลับงานตัวแทน</button></div>'}
