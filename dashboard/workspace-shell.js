@@ -1,9 +1,11 @@
+import {uiMenuIcon} from '../ui/car-list-components.js?rev=pa-car-icons-r1';
 import {mountThemeControl} from '../ui/theme-icons.js?rev=shared-control-r2';
 const home = new URL('../dashboard/', import.meta.url);
 const directory = new URL('../car-directory/', import.meta.url);
 const login = new URL('../', import.meta.url);
 const compact = matchMedia('(max-width: 767px)');
 const features = Object.freeze({ mobileBottomNavigation: false });
+const itemIcons={home:'home',cars:'car',expenses:'expense','holding-cars':'holding',performance:'performance',bonuses:'award','admin-demo':'admin',customers:'users',planning:'planning',policies:'planning',coverage:'admin'};
 
 export const workspaceMenus = {
     agent: {
@@ -35,12 +37,12 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
         <div class="pa-actions">${onSearch ? '<button type="button" data-pa-search aria-label="ค้นหาคันรถ"><span aria-hidden="true">⌕</span></button>' : ''}
         <button type="button" data-pa-theme></button></div>`;
     sidebar.innerHTML = `<div class="pa-work-areas" aria-label="เลือกพื้นที่ทำงาน">
-        <a href="${menuUrl('agent','home')}" data-pa-area="agent" ${area === 'agent' ? 'aria-current="true"' : ''}>งานตัวแทน</a>
-        <a href="${menuUrl('customer','home')}" data-pa-area="customer" ${area === 'customer' ? 'aria-current="true"' : ''}>งานลูกค้า</a>
+        <a href="${menuUrl('agent','home')}" data-pa-area="agent" ${area === 'agent' ? 'aria-current="true"' : ''}>${uiMenuIcon("expense")}<span>งานตัวแทน</span></a>
+        <a href="${menuUrl('customer','home')}" data-pa-area="customer" ${area === 'customer' ? 'aria-current="true"' : ''}>${uiMenuIcon("users")}<span>งานลูกค้า</span></a>
         </div><nav class="pa-links" aria-label="เมนูพื้นที่ทำงาน">${Object.entries(workspaceMenus[area]).map(([id,label]) =>
-            `<a href="${menuUrl(area,id)}" data-pa-view="${id}" ${screen === id ? 'aria-current="page"' : ''}>${label}</a>`).join('')}</nav>
-        <div class="pa-account"><details><summary>บัญชี</summary><p>เว็บทดลอง V2 · ใช้ข้อมูลจำลองเท่านั้น ข้อมูลเก็บในเบราว์เซอร์นี้</p></details>
-        <a href="${login.href}">ออกจากระบบ</a></div>`;
+            `<a href="${menuUrl(area,id)}" data-pa-view="${id}" ${screen === id ? 'aria-current="page"' : ''}><span class="pa-nav-icon">${uiMenuIcon(itemIcons[id]||"home")}</span><span class="pa-nav-label">${label}</span></a>`).join('')}</nav>
+        <div class="pa-account"><details><summary>${uiMenuIcon("account")}<span>บัญชี</span></summary><p>เว็บทดลอง V2 · ใช้ข้อมูลจำลองเท่านั้น ข้อมูลเก็บในเบราว์เซอร์นี้</p></details>
+        <a href="${login.href}">${uiMenuIcon("logout")}<span>ออกจากระบบ</span></a></div>`;
     const backdrop = document.createElement('button');
     backdrop.className = 'pa-backdrop';
     backdrop.type = 'button';
