@@ -408,9 +408,45 @@ export function connectGroupForm(onSaved, report) {
         setTimeout(()=>URL.revokeObjectURL(url),60000);
         report('ส่งไฟล์สำรอง JSON ให้เบราว์เซอร์แล้ว กรุณาตรวจไฟล์ในเครื่อง');
     }
+
+    let cancelPendingConfirmation=null;
+    function askInline(message,requiredName=''){
+        if(cancelPendingConfirmation)cancelPendingConfirmation();
+        return new Promise(resolve=>{
+            const section=manager.querySelector('#carManageConfirm');
+            const title=section.querySelector('[data-confirm-message]');
+            const nameLabel=section.querySelector('[data-confirm-name-label]');
+            const nameInput=section.querySelector('[data-confirm-name]');
+            const yes=section.querySelector('[data-confirm-yes]');
+            const no=section.querySelector('[data-confirm-cancel]');
+            section.hidden=false;title.textContent=message;
+            nameLabel.hidden=!requiredName;
+            nameInput.value='';
+            yes.disabled=Boolean(requiredName);
+            const onInput=()=>{yes.disabled=Boolean(requiredName)&&nameInput.value!==requiredName;};
+            const finish=answer=>{
+                section.hidden=true;
+                yes.removeEventListener('click',accept);
+                no.removeEventListener('click',cancel);
+                nameInput.removeEventListener('input',onInput);
+                if(cancelPendingConfirmation===cancel)cancelPendingConfirmation=null;
+                resolve(answer);
+            };
+            const accept=()=>finish(!requiredName||nameInput.value===requiredName);
+            const cancel=()=>finish(false);
+            cancelPendingConfirmation=cancel;
+            nameInput.addEventListener('input',onInput);
+            yes.addEventListener('click',accept);
+            no.addEventListener('click',cancel);
+            section.scrollIntoView({block:'nearest',behavior:'instant'});
+            (requiredName?nameInput:yes).focus({preventScroll:true});
+        });
+    }
+    dialog.addEventListener('close',()=>cancelPendingConfirmation?.());
+
     legacyPanel.querySelector('button').addEventListener('click',async()=>{
         if(!current||busy||dirty||operation)return;
-        if(!confirm('ต้องการออกรหัส GRP แบบ V1 ให้คันรถเดิม โดยคง UUID ภายในเหมือนเดิมหรือไม่?'))return;
+        if(!await askInline('ออกรหัส GRP แบบ V1 ให้คันรถเดิม โดยคง UUID ภายในเหมือนเดิม?'))return;
         try{
             current=await carStore.assignLegacyCode(current.id,current.revision);
             input('groupId').value=current.groupId||'';
@@ -425,7 +461,7 @@ export function connectGroupForm(onSaved, report) {
         if(action==='export'){exportCurrent();return;}
         if(dirty){error.textContent='โปรดบันทึกหรือยกเลิกการแก้ไขก่อนจัดการคันรถ';return;}
         if(action==='clone'){
-            if(!confirm('สร้างคันรถใหม่จากเฉพาะรายชื่อสมาชิกและตำแหน่งของคันนี้หรือไม่?'))return;
+            if(!await askInline('สร้างแบบฟอร์มคันรถใหม่จากเฉพาะสมาชิกและตำแหน่งของคันนี้?'))return;
             const source=current;
             current=null;
             form.reset();setPeriodOptions();province.set('');
@@ -445,7 +481,7 @@ export function connectGroupForm(onSaved, report) {
         if(action==='archive'||action==='close'){
             const flag=action==='archive'?'archived':'closed';
             const next=!Boolean(current[flag]);
-            if(!confirm('ยืนยันการเปลี่ยนสถานะคันรถ '+(current.groupId||current.name)+' หรือไม่?'))return;
+            if(!await askInline('ยืนยันเปลี่ยนสถานะคันรถ '+(current.groupId||current.name)+'?'))return;
             button.disabled=true;
             try{
                 current=await carStore.setFlags(current.id,current.revision,{[flag]:next});
@@ -456,9 +492,7 @@ export function connectGroupForm(onSaved, report) {
             return;
         }
         if(action==='delete'){
-            const typed=prompt('การลบจะลบข้อมูลจำลองของคันรถนี้ในเบราว์เซอร์ กรุณาสำรอง JSON ก่อน แล้วพิมพ์ชื่อคันรถเพื่อยืนยัน:\\n'+current.name);
-            if(typed!==current.name)return;
-            if(!confirm('ลบคันรถนี้จากข้อมูลจำลองในเบราว์เซอร์อย่างถาวรหรือไม่?'))return;
+            if(!await askInline('ลบคันรถนี้จากข้อมูลจำลองในเบราว์เซอร์? โปรดสำรอง JSON ก่อน และพิมพ์ชื่อให้ตรง',current.name))return;
             button.disabled=true;
             try{
                 await carStore.deleteLocal(current.id,current.revision);
