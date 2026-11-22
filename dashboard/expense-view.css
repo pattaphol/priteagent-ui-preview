@@ -29,3 +29,15 @@
 :scope .row-grid input {width:100%;max-width:100%;min-width:0;}
 }
 @media(max-width:767px) { .pa-expense-page {padding:0 10px;} }
+/* Layout-only: reuse the existing Car V2 input/date styles; no new UI kit. */
+.pa-expense-page #paExpenseFormWrap,.pa-expense-page #paExpenseAuxWrap {scroll-margin-top:92px;}
+.pa-expense-page #paExpenseAuxWrap[hidden],.pa-expense-page #paExpenseAuxWrap [hidden]{display:none!important;}
+.pa-expense-page .pa-expense-aux-wrap {margin-top:12px;}
+.pa-expense-page .pa-expense-aux-warning {padding:12px;border:1px solid var(--line);border-radius:var(--pa-ui-radius,14px);color:var(--muted);line-height:1.5;}
+.pa-expense-page .pa-expense-aux-form {display:grid;gap:14px;width:100%;max-width:680px;min-width:0;}
+.pa-expense-page .pa-expense-aux-form label{display:grid;gap:6px;min-width:0;font-size:14px;font-weight:650;}
+.pa-expense-page .pa-expense-aux-form .pa-control{width:100%;min-width:0;}
+.pa-expense-page .pa-expense-aux-form .expv1-action{justify-self:start;}
+.pa-expense-page .pa-expense-aux-wrap .expv1-form-back{margin-bottom:12px;}
+.pa-expense-page .pa-expense-aux-wrap h2{font-size:19px;}
+.pa-expense-page .expv1-note .expv1-money{display:block;text-align:left;}
