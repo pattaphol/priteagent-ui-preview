@@ -1,4 +1,4 @@
-import { attachThaiCalendar } from './calendar-picker.js?rev=pa-calendar-r1';
+import { attachThaiCalendar } from './calendar-picker.js?rev=pa-calendar-r2';
 // Shared accessible Thai date text + V1-style calendar for all active V2 forms.
 // Data contract remains ISO YYYY-MM-DD in the existing named <input type="date">.
 const thaiDigits = '๐๑๒๓๔๕๖๗๘๙';
