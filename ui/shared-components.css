@@ -52,3 +52,18 @@
  .v1Status.pa-status-tabs [role=tab],.filterbar.pa-status-tabs [role=tab]{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){.pa-view-icons button,.pa-status-tabs button{animation:none!important;transition:none!important}}
+
+/* Owner tablet correction: province icon is inline beside its label, not
+ * placed on a second grid row by the generic .carGroupForm label rule. */
+.carGroupForm #carProvincePicker label[for=carProvince] {
+  display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+  width:fit-content;min-width:0;gap:5px;line-height:1.4;
+}
+.carGroupForm #carProvincePicker label[for=carProvince]>.pa-ui-icon {
+  display:inline-block;vertical-align:middle;margin:0;
+  width:18px;height:18px;min-width:18px;flex:0 0 18px;
+}
+/* Both independent car renderers use the same icon/text spacing. */
+.pa-directory .v1Facts>span,.pa-dashboard .car-facts>span {
+  display:flex;align-items:center;gap:6px;min-width:0;
+}
