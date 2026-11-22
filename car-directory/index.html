@@ -208,6 +208,11 @@ html, body { height: 100%; }
     <button type="button" data-car-manage="export"><span>สำรองข้อมูล JSON</span></button>
     <button type="button" data-car-manage="delete"><span>ลบคันรถนี้</span></button>
    </div>
+   <div class="carManageConfirm" id="carManageConfirm" role="group" aria-label="ยืนยันคำสั่งจัดการคันรถ" hidden>
+    <strong data-confirm-message></strong>
+    <label data-confirm-name-label hidden>พิมพ์ชื่อคันรถให้ตรงเพื่อยืนยัน<input type="text" data-confirm-name autocomplete="off" aria-label="ยืนยันชื่อคันรถก่อนลบ"></label>
+    <div class="carConfirmActions"><button type="button" data-confirm-cancel>ยกเลิก</button><button type="button" data-confirm-yes>ยืนยัน</button></div>
+   </div>
    <small>เฉพาะข้อมูลจำลองบนเครื่องนี้ · การปิดคันรถล็อกเฉพาะแบบฟอร์มทดลอง ยังไม่ได้ล็อกรายการค่าใช้จ่าย/ถืองานจริงที่ไม่เชื่อม Backend</small>
   </section>
   </div>
@@ -219,7 +224,7 @@ html, body { height: 100%; }
  </form>
 </dialog>
 <script type="module">
-import { carStore, connectGroupForm } from './group-form.js?rev=pa-car-final-r3';
+import { carStore, connectGroupForm } from './group-form.js?rev=pa-car-confirm-r4';
 import { carModeMarkup,carStatusMarkup,syncCarControlState,enableCarTabKeyboard,carIcon } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
 import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pa-car-final-r3';
 (function(){
