@@ -1,8 +1,8 @@
 import { carModeMarkup,carStatusMarkup,carIcon,enableCarTabKeyboard } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
-import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-admin-integrated-r23';
+import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-car-final-r3';
 import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-policy-r24';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
-import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
+import { LocalPreferences, LocalCarGroupStore } from './adapters.js?rev=pa-car-code-r1';
 const root = document.querySelector('#app');
 enableCarTabKeyboard();
 let storage;
