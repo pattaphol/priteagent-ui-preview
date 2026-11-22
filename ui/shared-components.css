@@ -1,0 +1,54 @@
+/* V2 Shared UI Components R2 — forms/theme tokens in shared-design.css.
+ * Both active car-list routes import this ONE style for modes/tabs/cards/icons.
+ */
+:root {--pa-ui-line:var(--pa-field-border,#35536c);--pa-ui-ink:var(--pa-field-text,#edf5ff);--pa-ui-accent:var(--pa-field-focus,#49bce9);--pa-ui-panel:var(--pa-field-bg,#0b2032);--pa-ui-muted:var(--pa-field-muted,#a9b9ca);--pa-ui-radius:var(--pa-field-radius,13px);--pa-ui-ring:var(--pa-field-shadow,0 0 0 3px #49bce92e)}
+.pa-ui-icon{display:inline-block;width:19px;height:19px;min-width:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.v1Facts .pa-fact,.car-facts .pa-fact{display:flex;align-items:center;gap:6px;min-width:0}
+.v1Facts .pa-ui-icon,.car-facts .pa-ui-icon{color:var(--pa-ui-accent);flex-shrink:0;width:16px;height:16px;min-width:16px}
+#carProvincePicker label[for=carProvince]>.pa-ui-icon{width:16px;height:16px;min-width:16px;margin-inline-start:5px;color:var(--pa-ui-accent)}
+.v1Modes{grid-template-columns:1fr!important;justify-items:start}
+.v1Modes #layoutHelp{grid-column:1/-1;max-width:100%;white-space:normal}
+.v1Modes .v1ModeBtns.pa-view-icons,.view-controls .pa-view-icons{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;
+ width:min(100%,340px);max-width:100%;min-width:0;padding:4px;
+ border:1px solid var(--pa-ui-line);border-radius:14px;background:var(--pa-ui-panel)}
+.v1Modes .v1ModeBtns.pa-view-icons{justify-self:start}
+.v1Modes .pa-view-icons [data-layout],.view-controls .pa-view-icons [data-layout]{
+ display:grid;place-items:center;box-sizing:border-box;min-width:0;width:100%;height:46px;min-height:46px;max-width:none;
+ margin:0;padding:6px;border:1px solid transparent;border-radius:10px;background:transparent;
+ color:var(--pa-ui-muted);box-shadow:none;cursor:pointer}
+.v1Modes .pa-view-icons [data-layout] .pa-ui-icon,.view-controls .pa-view-icons [data-layout] .pa-ui-icon{width:23px;height:23px;min-width:23px}
+.v1Modes .pa-view-icons [aria-pressed=true],.view-controls .pa-view-icons [aria-pressed=true]{border-color:var(--pa-ui-accent);color:var(--pa-ui-accent);background:color-mix(in srgb,var(--pa-ui-accent) 12%,transparent)}
+.v1Modes .pa-view-icons [data-layout]:focus-visible,.view-controls .pa-view-icons [data-layout]:focus-visible{outline:2px solid var(--pa-ui-accent);outline-offset:1px}
+.v1Status.pa-status-tabs,.filterbar.pa-status-tabs,.pa-admin-tabs{
+ box-sizing:border-box;display:flex;align-items:stretch;flex-wrap:nowrap;gap:12px;
+ max-width:100%;width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;
+ border-bottom:1px solid var(--pa-ui-line);padding:0;margin-block-end:14px}
+.v1Status.pa-status-tabs [role=tab],.filterbar.pa-status-tabs [role=tab],.pa-admin-tabs [role=tab],.pa-admin-tabs button{
+ box-sizing:border-box;flex:0 0 auto;min-width:0;min-height:43px;
+ white-space:nowrap;margin:0;padding:8px 1px 10px;border:0;
+ border-bottom:3px solid transparent;border-radius:0;background:transparent;
+ color:var(--pa-ui-muted);box-shadow:none;transform:none;cursor:pointer;
+ font-size:14px;font-weight:600;line-height:1.4}
+.v1Status.pa-status-tabs [aria-selected=true],.filterbar.pa-status-tabs [aria-selected=true],.pa-admin-tabs [aria-selected=true]{
+ border-bottom-color:var(--pa-ui-accent);color:var(--pa-ui-accent);background:transparent;font-weight:750;box-shadow:none}
+.v1Status.pa-status-tabs [role=tab]:focus-visible,.filterbar.pa-status-tabs [role=tab]:focus-visible,.pa-admin-tabs button:focus-visible{outline:2px solid var(--pa-ui-accent);outline-offset:-2px}
+.pa-directory .v1Card,.pa-dashboard .directory-car,.pa-admin-section,.dashboard-work,.focuscard{border-color:var(--pa-ui-line);border-radius:var(--pa-ui-radius)}
+.pa-directory .v1Card:focus-within,.pa-dashboard .directory-car:focus-within{outline:1px solid var(--pa-ui-accent);outline-offset:1px}
+.pa-dashboard :is(.search input,.periods select,.pa-admin-search input),.pa-directory :is(.v1Search input,.v1Periods select,.carGroupForm .pa-control),.pa-admin-section :is(input,select),.carGroupForm .pa-date-field{
+ min-height:var(--pa-field-min-height);border-color:var(--pa-ui-line);border-radius:var(--pa-ui-radius);font-size:16px}
+.pa-dashboard :is(.search input,.periods select,.pa-admin-search input):focus,.pa-directory :is(.v1Search input,.v1Periods select,.carGroupForm .pa-control):focus,.pa-admin-section :is(input,select):focus{
+ outline:2px solid var(--pa-ui-accent);outline-offset:1px;box-shadow:var(--pa-ui-ring)}
+.pa-header :is(button,a):focus-visible,.shell-header button:focus-visible,.pa-sidebar :is(button,a):focus-visible,#sidebar button:focus-visible,.top button:focus-visible,.side :is(a,button):focus-visible{outline:2px solid var(--pa-ui-accent);outline-offset:2px}
+@media(max-width:767px){
+ .v1Modes .v1ModeBtns.pa-view-icons,.view-controls .pa-view-icons{grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,340px)}
+ .v1Status.pa-status-tabs,.filterbar.pa-status-tabs,.pa-admin-tabs{gap:12px;flex-wrap:nowrap;white-space:nowrap}
+ .pa-directory .v1Grid.v1-small,.car-directory-grid.directory-small{grid-template-columns:repeat(2,minmax(0,1fr))}
+ :where(.pa-directory,.pa-dashboard,#loginApp,.shell,.app) :is(input,select):not([type=checkbox]):not([type=radio]):not([type=hidden]){font-size:16px;min-width:0}
+}
+@media(max-width:359px){
+ .pa-directory .v1Grid.v1-small,.car-directory-grid.directory-small{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px}
+ .v1Modes .v1ModeBtns.pa-view-icons,.view-controls .pa-view-icons{width:100%}
+ .v1Status.pa-status-tabs [role=tab],.filterbar.pa-status-tabs [role=tab]{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.pa-view-icons button,.pa-status-tabs button{animation:none!important;transition:none!important}}

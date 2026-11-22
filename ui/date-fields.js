@@ -1,4 +1,5 @@
 import { attachThaiCalendar } from './calendar-picker.js?rev=pa-calendar-r2';
+import { carIcon } from './car-list-components.js?rev=pa-ui-unified-r1';
 // Shared accessible Thai date text + V1-style calendar for all active V2 forms.
 // Data contract remains ISO YYYY-MM-DD in the existing named <input type="date">.
 const thaiDigits = '๐๑๒๓๔๕๖๗๘๙';
@@ -40,7 +41,10 @@ export function connectDateFields(form) {
   }));
   for (const field of fields) {
     if (!field.text || !field.native) throw new Error('Date field markup mismatch');
-    field.calendar = attachThaiCalendar(field.text.closest('[data-pa-date-field]'),field.native,field.text,iso => {
+    const dateGroup=field.text.closest('[data-pa-date-field]');
+    const icon=dateGroup?.querySelector('.pa-date-icon');
+    if(icon)icon.innerHTML=carIcon('calendar');
+    field.calendar = attachThaiCalendar(dateGroup,field.native,field.text,iso => {
       field.native.value = iso;
       field.native.dispatchEvent(new Event('change', {bubbles:true}));
     });
@@ -104,7 +108,7 @@ export function enhancePlainDateFields(root=document) {
     const icon=document.createElement('span');
     icon.className='pa-date-icon';
     icon.setAttribute('aria-hidden','true');
-    icon.innerHTML='<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h3M13 14h3"/></svg>';
+    icon.innerHTML=carIcon('calendar');
     native.before(wrap);
     native.classList.add('pa-date-native');
     native.setAttribute('data-pa-date-native','');

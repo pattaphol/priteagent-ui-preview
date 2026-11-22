@@ -1,8 +1,10 @@
+import { carModeMarkup,carStatusMarkup,carIcon,enableCarTabKeyboard } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
 import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-admin-integrated-r23';
 import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-policy-r24';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');
+enableCarTabKeyboard();
 let storage;
 try {
     storage = window.localStorage;
@@ -120,7 +122,7 @@ function actions(c) {
     return `<div class="directory-car-actions"><button data-car="${c.id}" data-action="entries">▤ ค่าใช้จ่าย</button><button data-car="${c.id}" data-action="holding">▦ ถืองาน</button></div>`;
 }
 function card(c) {
-    return `<article class="directory-car card-${layout}"><button class="directory-car-open" data-car="${c.id}" data-action="body" aria-label="${page === 'holding-cars' ? 'ถืองาน' : 'ตั้งค่าคันรถ'} ${e(c.name)}"><div class="directory-car-head"><span class="car-icon" aria-hidden="true">▰</span><span class="badge ${c.closed ? 'closed' : ''}">${c.closed ? 'ปิดคันรถแล้ว' : 'กำลังดำเนินการ'}</span></div><h2>${e(c.name)}</h2><div class="car-facts"><span>⌖ ${e(c.destination || 'ยังไม่ระบุจังหวัด')}</span><span>▦ ${period(c)}</span>${layout !== 'small' ? `<span>${date(c.start)} – ${date(c.end)}</span>` : ''}</div>${layout === 'large' ? `<div class="work-members">${c.members.slice(0, 4).map((m)=>`<span><i aria-hidden="true">${e(m.name.slice(-1))}</i>${e(m.name)}</span>`).join('')}${c.members.length > 4 ? `<span>+${c.members.length - 4} คน</span>` : ''}</div>${c.group ? `<small class="directory-code">${e(c.group.groupId)}</small>` : ''}` : ''}${layout !== 'small' ? `<div class="directory-car-total"><span>ค่าใช้จ่าย<strong>${money(c.expenseTHB)}</strong></span>${layout === 'large' ? `<span>เงินกองกลางคงเหลือ<strong>${money(c.poolTHB)}</strong></span>` : ''}</div>` : ''}</button>${actions(c)}</article>`;
+    return `<article class="directory-car card-${layout}"><button class="directory-car-open" data-car="${c.id}" data-action="body" aria-label="${page === 'holding-cars' ? 'ถืองาน' : 'ตั้งค่าคันรถ'} ${e(c.name)}"><div class="directory-car-head"><span class="car-icon" aria-hidden="true">▰</span><span class="badge ${c.closed ? 'closed' : ''}">${c.closed ? 'ปิดคันรถแล้ว' : 'กำลังดำเนินการ'}</span></div><h2>${e(c.name)}</h2><div class="car-facts"><span class="pa-fact">${carIcon('pin')} ${e(c.destination || 'ยังไม่ระบุจังหวัด')}</span><span class="pa-fact">${carIcon('calendar')} ${period(c)}</span>${layout !== 'small' ? `<span>${date(c.start)} – ${date(c.end)}</span>` : ''}</div>${layout === 'large' ? `<div class="work-members">${c.members.slice(0, 4).map((m)=>`<span><i aria-hidden="true">${e(m.name.slice(-1))}</i>${e(m.name)}</span>`).join('')}${c.members.length > 4 ? `<span>+${c.members.length - 4} คน</span>` : ''}</div>${c.group ? `<small class="directory-code">${e(c.group.groupId)}</small>` : ''}` : ''}${layout !== 'small' ? `<div class="directory-car-total"><span>ค่าใช้จ่าย<strong>${money(c.expenseTHB)}</strong></span>${layout === 'large' ? `<span>เงินกองกลางคงเหลือ<strong>${money(c.poolTHB)}</strong></span>` : ''}</div>` : ''}</button>${actions(c)}</article>`;
 }
 function rowsMarkup(rows) {
     if (layout !== 'table') return `<div class="car-directory-grid directory-${layout}">${rows.map(card).join('')}</div>`;
@@ -169,13 +171,8 @@ function render() {
         '4',
         '5'
     ], filters.week)}</div></div>
- <section class="view-controls" aria-label="รูปแบบการแสดงคันรถ"><div role="group" aria-label="เลือกรูปแบบ">${layouts.map((l)=>`<button data-layout="${l}" aria-pressed="${layout === l}">${layoutNames[l]}</button>`).join('')}</div><p>จำรูปแบบแยกตามหน้าและอุปกรณ์ · ${device}<small id="pref-error" role="status">${prefError}</small></p></section>
- <div class="filterbar" role="group" aria-label="สถานะ">${Object.entries({
-        all: 'ทั้งหมด',
-        open: 'กำลังดำเนินการ',
-        closed: 'ปิดแล้ว',
-        archived: 'คลังคันรถ'
-    }).map(([s, n])=>`<button data-status="${s}" aria-pressed="${filters.status === s}">${n}</button>`).join('')}</div><p id="count" role="status"></p><section id="results" aria-label="รายการคันรถ"></section>
+ <section class="view-controls" aria-label="รูปแบบการแสดงคันรถ"><div class="pa-view-icons" role="group" aria-label="เลือกรูปแบบ">${carModeMarkup(layout)}</div><p>จำรูปแบบแยกตามหน้าและอุปกรณ์ · ${device}<small id="pref-error" role="status">${prefError}</small></p></section>
+ <div class="filterbar pa-status-tabs" role="tablist" aria-label="สถานะคันรถ">${carStatusMarkup(filters.status,'status')}</div><p id="count" role="status"></p><section id="results" aria-label="รายการคันรถ"></section>
  ` : screen==='home' ? `<section class="shell-page dashboard-page" aria-labelledby="dashboard-title">
  <div class="dashboard-intro"><div><span class="dashboard-kicker">${areaName}</span><h1 id="dashboard-title" tabindex="-1">หน้าแรก</h1><p>ภาพรวมงานของคุณใน PriteAgent V2</p></div><span class="dashboard-status">ข้อมูลบนอุปกรณ์นี้</span></div>
  ${area==='agent'?`
