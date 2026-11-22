@@ -51,7 +51,8 @@ export function connectGroupForm(onSaved, report) {
         message.className = 'carGroupFieldError';
         message.id = 'car-group-error-' + control.name;
         message.hidden = true;
-        control.after(message);
+        const errorAnchor = control.closest('[data-pa-date-field]') ?? control;
+        errorAnchor.after(message);
         control.setAttribute('aria-describedby', [control.getAttribute('aria-describedby'), message.id].filter(Boolean).join(' '));
         feedback.set(control.name, message);
     }
@@ -167,7 +168,7 @@ export function connectGroupForm(onSaved, report) {
             message.hidden = !text;
             if (text) {
                 control.setAttribute('aria-invalid', 'true');
-                first ??= control;
+                first ??= control.closest('[data-pa-date-field]')?.querySelector('[data-pa-date-text]') ?? control;
             } else control.removeAttribute('aria-invalid');
         }
         if (first) {
