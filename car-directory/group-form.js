@@ -469,7 +469,7 @@ export function connectGroupForm(onSaved, report) {
             refreshChoices();
             input('owner').value=String(source.ownerIndex);
             input('self').value=source.selfPosition===undefined?'':String(source.selfPosition);
-            input('name').value='';input('workNote').value='';input('budget').value='';
+            input('name').value=source.name||'';input('workNote').value='';input('budget').value='';
             input('groupId').value='';
             dateFields.sync();updateFuelContext();updateDateHint();
             dirty=true;clearReview();error.textContent='';
