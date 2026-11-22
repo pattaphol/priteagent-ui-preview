@@ -108,3 +108,30 @@
  .carGroupManage .carManageActions{grid-template-columns:repeat(2,minmax(0,1fr))}
  .carGroupManage .carManageActions [data-car-manage=delete]{grid-column:1/-1}
 }
+
+
+/* Inline management confirmation: no browser alert/confirm popup or accidental
+ * destructive one-tap action; usable with iPhone keyboard and screen readers. */
+.carGroupManage .carManageConfirm{
+ display:grid;gap:10px;padding:12px;min-width:0;
+ border:1px solid var(--pa-ui-accent);border-radius:11px;
+ background:color-mix(in srgb,var(--pa-ui-accent) 9%,var(--pa-ui-panel));
+}
+.carGroupManage .carManageConfirm[hidden]{display:none!important}
+.carManageConfirm strong{font-size:14px;font-weight:700;line-height:1.5;color:var(--pa-ui-ink)}
+.carManageConfirm label{display:grid;gap:6px;font-size:13px;color:var(--pa-ui-ink)}
+.carManageConfirm input{
+ box-sizing:border-box;width:100%;min-width:0;min-height:50px;
+ padding:8px 11px;font:inherit;font-size:16px;
+ border:1px solid var(--pa-ui-line);border-radius:10px;
+ background:var(--pa-ui-panel);color:var(--pa-ui-ink)
+}
+.carManageConfirm input:focus{outline:2px solid var(--pa-ui-accent);outline-offset:1px}
+.carManageConfirm .carConfirmActions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.carManageConfirm .carConfirmActions button{
+ min-height:44px;min-width:96px;padding:8px 14px;cursor:pointer;
+ border:1px solid var(--pa-ui-line);border-radius:10px;
+ color:var(--pa-ui-ink);background:transparent;font:700 14px/1.4 inherit
+}
+.carManageConfirm .carConfirmActions [data-confirm-yes]{background:var(--pa-ui-accent);color:#072036;border-color:var(--pa-ui-accent)}
+.carManageConfirm .carConfirmActions button:disabled{opacity:.5;cursor:not-allowed}
