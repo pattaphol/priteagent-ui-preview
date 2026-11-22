@@ -1,0 +1,232 @@
+/* PriteAgent V2 — Shared UI R1 (ACTIVE SYNTHETIC entrypoints only)
+ * SINGLE source for control tokens, mobile hit sizes and calendar popover.
+ * Page-specific layout CSS remains responsible for layout, not field styling.
+ * Dark input styling follows the current V2 Login design.
+ */
+:root {
+  --pa-field-min-height: 54px;
+  --pa-field-radius: 13px;
+  --pa-field-font-size: 16px;
+  --pa-field-bg: #0b2032;
+  --pa-field-border: #35536c;
+  --pa-field-text: #edf5ff;
+  --pa-field-muted: #a9b9ca;
+  --pa-field-focus: #49bce9;
+  --pa-field-error: #f7a2ae;
+  --pa-field-surface: #102638;
+  --pa-field-selected: #0876c7;
+  --pa-field-shadow: 0 0 0 3px rgba(73,188,233,.18);
+  --pa-field-label-color: #d6e6f2;
+}
+html[data-theme=light] {
+  --pa-field-bg: #fff;
+  --pa-field-border: #bacbdc;
+  --pa-field-text: #233e56;
+  --pa-field-muted: #62788d;
+  --pa-field-focus: #0876bb;
+  --pa-field-error: #ba3851;
+  --pa-field-surface: #f1f6fc;
+  --pa-field-selected: #0876c7;
+  --pa-field-shadow: 0 0 0 3px rgba(8,118,187,.17);
+  --pa-field-label-color: #344e68;
+}
+/* Shared form controls. Explicit targets protect old page navigation buttons. */
+body :is(input,select,textarea).pa-control,
+body :is(input,select,textarea).control,
+body .control > input,
+body .pa-admin-section :is(input,select),
+body .pa-admin-tablewrap select,
+body #main :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not(.pa-date-native):not(.pa-date-text) {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--pa-field-min-height);
+  border-radius: var(--pa-field-radius);
+  border: 1.5px solid var(--pa-field-border);
+  background: var(--pa-field-bg);
+  color: var(--pa-field-text);
+  font-size: var(--pa-field-font-size);
+  line-height: 1.4;
+  outline: none;
+  -webkit-text-size-adjust: 100%;
+}
+body :is(input,select,textarea).pa-control::placeholder,
+body :is(input,select,textarea).control::placeholder,
+body .control > input::placeholder,
+body #main input::placeholder {
+  color: var(--pa-field-muted);
+  opacity: 1;
+}
+body :is(input,select,textarea).pa-control:focus,
+body :is(input,select,textarea).control:focus,
+body .control > input:focus,
+body #main :is(input,select,textarea):focus:not([type=checkbox]):not([type=radio]):not(.pa-date-native):not(.pa-date-text) {
+  border-color: var(--pa-field-focus);
+  box-shadow: var(--pa-field-shadow);
+  outline: none;
+}
+body :is(input,select,textarea)[aria-invalid=true]:not([type=checkbox]) {
+  border-color: var(--pa-field-error);
+}
+body :is(input,select,textarea):disabled:not([type=checkbox]) {
+  opacity: .65;
+}
+/* Preserve the Login look but never shrink its input controls as the keyboard
+ * reduces the visual viewport height. Previous @media height rule was 43px.
+ */
+#loginApp .control { height: var(--pa-field-min-height); min-height: var(--pa-field-min-height); }
+#loginApp .control > input { height: 100%; min-height: var(--pa-field-min-height); }
+#loginApp .field { min-width: 0; }
+#loginApp .form { min-width: 0; }
+@media (max-width: 767px) {
+  :root { --pa-field-min-height: 52px; }
+  body .carGroupForm .pa-control,
+  body .carGroupForm select,
+  body .carGroupForm .pa-date-field { min-height: 52px; }
+  /* iOS Safari auto-zooms inputs with computed text size below 16px. */
+  body :is(input,select,textarea).pa-control,
+  body :is(input,select,textarea).control,
+  body .control > input,
+  body #main :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not(.pa-date-native):not(.pa-date-text) { font-size: 16px; }
+  #loginApp .control { height: 52px; min-height: 52px; }
+  #loginApp .control > input { min-height: 52px; }
+  .carGroupForm .carGroupGrid,
+  .carGroupForm .carGroupDates,
+  .carGroupForm .carGroupRoles { min-width: 0; }
+}
+/* Shared focus ring, visible keyboard navigation, narrow mobile data fields. */
+body .pa-date-field {
+  min-width: 0;
+  min-height: var(--pa-field-min-height);
+  border: 1.5px solid var(--pa-field-border);
+  border-radius: var(--pa-field-radius);
+  background: var(--pa-field-bg);
+  color: var(--pa-field-text);
+}
+body .pa-date-field:focus-within {
+  outline: none;
+  border-color: var(--pa-field-focus);
+  box-shadow: var(--pa-field-shadow);
+}
+body .pa-date-field .pa-date-text { font-size: 16px; color: var(--pa-field-text); }
+body .pa-date-icon { color: var(--pa-field-focus); border-color: var(--pa-field-border); }
+body .pa-date-field :is(.pa-calendar-launch,.pa-date-native) {
+  border: 0;
+  background: transparent;
+  color: var(--pa-field-focus);
+}
+body .pa-date-field .pa-calendar-launch {
+  width: 38px;
+  min-width: 38px;
+  min-height: 100%;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border-inline-start: 1px solid var(--pa-field-border);
+  border-radius: 0;
+}
+body .pa-date-field .pa-calendar-launch svg {
+  height: 20px;
+  width: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body .pa-date-field .pa-date-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-width: 0;
+  min-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* Calendar component shared by V2 date controls. Popover is elevated above
+ * the mobile modal; bounded to viewport, no navigation or external assets. */
+.pa-calendar-popover,
+.pa-calendar-popover:popover-open {
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  z-index: 2147483000;
+  width: min(340px, calc(100vw - 24px));
+  max-width: min(340px, calc(100vw - 24px));
+  margin: 0;
+  padding: 13px;
+  border: 1px solid var(--pa-field-border);
+  border-radius: 16px;
+  background: var(--pa-field-bg);
+  color: var(--pa-field-text);
+  box-shadow: 0 16px 52px rgba(0,0,0,.3);
+  font: 15px/1.4 'Noto Sans Thai',system-ui,sans-serif;
+  direction: ltr;
+  overscroll-behavior: contain;
+}
+.pa-calendar-popover[hidden] { display: none !important; }
+.pa-calendar-top,
+.pa-calendar-monthline { display: flex; align-items: center; gap: 8px; }
+.pa-calendar-top { justify-content: space-between; margin-bottom: 10px; }
+.pa-calendar-top label { flex: 1; min-width: 0; display: grid; gap: 3px; font-size: 11px; color: var(--pa-field-muted); }
+.pa-calendar-popover select {
+  appearance: auto;
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 4px 6px;
+  border: 1px solid var(--pa-field-border);
+  border-radius: 10px;
+  background: var(--pa-field-surface);
+  color: var(--pa-field-text);
+  font: inherit;
+  font-size: 16px;
+}
+.pa-calendar-monthline { justify-content: space-between; margin-bottom: 6px; }
+.pa-calendar-monthline strong { font-size: 15px; text-align: center; }
+.pa-calendar-popover button { font: inherit; cursor: pointer; }
+.pa-calendar-nav {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--pa-field-text);
+  font-size: 24px !important;
+}
+.pa-calendar-nav:focus-visible,
+.pa-calendar-popover button:focus-visible,
+.pa-calendar-popover select:focus-visible {
+  outline: 2px solid var(--pa-field-focus);
+  outline-offset: 1px;
+}
+.pa-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 3px; }
+.pa-calendar-weekday { min-height: 30px; display: grid; place-items: center; font-size: 12px; color: var(--pa-field-muted); }
+.pa-calendar-day {
+  width: 100%;
+  aspect-ratio: 1/1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--pa-field-text);
+  font-size: 15px;
+}
+.pa-calendar-day[aria-selected=true] { background: var(--pa-field-selected); color: #fff; font-weight: 700; }
+.pa-calendar-day:not([aria-selected=true]):hover { background: var(--pa-field-surface); }
+.pa-calendar-spacer { display: block; }
+.pa-calendar-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 9px; margin-top: 8px; border-top: 1px solid var(--pa-field-border); }
+.pa-calendar-footer button { padding: 6px 10px; border: 0; color: var(--pa-field-focus); background: none; border-radius: 8px; font-size: 14px; }
+.pa-calendar-help { color: var(--pa-field-muted); font-size: 11px; }
+@media (max-width: 359px) {
+  .pa-calendar-popover, .pa-calendar-popover:popover-open { padding: 9px; }
+  .pa-calendar-day { min-height: 34px; }
+}
+/* Form metadata must not clip the input itself when iPhone keyboard opens. */
+.carGroupForm .carGroupScroll { min-width: 0; }
+.carGroupForm .carGroupDates,
+.carGroupForm .carGroupRoles { grid-template-columns: repeat(2,minmax(0,1fr)); }
