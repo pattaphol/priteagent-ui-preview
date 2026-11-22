@@ -1,7 +1,7 @@
 import { carModeMarkup,carStatusMarkup,carIcon,enableCarTabKeyboard } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
 import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-car-final-r3';
 import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-policy-r24';
-import { expenseMarkup, mountExpenseView } from './expense-view.js?rev=pa-expense-synthetic-actions-r1';
+import { expenseMarkup, mountExpenseView } from './expense-view.js?rev=pa-expense-synthetic-actions-r2';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js?rev=pa-car-code-r1';
 const root = document.querySelector('#app');

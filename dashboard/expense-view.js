@@ -154,6 +154,8 @@ export function mountExpenseView(cars,selectedCarId,onChange){
     const prior=cashDraftsFor(car.id),next=[...prior,record].slice(-500);
     localStorage.setItem(cashDraftKey(car.id),JSON.stringify(next));
     form.reset();
+    // Keep the shared Thai text date in sync with the reset native ISO date.
+    form.querySelector('[data-pa-date-native]')?.dispatchEvent(new Event('change',{bubbles:true}));
     status.textContent='บันทึกแบบร่างในเครื่องแล้ว · ยังไม่ใช่รายการที่ยืนยันทางการเงิน';
     showFrame(kind==='fund'?'overview':'settlement');
    }catch{status.textContent='ไม่สามารถบันทึกในเบราว์เซอร์นี้ได้ · ไม่มีการทำรายการเงินจริง';}
