@@ -1,5 +1,5 @@
 import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-admin-integrated-r23';
-import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-integrated-r23';
+import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-policy-r24';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js';
 const root = document.querySelector('#app');
