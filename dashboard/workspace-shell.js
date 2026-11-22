@@ -2,7 +2,6 @@ import {uiMenuIcon} from '../ui/car-list-components.js?rev=pa-car-icons-r1';
 import {mountThemeControl} from '../ui/theme-icons.js?rev=shared-control-r2';
 const home = new URL('../dashboard/', import.meta.url);
 const directory = new URL('../car-directory/', import.meta.url);
-const expensePage = new URL('../expense-ui-r395-20261122/', import.meta.url);
 const login = new URL('../', import.meta.url);
 const compact = matchMedia('(max-width: 767px)');
 const features = Object.freeze({ mobileBottomNavigation: false });
@@ -22,7 +21,6 @@ export const workspaceMenus = {
 
 function menuUrl(area, screen) {
     if (screen === 'cars') return directory.href;
-    if (area === 'agent' && screen === 'expenses') return expensePage.href;
     const link = new URL(home);
     if (area === 'customer') link.searchParams.set('area', area);
     if (screen !== 'home') link.searchParams.set('view', screen);
@@ -74,7 +72,7 @@ export function mountWorkspaceShell({header, sidebar, area, screen, onNavigate, 
         const nextArea = link.dataset.paArea || area;
         const nextView = link.dataset.paView || 'home';
         showDrawer(false);
-        if (onNavigate && nextView !== 'cars' && nextView !== 'expenses') {
+        if (onNavigate && nextView !== 'cars') {
             event.preventDefault();
             onNavigate(nextArea,nextView);
         }

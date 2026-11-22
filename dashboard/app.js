@@ -1,10 +1,10 @@
 import { carModeMarkup,carStatusMarkup,carIcon,enableCarTabKeyboard } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
 import { mountWorkspaceShell, workspaceMenus } from './workspace-shell.js?rev=pa-car-final-r3';
 import { adminDemoMarkup, mountAdminDemo } from './admin-demo.js?rev=pa-admin-policy-r24';
+import { expenseMarkup, mountExpenseView } from './expense-view.js?rev=pa-expense-unified-r1';
 import { layouts, deviceFor, initialFilters, filterCars, bodyTarget } from './domain.js?rev=pm34-groupform-20261116';
 import { LocalPreferences, LocalCarGroupStore } from './adapters.js?rev=pa-car-code-r1';
 const root = document.querySelector('#app');
-const expensePage = new URL('../expense-ui-r395-20261122/', import.meta.url);
 enableCarTabKeyboard();
 let storage;
 try {
@@ -74,29 +74,29 @@ let area = route.searchParams.get('area') === 'customer' ? 'customer' : 'agent';
 const requestedView = route.searchParams.get('view');
 let screen = Object.hasOwn(workspaceMenus[area],requestedView) && requestedView !== 'cars' ? requestedView : 'home';
 let detailCarId = null;
+let expenseCarId = route.searchParams.get('car');
 let unmountShell;
 function openCarDirectory(params = {}) {
     const target = new URL('../car-directory/', window.location.href);
     for (const [key, value] of Object.entries(params)) target.searchParams.set(key, value);
     window.location.assign(target);
 }
-function navigate(destination) {
-    if (destination === 'expenses') {
-        window.location.assign(expensePage.href); // Public synthetic Expense UI; not a real car ledger
-        return;
-    }
+function navigate(destination, carId = null) {
+    if (destination === 'expenses' && carId) expenseCarId = carId;
     if (destination === 'cars') {
         openCarDirectory();
         return;
     }
     screen = destination;
     detailCarId = null;
-    if (screen === 'admin-demo' || new URL(location.href).searchParams.get('view') === 'admin-demo') {
-        const url = new URL(location.href);
-        if (screen === 'admin-demo') { url.searchParams.set('view', 'admin-demo'); url.searchParams.delete('area'); }
-        else url.searchParams.delete('view');
-        history.replaceState(null, '', url);
-    }
+    const url = new URL(location.href);
+    if (screen === 'home') url.searchParams.delete('view');
+    else url.searchParams.set('view', screen);
+    if (area === 'customer') url.searchParams.set('area', 'customer');
+    else url.searchParams.delete('area');
+    if (screen === 'expenses' && expenseCarId) url.searchParams.set('car', expenseCarId);
+    else url.searchParams.delete('car');
+    history.replaceState(null, '', url);
     render();
     document.querySelector('main h1')?.focus();
 }
@@ -113,7 +113,8 @@ const nav = {
             document.querySelector('main h1')?.focus();
             return;
         }
-        navigate(target.screen === 'entries' ? 'expenses' : 'holding-cars');
+        if (target.screen === 'entries') navigate('expenses',target.carId);
+        else navigate('holding-cars');
     }
 };
 function showSimulation(title, context = '', screen = 'module') {
@@ -186,7 +187,7 @@ function render() {
  <h2>รายการคันรถของฉัน</h2>${cars.length?`<div class="dashboard-car-list">${cars.slice(0,3).map(c=>`<button data-car="${e(c.id)}" data-action="body" aria-label="เปิดรายละเอียดคันรถ ${e(c.name)}"><span><strong>${e(c.name)}</strong><small>${e(c.destination||'ยังไม่ระบุจังหวัด')} · ${period(c)}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>`:'<p class="dashboard-empty">ยังไม่มีคันรถที่บันทึกไว้ เริ่มจากปุ่มสร้างคันรถ</p>'}</div>
  <p class="dashboard-footnote">ค่าใช้จ่าย ถืองาน และงานลูกค้ายังไม่เปิดใช้งานจริง ข้อมูลคันรถที่สร้างในขั้นนี้ไม่ใช่ข้อมูลกลางข้ามอุปกรณ์</p>
  `:'<div class="dashboard-work"><h2>งานลูกค้า</h2><p>ยังไม่พร้อมใช้งาน ขณะนี้ยังไม่มีข้อมูลลูกค้าหรือสิทธิ์บัญชีจริง</p><button data-area="agent">กลับงานตัวแทน</button></div>'}
- </section>` : screen === 'admin-demo' ? adminDemoMarkup() : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
+ </section>` : screen === 'expenses' && area === 'agent' ? expenseMarkup(cars,expenseCarId) : screen === 'admin-demo' ? adminDemoMarkup() : screen === 'car-detail' && detail ? `<section class="shell-page"><h1 tabindex="-1">${e(detail.name)}</h1><p>${e(detail.destination)} · ${period(detail)}</p><p>${date(detail.start)} – ${date(detail.end)}</p><ul>${detail.members.map((m)=>`<li>${e(m.name)}</li>`).join('')}</ul><button data-action="edit-group" data-id="${e(detail.id)}">แก้ไขคันรถ</button><button data-page="cars">กลับรายการ</button></section>` : `<section class="shell-page"><h1 tabindex="-1">${activeName}</h1><p>ยังไม่พร้อมใช้งาน</p><button data-page="home">กลับหน้าแรก</button></section>`}
  <footer>PriteAgent V2 · พื้นที่ทำงาน</footer></main>
  <dialog id="simulation" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="context"></p><strong>ยังไม่เปิดใช้งาน</strong><p>ฟีเจอร์นี้อยู่ระหว่างพัฒนา ยังไม่สามารถบันทึกหรือจัดการข้อมูลในส่วนนี้ได้</p><button id="close-dialog" autofocus>ปิด</button></dialog>`;
     if (directory) result();
@@ -200,6 +201,7 @@ function render() {
         }
     });
     if (screen === 'admin-demo') mountAdminDemo();
+    if (screen === 'expenses' && area === 'agent') mountExpenseView(cars,expenseCarId,nextId=>{expenseCarId=nextId;const url=new URL(location.href);url.searchParams.set('car',nextId);history.replaceState(null,'',url);render()});
     showPendingRecovery();
     document.querySelector('#search')?.addEventListener('input', (ev)=>{
         filters.query = ev.target.value;
@@ -244,6 +246,7 @@ async function load(next) {
                         month: g.month,
                         week: g.week
                     },
+                    ownerIndex: g.ownerIndex,
                     members: g.members.map((name, i)=>({
                             id: String(i),
                             name

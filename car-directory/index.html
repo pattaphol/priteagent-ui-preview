@@ -293,7 +293,7 @@ async function refreshCars(message=''){
 const editGroup=connectGroupForm(refreshCars,status);
 function openCar(id){void editGroup(id)}
 get('createCar').onclick=()=>void editGroup();
-function openAction(id,action){const t=cars.find(x=>x.id===id);if(!t)return;if(action==='expense'){window.location.assign(new URL('../expense-ui-r395-20261122/',location.href).href);return;}info((action==='expense'?'ค่าใช้จ่าย':'ถืองาน')+' · '+t.title,'ปุ่มตาม V1 Snapshot แต่การบันทึกค่าใช้จ่ายหรือถืองานจริงไม่อยู่ใน UI-04 Preview นี้');}
+function openAction(id,action){const t=cars.find(x=>x.id===id);if(!t)return;if(action==='expense'){window.location.assign(new URL('../dashboard/?view=expenses&car='+encodeURIComponent(id),location.href).href);return;}info((action==='expense'?'ค่าใช้จ่าย':'ถืองาน')+' · '+t.title,'ปุ่มตาม V1 Snapshot แต่การบันทึกค่าใช้จ่ายหรือถืองานจริงไม่อยู่ใน UI-04 Preview นี้');}
 get('searchCars').oninput=()=>{query=get('searchCars').value.trim();render()};
 for(const b of document.querySelectorAll('[data-layout]'))b.onclick=()=>setLayout(b.dataset.layout);
 for(const b of document.querySelectorAll('[data-state]'))b.onclick=()=>{state=b.dataset.state;render()};
