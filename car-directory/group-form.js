@@ -1,4 +1,5 @@
-import { LocalCarGroupStore } from '../dashboard/adapters.js';
+import {uiMenuIcon} from '../ui/car-list-components.js?rev=pa-car-icons-r1';
+import { LocalCarGroupStore } from '../dashboard/adapters.js?rev=pa-car-code-r1';
 import { validateCarGroup } from '../dashboard/domain.js';
 import { currentCarPeriod, weeksForMonth } from './car-period.js';
 import { connectProvincePicker, isThaiProvince } from '../ui/province-picker.js';
@@ -34,6 +35,9 @@ export function connectGroupForm(onSaved, report) {
     const province = connectProvincePicker(dialog.querySelector('#carProvincePicker'));
     const applyWeekButton = dialog.querySelector('#carApplyWeekDates');
     const fuelContext = dialog.querySelector('#carFuelContext');
+    const manager = dialog.querySelector('#carGroupManage');
+    const legacyPanel = dialog.querySelector('#carLegacyCode');
+    for(const b of manager.querySelectorAll('[data-car-manage]'))b.insertAdjacentHTML('afterbegin',uiMenuIcon({archive:'archive',close:'lock',clone:'copy',export:'download',delete:'trash'}[b.dataset.carManage]));
     const dateFields = connectDateFields(form);
     const members = [1, 2, 3, 4].map(n => input('member' + n));
     const review = dialog.querySelector('#carGroupReview');
@@ -384,6 +388,87 @@ export function connectGroupForm(onSaved, report) {
     });
     syncPending();
 
+    function refreshManagement() {
+        manager.hidden = !current;
+        legacyPanel.hidden = !current || Boolean(current.groupId);
+        const archive=manager.querySelector('[data-car-manage=archive] span');
+        const close=manager.querySelector('[data-car-manage=close] span');
+        archive.textContent=current?.archived?'นำคันรถออกจากคลัง':'เก็บคันรถเข้าคลัง';
+        close.textContent=current?.closed?'เปิดคันรถอีกครั้ง':'ปิดคันรถและล็อกรายการ';
+        lock(Boolean(current?.closed));
+    }
+    function exportCurrent() {
+        if (!current) return;
+        const content=JSON.stringify({format:'priteagent-v2-synthetic-car-backup-v1',exportedAt:new Date().toISOString(),car:current},null,2);
+        const blob=new Blob([content],{type:'application/json'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url;a.download=(current.groupId||'car-legacy')+'.json';
+        a.style.display='none';document.body.append(a);a.click();a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+        report('ส่งไฟล์สำรอง JSON ให้เบราว์เซอร์แล้ว กรุณาตรวจไฟล์ในเครื่อง');
+    }
+    legacyPanel.querySelector('button').addEventListener('click',async()=>{
+        if(!current||busy||dirty||operation)return;
+        if(!confirm('ต้องการออกรหัส GRP แบบ V1 ให้คันรถเดิม โดยคง UUID ภายในเหมือนเดิมหรือไม่?'))return;
+        try{
+            current=await carStore.assignLegacyCode(current.id,current.revision);
+            input('groupId').value=current.groupId||'';
+            refreshManagement();
+            await onSaved('ออกรหัสคันรถ GRP แล้ว');
+        }catch{error.textContent='ออกรหัส GRP ไม่สำเร็จ กรุณาเปิดคันรถล่าสุด';}
+    });
+    manager.addEventListener('click',async event=>{
+        const button=event.target.closest('[data-car-manage]');
+        if(!button||!current||busy||operation)return;
+        const action=button.dataset.carManage;
+        if(action==='export'){exportCurrent();return;}
+        if(dirty){error.textContent='โปรดบันทึกหรือยกเลิกการแก้ไขก่อนจัดการคันรถ';return;}
+        if(action==='clone'){
+            if(!confirm('สร้างคันรถใหม่จากเฉพาะรายชื่อสมาชิกและตำแหน่งของคันนี้หรือไม่?'))return;
+            const source=current;
+            current=null;
+            form.reset();setPeriodOptions();province.set('');
+            members.forEach((el,i)=>{el.value=source.members[i]||'';el.dataset.previous=el.value;});
+            refreshChoices();
+            input('owner').value=String(source.ownerIndex);
+            input('self').value=source.selfPosition===undefined?'':String(source.selfPosition);
+            input('name').value='';input('workNote').value='';input('budget').value='';
+            input('groupId').value='';
+            dateFields.sync();updateFuelContext();updateDateHint();
+            dirty=true;clearReview();error.textContent='';
+            refreshManagement();
+            dialog.querySelector('#carGroupTitle').textContent='สร้างกลุ่มใหม่จากรายชื่อเดิม';
+            input('name').focus();
+            return;
+        }
+        if(action==='archive'||action==='close'){
+            const flag=action==='archive'?'archived':'closed';
+            const next=!Boolean(current[flag]);
+            if(!confirm('ยืนยันการเปลี่ยนสถานะคันรถ '+(current.groupId||current.name)+' หรือไม่?'))return;
+            button.disabled=true;
+            try{
+                current=await carStore.setFlags(current.id,current.revision,{[flag]:next});
+                refreshManagement();
+                await onSaved('อัปเดตสถานะคันรถแล้ว (ข้อมูลจำลอง)');
+            }catch{error.textContent='เปลี่ยนสถานะไม่สำเร็จ กรุณาเปิดรายการล่าสุด';}
+            finally{button.disabled=false;}
+            return;
+        }
+        if(action==='delete'){
+            const typed=prompt('การลบจะลบข้อมูลจำลองของคันรถนี้ในเบราว์เซอร์ กรุณาสำรอง JSON ก่อน แล้วพิมพ์ชื่อคันรถเพื่อยืนยัน:\\n'+current.name);
+            if(typed!==current.name)return;
+            if(!confirm('ลบคันรถนี้จากข้อมูลจำลองในเบราว์เซอร์อย่างถาวรหรือไม่?'))return;
+            button.disabled=true;
+            try{
+                await carStore.deleteLocal(current.id,current.revision);
+                dirty=false;current=null;dialog.close();
+                await onSaved('ลบคันรถจำลองในเบราว์เซอร์แล้ว');
+            }catch{error.textContent='ลบไม่สำเร็จ กรุณาเปิดรายการล่าสุด';}
+            finally{button.disabled=false;}
+        }
+    });
+
     let opening = false;
     return async function open(id) {
         if (dialog.open || opening) return;
@@ -410,7 +495,8 @@ export function connectGroupForm(onSaved, report) {
             dirty = false;
             operation = null;
             dialog.querySelector('#carGroupTitle').textContent = current ? 'ตั้งค่าคันรถ / คันรถ Group' : 'สร้างคันรถ / คันรถ Group';
-            input('groupId').value = current?.id ?? '';
+            input('groupId').value = current?.groupId ?? '';
+            refreshManagement();
             if (current) {
                 for (const key of ['year', 'month', 'week', 'startDate', 'endDate', 'name', 'workNote', 'budget']) {
                     input(key).value = current[key] ?? '';
