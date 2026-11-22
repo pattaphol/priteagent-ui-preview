@@ -1,3 +1,4 @@
+import {allocateCarCode} from '../ui/car-code.js?rev=pa-car-code-r1';
 import { validLayout } from './domain.js';
 export const fixtures = [
     {
@@ -217,16 +218,11 @@ export class LocalCarGroupStore {
                         }
                         result = prior.result.result;
                     } else {
-                        result = {
-                            ...structuredClone(draft),
-                            id: crypto.randomUUID(),
-                            revision: 1
-                        };
-                        groups.add(result);
-                        requests.add({
-                            fingerprint,
-                            result
-                        }, requestId);
+                        allocateCarCode(groups,requests,draft,groupId=>{
+                            result={...structuredClone(draft),id:crypto.randomUUID(),groupId,archived:false,closed:false,revision:1};
+                            groups.add(result);
+                            requests.add({fingerprint,result},requestId);
+                        });
                     }
                 };
                 tx.oncomplete = ()=>resolve(result);
@@ -279,6 +275,7 @@ export class LocalCarGroupStore {
                             return;
                         }
                         result = {
+                            ...current,
                             ...structuredClone(draft),
                             id,
                             revision: expectedRevision + 1
@@ -297,5 +294,63 @@ export class LocalCarGroupStore {
         } finally{
             db.close();
         }
+    }
+
+    async setFlags(id,expectedRevision,flags) {
+        if(!id||!Number.isInteger(expectedRevision)||!flags||
+           Object.keys(flags).some(key=>!['closed','archived'].includes(key))||
+           Object.values(flags).some(value=>typeof value!=='boolean'))throw Error('INVALID_CAR_STATUS');
+        const db=await this.db();
+        try { return await new Promise((resolve,reject)=>{
+            const tx=db.transaction('groups','readwrite'),groups=tx.objectStore('groups');
+            let result,reason='STATUS_FAILED';
+            const get=groups.get(id);
+            get.onsuccess=()=>{
+                if(!get.result){reason='NOT_FOUND';tx.abort();return;}
+                if(get.result.revision!==expectedRevision){reason='CONFLICT_STALE_REVISION';tx.abort();return;}
+                result={...get.result,...flags,revision:expectedRevision+1};
+                groups.put(result);
+            };
+            tx.oncomplete=()=>resolve(result);
+            tx.onerror=()=>reject(tx.error);
+            tx.onabort=()=>reject(new Error(reason));
+        });} finally { db.close(); }
+    }
+    async deleteLocal(id,expectedRevision) {
+        const db=await this.db();
+        try { return await new Promise((resolve,reject)=>{
+            const tx=db.transaction('groups','readwrite'),groups=tx.objectStore('groups');
+            let reason='DELETE_FAILED';
+            const get=groups.get(id);
+            get.onsuccess=()=>{
+                if(!get.result){reason='NOT_FOUND';tx.abort();return;}
+                if(get.result.revision!==expectedRevision){reason='CONFLICT_STALE_REVISION';tx.abort();return;}
+                groups.delete(id);
+            };
+            tx.oncomplete=()=>resolve(true);
+            tx.onerror=()=>reject(tx.error);
+            tx.onabort=()=>reject(new Error(reason));
+        });} finally { db.close(); }
+    }
+    async assignLegacyCode(id,expectedRevision) {
+        const db=await this.db();
+        try { return await new Promise((resolve,reject)=>{
+            const tx=db.transaction(['groups','requests'],'readwrite');
+            const groups=tx.objectStore('groups'),requests=tx.objectStore('requests');
+            let result,reason='CODE_FAILED';
+            const get=groups.get(id);
+            get.onsuccess=()=>{
+                if(!get.result){reason='NOT_FOUND';tx.abort();return;}
+                if(get.result.revision!==expectedRevision){reason='CONFLICT_STALE_REVISION';tx.abort();return;}
+                if(get.result.groupId){result=get.result;return;}
+                allocateCarCode(groups,requests,get.result,groupId=>{
+                    result={...get.result,groupId,revision:expectedRevision+1};
+                    groups.put(result);
+                });
+            };
+            tx.oncomplete=()=>resolve(result);
+            tx.onerror=()=>reject(tx.error);
+            tx.onabort=()=>reject(new Error(reason));
+        });} finally { db.close(); }
     }
 }
