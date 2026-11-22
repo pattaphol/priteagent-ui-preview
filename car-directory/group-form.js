@@ -2,7 +2,7 @@ import { LocalCarGroupStore } from '../dashboard/adapters.js';
 import { validateCarGroup } from '../dashboard/domain.js';
 import { currentCarPeriod, weeksForMonth } from './car-period.js';
 import { connectProvincePicker, isThaiProvince } from '../ui/province-picker.js';
-import { connectDateFields } from '../ui/date-fields.js?rev=pa-car-form-r1';
+import { connectDateFields } from '../ui/date-fields.js?rev=pa-calendar-r1';
 
 export const carStore = new LocalCarGroupStore();
 const pendingPrefix = 'priteagent-v2:phase1:pending-operation:';
