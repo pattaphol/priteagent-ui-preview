@@ -1,5 +1,13 @@
 // Public synthetic UI demonstration ONLY. No identity, API, ACL, storage, or private data.
 const roleLabels = Object.freeze({admin:'Admin',agent:'ตัวแทน',unit_manager:'ผู้จัดการหน่วย',director:'ผู้อำนวยการ',secretary:'เลขา'});
+// Owner-approved display guidance only; not an authorization engine or an actual RBAC grant.
+const rolePolicy = Object.freeze([
+  {role:'admin',scope:'จัดการผู้ใช้และกำหนดบทบาท',boundary:'ต้องยืนยันตัวตน Owner และ MFA ก่อนเปิดสิทธิ์จริง'},
+  {role:'agent',scope:'ดูและจัดการข้อมูลงานของตนเอง',boundary:'บทบาทเริ่มต้นสำหรับผู้สมัคร; ไม่เปิดข้อมูลคนอื่น'},
+  {role:'unit_manager',scope:'ดูภาพรวมผลงานตัวแทนในหน่วยที่รับผิดชอบ',boundary:'ไม่ได้รับสิทธิ์แก้ไขข้อมูลลูกค้าหรือกรมธรรม์ของสมาชิก'},
+  {role:'director',scope:'ดูผลงานหลายหน่วยที่ได้รับมอบหมายให้กำกับ',boundary:'ดูข้อมูลเฉพาะหน่วยที่กำกับ; ไม่แก้ข้อมูลผู้อื่น'},
+  {role:'secretary',scope:'ดูข้อมูลของตนเองเท่านั้น',boundary:'สิทธิ์ดูข้อมูลผู้อื่นยังไม่อนุมัติ'}
+]);
 const baseUsers = Object.freeze([
   {id:'synthetic-user-000',name:'เจ้าของระบบ (ตัวอย่าง)',role:'admin',unit:'ส่วนกลาง'},
   {id:'synthetic-user-001',name:'ผู้ใช้ตัวอย่าง A',role:'agent',unit:'หน่วย 01'},
@@ -39,7 +47,7 @@ const situationLabels = Object.freeze({
   server_error:'Server ขัดข้อง', invalid_cursor:'หน้าถัดไปไม่ถูกต้อง',
   conflict:'ข้อมูลเปลี่ยนระหว่างบันทึก', save_failure:'บันทึกไม่สำเร็จ'
 });
-const tabs = Object.freeze({users:'ผู้ใช้และบทบาท',sessions:'ประวัติ Login',audit:'Audit Log'});
+const tabs = Object.freeze({users:'ผู้ใช้และบทบาท',permissions:'สิทธิ์ตามบทบาท',sessions:'ประวัติ Login',audit:'Audit Log'});
 const html = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const state = {users:baseUsers.map(x=>({...x})),events:baseEvents.map(x=>({...x})),tab:'users',scenario:'ready',search:'',more:3,busy:false,detail:null,token:0};
 const visible = () => ['ready','empty','label_pending','conflict','save_failure','invalid_cursor'].includes(state.scenario);
@@ -64,6 +72,12 @@ function usersMarkup() {
   <div class="pa-admin-tablewrap"><table><thead>${headRow(labels)}</thead><tbody>${rows||'<tr><td colspan="6">ไม่พบรายการที่ค้นหา</td></tr>'}</tbody></table></div>
   <div class="pa-admin-pagination"><span>${shown.length} จาก ${list.length} รายการ</span><button type="button" data-admin-action="more" ${state.busy||!!q||shown.length>=list.length?'disabled':''}>โหลดเพิ่ม (จำลอง)</button></div>`;
 }
+function permissionsMarkup() {
+  const labels=['บทบาท','สิทธิ์ตามแบบที่อนุมัติ','ขอบเขต / เงื่อนไข'];
+  const rows=rolePolicy.map(p=>cells([roleLabels[p.role],p.scope,p.boundary],labels)).join('');
+  return `<div class="pa-admin-tablewrap"><table><thead>${headRow(labels)}</thead><tbody>${rows}</tbody></table></div>
+    <p class="pa-admin-locked">แสดงกติกาของหน้าจอทดลองเท่านั้น · ไม่มีการให้สิทธิ์จริง · การควบคุมสิทธิ์ต้องตรวจที่ Backend ทุกคำขอ</p>`;
+}
 function sessionsMarkup() { const labels=['เวลา','ผู้ใช้','เหตุการณ์','อุปกรณ์/เบราว์เซอร์','ผลลัพธ์']; return `<div class="pa-admin-tablewrap"><table><thead>${headRow(labels)}</thead><tbody>${baseSessions.map(x=>cells(Object.values(x),labels)).join('')}</tbody></table></div><p>ข้อมูลอุปกรณ์เป็นตัวอย่าง ไม่ใช่ Hardware ID จริง</p>`; }
 function auditMarkup() { const labels=['เวลา','ผู้ดำเนินการ','เหตุการณ์','เป้าหมาย','ผลลัพธ์']; return `<div class="pa-admin-tablewrap"><table><thead>${headRow(labels)}</thead><tbody>${state.events.map(x=>cells(Object.values(x),labels)).join('')}</tbody></table></div><p>ไม่มี Password, Token หรือข้อมูลลูกค้าใน Log ตัวอย่าง</p>`; }
 function viewMarkup() {
@@ -74,7 +88,7 @@ function viewMarkup() {
   <div class="pa-admin-controls"><label>ทดลองสถานะ UI<select id="pa-admin-scenario">${Object.entries(situationLabels).map(([k,v])=>`<option value="${k}" ${k===state.scenario?'selected':''}>${html(v)}</option>`).join('')}</select></label><button type="button" data-admin-action="reset">รีเซ็ตข้อมูลตัวอย่าง</button></div>
   ${visible()?`<div class="pa-admin-metrics"><div><b>${state.users.length}</b><span>บัญชีตัวอย่าง</span></div><div><b>5</b><span>บทบาท</span></div><div><b>${state.events.length}</b><span>เหตุการณ์ตัวอย่าง</span></div></div>`:''}
   <div class="pa-admin-tabs" role="tablist" aria-label="ข้อมูลจัดการ (จำลอง)">${Object.entries(tabs).map(([key,label])=>`<button type="button" role="tab" data-admin-tab="${key}" aria-selected="${safeTab===key}" ${!visible()?'disabled':''}>${label}</button>`).join('')}</div>
-  <div class="pa-admin-section" role="tabpanel" aria-label="${html(tabs[safeTab])}">${!visible()?'<p class="pa-admin-hidden">ข้อมูลถูกซ่อน กรุณากลับสถานะ Admin ทดลอง</p>':safeTab==='users'?usersMarkup():safeTab==='sessions'?sessionsMarkup():auditMarkup()}</div>
+  <div class="pa-admin-section" role="tabpanel" aria-label="${html(tabs[safeTab])}">${!visible()?'<p class="pa-admin-hidden">ข้อมูลถูกซ่อน กรุณากลับสถานะ Admin ทดลอง</p>':safeTab==='users'?usersMarkup():safeTab==='permissions'?permissionsMarkup():safeTab==='sessions'?sessionsMarkup():auditMarkup()}</div>
   <p class="pa-admin-footer">เมนูและ Theme ใช้ร่วมกับ Dashboard เดิม · ข้อมูลทั้งหมดเป็นตัวอย่างและรีเซ็ตเมื่อโหลดหน้าใหม่ · สิทธิ์จริงต้องตรวจบน Server</p>`;
 }
 export function adminDemoMarkup() { return `<section id="pa-admin-demo" class="shell-page pa-admin" aria-label="Admin ทดลอง">${viewMarkup()}</section>`; }
