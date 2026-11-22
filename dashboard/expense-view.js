@@ -32,8 +32,8 @@ export function expenseMarkup(cars,selectedCarId){
  +(demo?'<div class="notice" role="note" id="paExpenseDemoBanner"><strong>ตัวอย่างหน้าค่าใช้จ่าย V2 · ข้อมูลสมมุติเท่านั้น</strong><p>แสดง 3 สมาชิกและ 4 รายการตัวอย่างเพื่อให้ตรวจ UI ได้ทันที ไม่ใช่คันรถหรือยอดเงินจริง และจะไม่บันทึกลงข้อมูลคันรถ</p><button type="button" data-page="cars">ไปหน้าคันรถของฉัน</button>'+(cars.length?'<a href="?view=expenses">ใช้คันรถที่บันทึกไว้</a>':'')+'</div>':'')
  +'<div class="pa-expense-head"><div><h1 tabindex="-1">คันรถ '+esc(car.name)+'</h1><p class="pa-expense-note">'+esc(period)+' · สมาชิก '+car.members.length+' คน</p><p class="pa-expense-note">'+(demo?'โหมดดูตัวอย่าง — ทดลองสลับแท็บและเปิดฟอร์มได้ แต่ไม่บันทึก':'ค่าใช้จ่าย V2 · ใช้คันรถและสมาชิกจากระบบเดียวกัน · ข้อมูลทดลองเฉพาะอุปกรณ์นี้')+'</p></div>'
  +(demo?'<span class="pa-expense-note">ดูตัวอย่าง UI</span>':'<label class="pa-expense-carselect">เลือกคันรถ<select id="paExpenseCar" aria-label="เลือกคันรถสำหรับค่าใช้จ่าย">'+cars.map(c=>'<option value="'+esc(c.id)+'" '+(c.id===car.id?'selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select></label>')+'</div>'
- +'<div id="paExpenseV1Frame">'+expenseV1Frame()+'</div>'
- +'<section id="paExpenseFormWrap" hidden><div class="expv1-form-back"><button type="button" id="expv1Back">← กลับรายการค่าใช้จ่าย</button><strong>เพิ่มค่าใช้จ่าย · '+esc(car.name)+'</strong></div><div class="pa-expense" id="paExpenseForm">'+APPROVED_MARKUP+'</div></section>'
+ +'<div id="paExpenseV1Frame" class="carGroupForm">'+expenseV1Frame()+'</div>'
+ +'<section id="paExpenseFormWrap" class="carGroupForm" hidden><div class="expv1-form-back"><button type="button" id="expv1Back">← กลับรายการค่าใช้จ่าย</button><strong>เพิ่มค่าใช้จ่าย · '+esc(car.name)+'</strong></div><div class="pa-expense" id="paExpenseForm">'+APPROVED_MARKUP+'</div></section>'
  +'<div id="paExpenseHistory" hidden>'+historyMarkup(car)+'</div></section>';
 }
 export function mountExpenseView(cars,selectedCarId,onChange){

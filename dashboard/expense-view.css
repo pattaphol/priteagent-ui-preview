@@ -18,7 +18,6 @@
 
 :scope .wrap { max-width:none; padding:0; }
 :scope .card { background:var(--panel);color:var(--ink);border-color:var(--line); }
-:scope .field { background:var(--panel);color:var(--ink);border-color:var(--line); }
 :scope .member, :scope .summary, :scope .total, :scope .btn, :scope .method, :scope .status { background:var(--panel);color:var(--ink);border-color:var(--line); }
 :scope .pool, :scope .fuel-reminder { background:var(--panel);color:var(--ink);border-color:var(--line); }
 :scope .pool .value, :scope .pool small, :scope .fuel-reminder strong, :scope .fuel-reminder .rule-current { color:var(--ink); }
