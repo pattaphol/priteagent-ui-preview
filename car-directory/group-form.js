@@ -2,6 +2,7 @@ import { LocalCarGroupStore } from '../dashboard/adapters.js';
 import { validateCarGroup } from '../dashboard/domain.js';
 import { currentCarPeriod, weeksForMonth } from './car-period.js';
 import { connectProvincePicker, isThaiProvince } from '../ui/province-picker.js';
+import { connectDateFields } from '../ui/date-fields.js?rev=pa-car-form-r1';
 
 export const carStore = new LocalCarGroupStore();
 const pendingPrefix = 'priteagent-v2:phase1:pending-operation:';
@@ -33,6 +34,7 @@ export function connectGroupForm(onSaved, report) {
     const province = connectProvincePicker(dialog.querySelector('#carProvincePicker'));
     const applyWeekButton = dialog.querySelector('#carApplyWeekDates');
     const fuelContext = dialog.querySelector('#carFuelContext');
+    const dateFields = connectDateFields(form);
     const members = [1, 2, 3, 4].map(n => input('member' + n));
     const review = dialog.querySelector('#carGroupReview');
     const reviewText = review.querySelector('p');
@@ -42,7 +44,7 @@ export function connectGroupForm(onSaved, report) {
     const pendingNotice = document.querySelector('#carPending');
     const pendingButton = pendingNotice.querySelector('button');
     const counts = dialog.querySelector('#carGroupMemberCount');
-    const controls = Array.from(form.querySelectorAll('input,select,textarea'));
+    const controls = Array.from(form.querySelectorAll('input,select,textarea')).filter(control => Boolean(control.name));
     const feedback = new Map();
     for (const control of controls) {
         const message = document.createElement('small');
@@ -75,6 +77,7 @@ export function connectGroupForm(onSaved, report) {
             input('startDate').value = now.start;
             input('endDate').value = now.end;
         }
+        dateFields.sync();
     }
     function updateDateHint() {
         const start = thaiDate(input('startDate').value);
@@ -100,6 +103,7 @@ export function connectGroupForm(onSaved, report) {
         }
         input('startDate').value = range.start;
         input('endDate').value = range.end;
+        dateFields.sync();
         for (const name of ['startDate','endDate','week']) {
             feedback.get(name).hidden = true;
             input(name).removeAttribute('aria-invalid');
@@ -111,12 +115,18 @@ export function connectGroupForm(onSaved, report) {
 
     function updateFuelContext() {
         const count = members.filter(member => member.value.trim()).length;
-        const share = {2: 30, 3: 16, 4: 0}[count];
-        const show = share !== undefined && input('owner').value !== '';
-        fuelContext.hidden = !show;
-        fuelContext.textContent = show
-            ? 'คันนี้มีสมาชิก ' + count + ' คน หากเจ้าของรถร่วมรับผิดชอบ สัดส่วนของเจ้าของรถคือ ' + share + '%'
-            : '';
+        const ownerIndex = input('owner').value === '' ? -1 : Number(input('owner').value);
+        const ownerName = ownerIndex >= 0 ? members[ownerIndex]?.value.trim() : '';
+        const leaderName = members[0]?.value.trim();
+        const share = {2:30, 3:16, 4:0}[count];
+        fuelContext.querySelector('[data-fuel-leader]').textContent = leaderName || 'ยังไม่ระบุ';
+        fuelContext.querySelector('[data-fuel-owner]').textContent = ownerName || 'ยังไม่เลือก';
+        fuelContext.querySelector('[data-fuel-owner-share]').textContent = ownerName && share !== undefined ? share + '%' : '—';
+        // Four members: three other shares depend on the approved whole-percent remainder policy.
+        // Do NOT invent a fixed 33.33% allocation or change the Expense Split R1 rules.
+        const others = count === 4 ? 'รวม 100% แบ่งตามกฎเศษ'
+            : share === undefined ? '—' : ((100-share)/(count-1)) + '%';
+        fuelContext.querySelector('[data-fuel-other-share]').textContent = ownerName ? others : '—';
     }
 
     const viewport = window.visualViewport;
@@ -173,6 +183,7 @@ export function connectGroupForm(onSaved, report) {
     }
     function lock(value) {
         for (const el of controls) el.disabled = value;
+        dateFields.setDisabled(value);
         reviewButton.disabled = value;
         applyWeekButton.disabled = value;
         if (value) province.close();
@@ -271,6 +282,7 @@ export function connectGroupForm(onSaved, report) {
             ...(budget.value === '' ? {} : {budget: budget.valueAsNumber})
         };
         const errors = validateCarGroup(draft);
+        for (const name of dateFields.invalidEntryNames()) errors[name] = 'วันที่ไม่ถูกต้อง ใช้วัน/เดือน/ปี พ.ศ.';
         if (!isThaiProvince(draft.province)) errors.province = 'เลือกจังหวัดที่อยู่ในรายการ';
         if (periodChanged && !selectedWeek()) errors.week = 'เลือกวีคที่มีในเดือนนี้';
         if (!names[0]) errors.member1 = 'กรอกชื่อสมาชิกคนที่ 1 ซึ่งเป็นหัวหน้าคัน';
@@ -411,6 +423,7 @@ export function connectGroupForm(onSaved, report) {
             refreshChoices();
             input('owner').value = current?.ownerIndex === undefined ? '' : String(current.ownerIndex);
             input('self').value = current?.selfPosition === undefined ? '' : String(current.selfPosition);
+            dateFields.sync();
             updateFuelContext();
             dialog.showModal();
             scroll.scrollTop = 0;
