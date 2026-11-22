@@ -105,7 +105,8 @@ export function attachThaiCalendar(group,native,text,onSelect) {
     isOpen=true;activeClose=close;trigger.setAttribute('aria-expanded','true');position();
     window.addEventListener('resize',position);window.visualViewport?.addEventListener('resize',position);
     queueMicrotask(()=>{if(isOpen){document.addEventListener('pointerdown',outside,true);document.addEventListener('keydown',keydown,true);}});
-    yearInput.focus({preventScroll:true});
+    // Do not open the iPhone virtual keyboard when simply opening the calendar.
+    (popup.querySelector('.pa-calendar-day[aria-selected=true]') || popup.querySelector('[data-cal-prev]')).focus({preventScroll:true});
   }
   trigger.addEventListener('click',e=>{e.preventDefault();isOpen?close():open()});
   popup.querySelector('[data-cal-prev]').addEventListener('click',()=>{
