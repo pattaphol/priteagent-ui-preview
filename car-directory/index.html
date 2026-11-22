@@ -136,7 +136,7 @@ html, body { height: 100%; }
  <header class="pa-dialog-heading"><h2 id="carGroupTitle" tabindex="-1">สร้างคันรถ / คันรถ Group</h2><button type="button" class="pa-button" data-close-group aria-label="ปิดฟอร์มคันรถ">✕</button></header>
  <form class="carGroupForm" novalidate>
   <div class="carGroupScroll pa-dialog-scroll">
-  <label>รหัสคันรถ GRP-ID<input class="pa-control" name="groupId" readonly placeholder="ระบบจะออกรหัสเมื่อบันทึก"><small>เมื่อบันทึกครั้งแรก ระบบจะสร้างรหัสนี้ และใช้รหัสเดิมเมื่อแก้ไข</small></label>
+  <label>รหัสคันรถ (แบบ V1)<input class="pa-control" name="groupId" readonly placeholder="GRP-2569-11-3-001 · ออกรหัสเมื่อบันทึก"><small>รูปแบบ GRP-ปี พ.ศ.-เดือน-วีค-ลำดับสามหลัก · เว็บทดลองนับรหัสเฉพาะเครื่องนี้</small></label><div id="carLegacyCode" hidden><small>คันรถเดิมยังไม่มีรหัส GRP แต่ UUID ภายในยังถูกเก็บรักษาไว้</small><button type="button" class="pa-button">ออกรหัส GRP ให้คันรถเดิม</button></div>
   <div class="carGroupPeriod">
    <label>ปี พ.ศ.<select class="pa-control" name="year" required></select></label>
    <label>เดือน<select class="pa-control" name="month" required></select></label>
@@ -199,6 +199,17 @@ html, body { height: 100%; }
   <label>งบประมาณ (บาทไทย · THB)<input class="pa-control" name="budget" type="number" step="1" placeholder="ยังไม่ตั้งงบ"></label>
   <section id="carGroupReview" class="pa-card" aria-label="สรุปก่อนบันทึก" tabindex="-1" hidden><h3>ตรวจทานก่อนบันทึก</h3><p></p></section>
   <p id="carGroupError" role="alert"></p>
+  <section class="carGroupManage" id="carGroupManage" hidden aria-label="จัดการคันรถ">
+   <h3>จัดการคันรถ</h3>
+   <div class="carManageActions">
+    <button type="button" data-car-manage="archive"><span>เก็บคันรถเข้าคลัง</span></button>
+    <button type="button" data-car-manage="close"><span>ปิดคันรถและล็อกรายการ</span></button>
+    <button type="button" data-car-manage="clone"><span>สร้างกลุ่มใหม่จากรายชื่อเดิม</span></button>
+    <button type="button" data-car-manage="export"><span>สำรองข้อมูล JSON</span></button>
+    <button type="button" data-car-manage="delete"><span>ลบคันรถนี้</span></button>
+   </div>
+   <small>เฉพาะข้อมูลจำลองบนเครื่องนี้ · การปิดคันรถล็อกเฉพาะแบบฟอร์มทดลอง ยังไม่ได้ล็อกรายการค่าใช้จ่าย/ถืองานจริงที่ไม่เชื่อม Backend</small>
+  </section>
   </div>
   <div class="pa-dialog-actions">
    <button type="button" class="pa-button" data-close-group>ยกเลิก</button>
@@ -208,9 +219,9 @@ html, body { height: 100%; }
  </form>
 </dialog>
 <script type="module">
-import { carStore, connectGroupForm } from './group-form.js?rev=pa-calendar-r2';
+import { carStore, connectGroupForm } from './group-form.js?rev=pa-car-final-r3';
 import { carModeMarkup,carStatusMarkup,syncCarControlState,enableCarTabKeyboard,carIcon } from '../ui/car-list-components.js?rev=pa-ui-unified-r1';
-import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=shared-control-r2';
+import { mountWorkspaceShell } from '../dashboard/workspace-shell.js?rev=pa-car-final-r3';
 (function(){
 'use strict';
 const get=id=>document.getElementById(id);
@@ -229,7 +240,7 @@ enableCarTabKeyboard();
 const provinceLabel=get('carProvincePicker')?.querySelector('label[for="carProvince"]');
 if(provinceLabel)provinceLabel.insertAdjacentHTML('beforeend',carIcon('pin'));
 function render(){
- const rows=cars.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
+ const rows=cars.filter(t=>(state==='archived'?t.archived:!t.archived&&(state==='all'||(state==='closed'?t.closed:!t.closed)))&&(!year||t.year===+year)&&(!month||t.month===+month)&&(!week||t.week===+week)&&[t.title,t.destination,t.id,t.groupId||'',...t.members].join(' ').toLocaleLowerCase('th').includes(query.toLocaleLowerCase('th')));
  get('resultCount').textContent='แสดง '+rows.length+' จาก '+cars.length+' คันรถ';
  get('carGrid').hidden=!rows.length||layout==='table';get('tableWrap').hidden=!rows.length||layout!=='table';get('empty').hidden=!!rows.length;get('carGrid').className='v1Grid v1-'+layout;
  get('layoutHelp').textContent=layouts[layout].join(' · ');
@@ -239,7 +250,7 @@ function render(){
  if(layout==='table'){
   get('tableWrap').innerHTML='<table class="v1Table"><thead><tr><th>คันรถ</th><th>จังหวัด / วีค</th><th>ช่วงวันที่</th><th>ค่าใช้จ่าย</th><th>ไปยัง</th></tr></thead><tbody>'+rows.map(t=>'<tr><td><button class="v1Name pa-button" data-car="'+escapeHtml(t.id)+'">'+escapeHtml(t.title)+'</button><small>'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</small></td><td>'+escapeHtml(t.destination)+'<small>'+period(t)+'</small></td><td>'+day(t.start)+' – '+day(t.end)+'</td><td>—</td><td>'+actions(t)+'</td></tr>').join('')+'</tbody></table>';get('carGrid').innerHTML='';
  }else{
-  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card pa-card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>'+carIcon('pin')+' '+escapeHtml(t.destination)+'</span><span>'+carIcon('calendar')+' '+period(t)+'</span>'+(layout==='small'?'':'<span>'+carIcon('clock')+' '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.id)+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
+  get('carGrid').innerHTML=rows.map(t=>'<article class="v1Card pa-card"><button class="v1Open" data-car="'+escapeHtml(t.id)+'" aria-label="ตั้งค่าคันรถ '+escapeHtml(t.title)+'"><div class="v1CardTop"><span class="v1Icon">'+icon('car')+'</span><span class="v1Badge '+(t.closed?'closed':'')+'">'+(t.closed?'ปิดคันรถแล้ว':'กำลังดำเนินการ')+'</span></div><h2>'+escapeHtml(t.title)+'</h2><div class="v1Facts"><span>'+carIcon('pin')+' '+escapeHtml(t.destination)+'</span><span>'+carIcon('calendar')+' '+period(t)+'</span>'+(layout==='small'?'':'<span>'+carIcon('clock')+' '+day(t.start)+' – '+day(t.end)+'</span>')+'</div>'+(layout==='large'?'<div class="v1Members">'+t.members.map((m,i)=>'<span><i>'+escapeHtml(m.slice(0,1))+'</i>'+escapeHtml(m)+'</span>').join('')+'</div><div class="v1Code">'+escapeHtml(t.groupId||'คันรถเดิม · ยังไม่ออกรหัส GRP')+'</div>':'')+(layout==='small'?'':'<div class="v1Total"><span>ค่าใช้จ่าย<strong>—</strong></span>'+(layout==='large'?'<span>เงินกองกลางคงเหลือ<strong>—</strong></span>':'')+'</div>')+'</button>'+actions(t)+'</article>').join('');get('tableWrap').innerHTML='';
  }
  for(const root of [get('carGrid'),get('tableWrap')]){for(const b of root.querySelectorAll('[data-car]'))b.onclick=()=>openCar(b.dataset.car);for(const b of root.querySelectorAll('[data-action]'))b.onclick=()=>openAction(b.dataset.id,b.dataset.action)}
 }
