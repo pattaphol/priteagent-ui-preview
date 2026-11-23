@@ -6,11 +6,11 @@ on:
       expected_sha:
         description: 'Exact approved UI source commit (40 hex chars)'
         required: true
-        default: 'ab477a534d4e600e4e82a47d03042c576c3cfbde'
+        # Input current exact HEAD on each manual dispatch; workflow-only commits change HEAD.
       target_url:
         description: 'Approved public synthetic preview URL'
         required: true
-        default: 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=ab477a5'
+        default: 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-expense-csp-r2'
 
 permissions:
   contents: read
@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA" || { echo 'BASELINE_MISMATCH'; exit 1; }
-          test "$TARGET_URL" = 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=ab477a5' || { echo 'TARGET_URL_MISMATCH'; exit 1; }
+          test "$TARGET_URL" = 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-expense-csp-r2' || { echo 'TARGET_URL_MISMATCH'; exit 1; }
           echo "HEAD=$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
           echo "Tree=$(git rev-parse HEAD^{tree})" >> "$GITHUB_STEP_SUMMARY"
       - name: Setup Node
@@ -94,21 +94,36 @@ jobs:
                   log(`${prefix}:dashboard`,status && status<400?'PASS':'FAIL',`HTTP ${status}`,{viewport:{width,height},browser:'Chromium',theme});
                   const overflow=await page.evaluate(()=>({documentScrollWidth:document.documentElement.scrollWidth,innerWidth:innerWidth}));
                   log(`${prefix}:document-overflow`,overflow.documentScrollWidth>overflow.innerWidth+1?'FAIL':'PASS',JSON.stringify(overflow));
-                  const car=await findVisible(page,["a[href*='car-directory']","button:has-text('คันรถ')","a:has-text('คันรถ')"]);
-                  if(car){
-                    try {await car.click({timeout:5000}); await page.waitForTimeout(600); await shot(page,`${prefix}_car_entry`);log(`${prefix}:car-entry`,'PASS','Car entry clicked; screenshot captured');}
-                    catch(e){log(`${prefix}:car-entry`,'NOT_RUN',`Unable to navigate: ${String(e).slice(0,180)}`);}
-                  } else log(`${prefix}:car-entry`,'NOT_RUN','Car entry selector not grounded in live DOM');
-                  const carModal=await findVisible(page,['dialog.pa-dialog[open]','dialog[open]']);
-                  if(carModal){await shot(page,`${prefix}_car_modal`);log(`${prefix}:car-modal`,'PASS','Visible dialog screenshot');}
-                  else log(`${prefix}:car-modal`,'NOT_RUN','No Car dialog opened; cannot claim parity');
+                  // Open the actual Car V2 modal in the hosted repo, without saving car data.
+                  let carModalSeen=false;
+                  const carUrl=new URL('../car-directory/',url).href;
+                  const carResponse=await page.goto(carUrl,{waitUntil:'domcontentloaded',timeout:30000});
+                  await page.waitForTimeout(500);
+                  const carCreate=page.locator('#createCar');
+                  if(carResponse?.status()===200 && await carCreate.count() && await carCreate.isVisible()){
+                    try {
+                      await carCreate.click({timeout:5000});
+                      await page.locator('#carGroupDialog[open]').waitFor({state:'visible',timeout:5000});
+                      await shot(page,`${prefix}_car_modal`);
+                      carModalSeen=true;
+                      log(`${prefix}:car-modal`,'PASS','Actual #carGroupDialog opened via #createCar');
+                    }catch(e){log(`${prefix}:car-modal`,'FAIL',`Existing Car dialog failed: ${String(e).slice(0,180)}`);}
+                  }else log(`${prefix}:car-modal`,'NOT_RUN','Hosted Car #createCar is not visible');
                   await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
                   await page.waitForTimeout(700);
-                  const fab=await findVisible(page,["button[aria-label*='เพิ่ม']","button:has-text('เพิ่มค่าใช้จ่าย')","button:has-text('+')"]);
-                  if(fab){try{await fab.click({timeout:5000});await page.waitForTimeout(500);log(`${prefix}:fab-click`,'PASS','Visible add control clicked');}catch(e){log(`${prefix}:fab-click`,'FAIL',String(e).slice(0,180));}}
-                  else log(`${prefix}:fab-click`,'NOT_RUN','No grounded add/FAB selector visible (may require synthetic car)');
-                  const add=await findVisible(page,["button:has-text('เพิ่มค่าใช้จ่าย')","[role='menuitem']:has-text('เพิ่มค่าใช้จ่าย')"]);
-                  if(add){try{await add.click({timeout:5000});await page.waitForTimeout(500);}catch(_){}}
+                  // Real V2 Expense FAB exposes a grounded menu item selector.
+                  const fab=page.locator('#expv1Fab');
+                  if(await fab.count() && await fab.isVisible()){
+                    try {
+                      await fab.click({timeout:5000});
+                      log(`${prefix}:fab-click`,'PASS','Existing Expense FAB menu opened');
+                      const add=page.locator('#expv1FabMenu [data-expv1-add]');
+                      await add.waitFor({state:'visible',timeout:5000});
+                      await add.click({timeout:5000});
+                      await page.waitForTimeout(300);
+                      log(`${prefix}:expense-add-click`,'PASS','Existing Expense add action clicked');
+                    }catch(e){log(`${prefix}:expense-add-click`,'FAIL',String(e).slice(0,180));}
+                  }else log(`${prefix}:fab-click`,'NOT_RUN','Existing #expv1Fab not visible');
                   const expenseModal=await findVisible(page,['dialog#paExpenseFormWrap[open]','dialog.pa-dialog[open]']);
                   if(expenseModal){
                     await shot(page,`${prefix}_expense_modal`);
@@ -125,7 +140,8 @@ jobs:
                     log(`${prefix}:date-calendar`,'NOT_RUN','Expense dialog not reached');
                     log(`${prefix}:modal-close`,'NOT_RUN','Expense dialog not reached');
                   }
-                  log(`${prefix}:car-expense-parity`,'NOT_RUN','Requires BOTH visible Car and Expense modal captures with same theme/viewport');
+                  log(`${prefix}:dual-modal-capture`,carModalSeen && !!expenseModal?'PASS':'NOT_RUN',carModalSeen && !!expenseModal?'Both actual modal screenshots captured':'One or both modals not captured');
+                  log(`${prefix}:car-expense-parity`,'NOT_RUN','Independent visual comparison required; dual captures are not proof of parity');
                   log(`${prefix}:keyboard-safe-area`,'NOT_RUN','Desktop Chromium emulation cannot establish iOS virtual keyboard/safe-area behavior');
                   log(`${prefix}:synthetic-save-reload`,'NOT_RUN','No verified synthetic car/expense fixture; do not mutate unknown records');
                   fs.writeFileSync(path.join(out,`${prefix}_console.json`),JSON.stringify(errors,null,2));

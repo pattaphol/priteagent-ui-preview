@@ -100,3 +100,12 @@
  .pa-expense-form-dialog .pa-expense .member-grid {gap:6px;}
  .pa-expense-form-dialog .pa-expense .member {padding:9px 6px;}
 }
+
+/* PA-EXPENSE CSP-ATTR R2 — retain approved geometry without CSP-blocked HTML style attributes. */
+.pa-expense-form-dialog .pa-expense .pa-expense-receipt-mark{font-size:26px;}
+.pa-expense-form-dialog .pa-expense .pa-expense-initial-hidden{display:none;}
+.pa-expense-form-dialog .pa-expense .pa-expense-receipt-action{margin-top:10px;}
+.pa-expense-form-dialog .pa-expense .pa-expense-hint-centered{text-align:center;}
+.pa-expense-form-dialog .pa-expense input.pa-expense-pay-width{width:110px;max-width:100%;}
+.pa-expense-form-dialog .pa-expense input.pa-expense-alloc-width{width:120px;max-width:100%;}
+.pa-expense-form-dialog .pa-expense .pa-expense-balance-note{font-size:11px;text-align:right;color:#b4ceea;}
