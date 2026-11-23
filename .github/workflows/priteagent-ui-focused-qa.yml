@@ -10,7 +10,7 @@ on:
       target_url:
         description: 'Approved public synthetic preview URL'
         required: true
-        default: 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-expense-csp-r2'
+        default: 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-modal-parity-r3'
 
 permissions:
   contents: read
@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA" || { echo 'BASELINE_MISMATCH'; exit 1; }
-          test "$TARGET_URL" = 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-expense-csp-r2' || { echo 'TARGET_URL_MISMATCH'; exit 1; }
+          test "$TARGET_URL" = 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=pa-modal-parity-r3' || { echo 'TARGET_URL_MISMATCH'; exit 1; }
           echo "HEAD=$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
           echo "Tree=$(git rev-parse HEAD^{tree})" >> "$GITHUB_STEP_SUMMARY"
       - name: Setup Node
@@ -69,7 +69,7 @@ jobs:
           const results = [];
           const log = (name, status, reason, extra={}) => results.push({name,status,reason,sha,url,...extra});
           const safeName = s => s.replace(/[^a-z0-9_-]/gi,'_');
-          async function shot(page,name) { await page.screenshot({path:path.join(out, safeName(name)+'.png'), fullPage:true}); }
+          async function shot(page,name,fullPage=true) { await page.screenshot({path:path.join(out, safeName(name)+'.png'), fullPage}); }
           async function findVisible(page,selectors) {
             for (const selector of selectors) {
               try { const l=page.locator(selector).filter({visible:true}).first(); if (await l.count() && await l.isVisible()) return l; } catch(_) {}
@@ -81,6 +81,10 @@ jobs:
             try {
               for (const [width,height] of viewports) for (const theme of ['light','dark']) {
                 const context=await browser.newContext({viewport:{width,height},colorScheme:theme,locale:'th-TH',timezoneId:'Asia/Bangkok',serviceWorkers:'block'});
+                // Explicit app theme, since emulated colorScheme alone does not switch persisted UI theme.
+                await context.addInitScript(value=>{
+                  try {localStorage.setItem('priteagent-v2:shell:theme',value);localStorage.setItem('priteagent.ui.theme.v1',value);} catch (_) {}
+                },theme);
                 const page=await context.newPage();
                 const prefix=`${width}x${height}_${theme}`;
                 const errors=[];
@@ -99,18 +103,22 @@ jobs:
                   const carUrl=new URL('../car-directory/',url).href;
                   const carResponse=await page.goto(carUrl,{waitUntil:'domcontentloaded',timeout:30000});
                   await page.waitForTimeout(500);
+                  const carTheme=await page.evaluate(()=>document.documentElement.dataset.theme);
+                  log(`${prefix}:car-theme`,carTheme===theme?'PASS':'FAIL',`Actual Car theme=${carTheme}, expected=${theme}`);
                   const carCreate=page.locator('#createCar');
                   if(carResponse?.status()===200 && await carCreate.count() && await carCreate.isVisible()){
                     try {
                       await carCreate.click({timeout:5000});
                       await page.locator('#carGroupDialog[open]').waitFor({state:'visible',timeout:5000});
-                      await shot(page,`${prefix}_car_modal`);
+                      await shot(page,`${prefix}_car_modal`,false);
                       carModalSeen=true;
                       log(`${prefix}:car-modal`,'PASS','Actual #carGroupDialog opened via #createCar');
                     }catch(e){log(`${prefix}:car-modal`,'FAIL',`Existing Car dialog failed: ${String(e).slice(0,180)}`);}
                   }else log(`${prefix}:car-modal`,'NOT_RUN','Hosted Car #createCar is not visible');
                   await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
                   await page.waitForTimeout(700);
+                  const expenseTheme=await page.evaluate(()=>document.documentElement.dataset.theme);
+                  log(`${prefix}:expense-theme`,expenseTheme===theme?'PASS':'FAIL',`Actual Expense theme=${expenseTheme}, expected=${theme}`);
                   // Real V2 Expense FAB exposes a grounded menu item selector.
                   const fab=page.locator('#expv1Fab');
                   if(await fab.count() && await fab.isVisible()){
@@ -126,9 +134,19 @@ jobs:
                   }else log(`${prefix}:fab-click`,'NOT_RUN','Existing #expv1Fab not visible');
                   const expenseModal=await findVisible(page,['dialog#paExpenseFormWrap[open]','dialog.pa-dialog[open]']);
                   if(expenseModal){
-                    await shot(page,`${prefix}_expense_modal`);
+                    await shot(page,`${prefix}_expense_modal`,false);
                     const geometry=await expenseModal.evaluate(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight};});
-                    log(`${prefix}:expense-modal`,'PASS','Visible real Dashboard modal screenshot',{geometry});
+                    log(`${prefix}:expense-modal`,'PASS','Visible real Dashboard viewport screenshot',{geometry});
+                    const body=page.locator('#paExpenseFormScroll');
+                    const dock=page.locator('#paExpenseForm > .foot-actions.pa-dialog-actions');
+                    if(await body.count() && await dock.count() && await dock.isVisible()){
+                      const before=await dock.boundingBox();
+                      const scrollDelta=await body.evaluate(el=>{el.scrollTop=el.scrollHeight;return {scrollTop:el.scrollTop,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight}});
+                      const after=await dock.boundingBox();
+                      const pinned=!!before && !!after && Math.abs(before.y-after.y)<=1 && after.y>=0 && (after.y+after.height)<=height+1;
+                      log(`${prefix}:expense-pinned-actions`,pinned?'PASS':'FAIL',JSON.stringify({before,after,scrollDelta}));
+                      await body.evaluate(el=>{el.scrollTop=0});
+                    }else log(`${prefix}:expense-pinned-actions`,'FAIL','Missing visible fixed Expense action dock');
                     log(`${prefix}:expense-modal-overflow`,geometry.x < -1 || geometry.x+geometry.width>width+1?'FAIL':'PASS',JSON.stringify(geometry));
                     const dates=await expenseModal.locator('input[type="date"], input[data-pa-date], input[data-calendar], input[placeholder*="วันที่"]').count();
                     log(`${prefix}:date-calendar`,'NOT_RUN',`Found ${dates} candidate date fields; icon/picker/BE behavior not exercised`);

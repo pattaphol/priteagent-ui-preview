@@ -79,7 +79,7 @@ export function expenseMarkup(cars,selectedCarId){
  +'<div class="pa-expense-head"><div><h1 tabindex="-1">คันรถ '+esc(car.name)+'</h1><p class="pa-expense-note">'+esc(period)+' · สมาชิก '+car.members.length+' คน</p><p class="pa-expense-note">'+(demo?'โหมดดูตัวอย่าง — ทดลองสลับแท็บและเปิดฟอร์มได้ แต่ไม่บันทึก':'ค่าใช้จ่าย V2 · ใช้คันรถและสมาชิกจากระบบเดียวกัน · ข้อมูลทดลองเฉพาะอุปกรณ์นี้')+'</p></div>'
  +(demo?'<span class="pa-expense-note">ดูตัวอย่าง UI</span>':'<label class="pa-expense-carselect">เลือกคันรถ<select id="paExpenseCar" aria-label="เลือกคันรถสำหรับค่าใช้จ่าย">'+cars.map(c=>'<option value="'+esc(c.id)+'" '+(c.id===car.id?'selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select></label>')+'</div>'
  +'<div id="paExpenseV1Frame" class="carGroupForm">'+expenseV1Frame()+'</div>'
- +'<dialog id="paExpenseFormWrap" class="pa-dialog pa-dialog--mobile-full carGroupForm pa-expense-form-dialog" aria-labelledby="paExpenseDialogTitle"><header class="pa-dialog-heading"><div><h2 id="paExpenseDialogTitle" tabindex="-1">เพิ่มค่าใช้จ่าย</h2><small>'+esc(car.name)+' · ข้อมูลทดลองเฉพาะอุปกรณ์นี้</small></div><button type="button" class="pa-button" id="expv1Back" aria-label="ปิดฟอร์มเพิ่มค่าใช้จ่าย">✕</button></header><div class="pa-dialog-scroll" id="paExpenseFormScroll"><div class="pa-expense" id="paExpenseForm">'+APPROVED_MARKUP+'</div></div></dialog>'
+ +'<dialog id="paExpenseFormWrap" class="pa-dialog pa-dialog--mobile-full carGroupForm pa-expense-form-dialog" aria-labelledby="paExpenseDialogTitle"><header class="pa-dialog-heading"><div><h2 id="paExpenseDialogTitle" tabindex="-1">เพิ่มค่าใช้จ่าย</h2><small>'+esc(car.name)+' · ข้อมูลทดลองเฉพาะอุปกรณ์นี้</small></div><button type="button" class="pa-button" id="expv1Back" aria-label="ปิดฟอร์มเพิ่มค่าใช้จ่าย">✕</button></header><div class="pa-expense pa-expense-dialog-body" id="paExpenseForm"><div class="pa-dialog-scroll" id="paExpenseFormScroll">'+APPROVED_MARKUP+'</div></div></dialog>'
  +'<section id="paExpenseAuxWrap" class="carGroupForm expv1-block pa-expense-aux-wrap" hidden>'+auxPreviewMarkup(car)+'</section>'
  +'<div id="paExpenseHistory" hidden>'+historyMarkup(car)+'</div></section>';
 }
@@ -92,6 +92,9 @@ export function mountExpenseView(cars,selectedCarId,onChange){
  if(select)select.onchange=e=>onChange(e.target.value);
  let controller;
  const viewport=window.visualViewport;
+ // Reuse original R3.9.5 buttons: dock them outside scrolling content, inside the same form root.
+ const actions=formRoot.querySelector('.foot-actions');
+ if(actions){actions.classList.add('pa-dialog-actions');formRoot.append(actions);}
  const scroll=formWrap.querySelector('#paExpenseFormScroll');
  const fitExpenseViewport=()=>{
   if(!formWrap.open||!viewport)return;
