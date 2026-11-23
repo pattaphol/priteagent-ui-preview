@@ -79,7 +79,7 @@ export function expenseMarkup(cars,selectedCarId){
  +'<div class="pa-expense-head"><div><h1 tabindex="-1">คันรถ '+esc(car.name)+'</h1><p class="pa-expense-note">'+esc(period)+' · สมาชิก '+car.members.length+' คน</p><p class="pa-expense-note">'+(demo?'โหมดดูตัวอย่าง — ทดลองสลับแท็บและเปิดฟอร์มได้ แต่ไม่บันทึก':'ค่าใช้จ่าย V2 · ใช้คันรถและสมาชิกจากระบบเดียวกัน · ข้อมูลทดลองเฉพาะอุปกรณ์นี้')+'</p></div>'
  +(demo?'<span class="pa-expense-note">ดูตัวอย่าง UI</span>':'<label class="pa-expense-carselect">เลือกคันรถ<select id="paExpenseCar" aria-label="เลือกคันรถสำหรับค่าใช้จ่าย">'+cars.map(c=>'<option value="'+esc(c.id)+'" '+(c.id===car.id?'selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select></label>')+'</div>'
  +'<div id="paExpenseV1Frame" class="carGroupForm">'+expenseV1Frame()+'</div>'
- +'<section id="paExpenseFormWrap" class="carGroupForm" hidden><div class="expv1-form-back"><button type="button" id="expv1Back">← กลับรายการค่าใช้จ่าย</button><strong>เพิ่มค่าใช้จ่าย · '+esc(car.name)+'</strong></div><div class="pa-expense" id="paExpenseForm">'+APPROVED_MARKUP+'</div></section>'
+ +'<dialog id="paExpenseFormWrap" class="pa-dialog pa-dialog--mobile-full carGroupForm pa-expense-form-dialog" aria-labelledby="paExpenseDialogTitle"><header class="pa-dialog-heading"><div><h2 id="paExpenseDialogTitle" tabindex="-1">เพิ่มค่าใช้จ่าย</h2><small>'+esc(car.name)+' · ข้อมูลทดลองเฉพาะอุปกรณ์นี้</small></div><button type="button" class="pa-button" id="expv1Back" aria-label="ปิดฟอร์มเพิ่มค่าใช้จ่าย">✕</button></header><div class="pa-dialog-scroll" id="paExpenseFormScroll"><div class="pa-expense" id="paExpenseForm">'+APPROVED_MARKUP+'</div></div></dialog>'
  +'<section id="paExpenseAuxWrap" class="carGroupForm expv1-block pa-expense-aux-wrap" hidden>'+auxPreviewMarkup(car)+'</section>'
  +'<div id="paExpenseHistory" hidden>'+historyMarkup(car)+'</div></section>';
 }
@@ -91,24 +91,49 @@ export function mountExpenseView(cars,selectedCarId,onChange){
  const select=document.querySelector('#paExpenseCar');if(!formRoot||!frame||!formWrap||!aux)return;
  if(select)select.onchange=e=>onChange(e.target.value);
  let controller;
+ const viewport=window.visualViewport;
+ const scroll=formWrap.querySelector('#paExpenseFormScroll');
+ const fitExpenseViewport=()=>{
+  if(!formWrap.open||!viewport)return;
+  formWrap.style.setProperty('--car-viewport-height',Math.floor(viewport.height)+'px');
+  formWrap.style.setProperty('--car-viewport-top',Math.floor(viewport.offsetTop)+'px');
+  const focused=document.activeElement;
+  if(viewport.height<window.innerHeight-100&&scroll.contains(focused)){
+   const input=focused.getBoundingClientRect(),area=scroll.getBoundingClientRect();
+   if(input.bottom>area.bottom||input.top<area.top)focused.scrollIntoView({block:'nearest',behavior:'auto'});
+  }
+ };
+ formWrap.addEventListener('close',()=>{
+  viewport?.removeEventListener('resize',fitExpenseViewport);
+  viewport?.removeEventListener('scroll',fitExpenseViewport);
+  formWrap.style.removeProperty('--car-viewport-height');
+  formWrap.style.removeProperty('--car-viewport-top');
+ });
  const showFrame=(tab='expenses')=>{
-  formWrap.hidden=true;aux.hidden=true;frame.hidden=false;controller?.refresh();controller?.activate(tab);
+  if(formWrap.open)formWrap.close();
+  aux.hidden=true;frame.hidden=false;controller?.refresh();controller?.activate(tab);
   frame.scrollIntoView({block:'start',behavior:'auto'});
  };
  const openExpense=(type='expense')=>{
-  aux.hidden=true;frame.hidden=true;formWrap.hidden=false;
+  aux.hidden=true;frame.hidden=false;
   if(type==='lodging'){
    const cat=formRoot.querySelector('#cat');
    if(cat){cat.value='ค่าห้องพัก';cat.dispatchEvent(new Event('change',{bubbles:true}));}
    const unit=formRoot.querySelector('#unit');if(unit)unit.value='คืน';
   }
-  formWrap.scrollIntoView({block:'start',behavior:'auto'});
-  requestAnimationFrame(()=>formRoot.querySelector('#name')?.focus({preventScroll:true}));
+  if(!formWrap.open){
+   formWrap.showModal();
+   viewport?.addEventListener('resize',fitExpenseViewport);
+   viewport?.addEventListener('scroll',fitExpenseViewport);
+  }
+  fitExpenseViewport();
+  scroll.scrollTop=0;
+  requestAnimationFrame(()=>formWrap.querySelector('#paExpenseDialogTitle')?.focus({preventScroll:true}));
  };
  const openAux=type=>{
   if(type==='lodging'){openExpense('lodging');return;}
   if(type!=='fund'&&type!=='transfer')return;
-  frame.hidden=true;formWrap.hidden=true;aux.hidden=false;
+  if(formWrap.open)formWrap.close();frame.hidden=true;aux.hidden=false;
   aux.querySelectorAll('[data-pa-aux-kind]').forEach(el=>{el.hidden=el.dataset.paAuxKind!==type;});
   aux.querySelector('#paExpenseAuxStatus').textContent=demo?'ข้อมูลตัวอย่างดูได้ แต่ไม่บันทึกข้อมูลใด ๆ':'รายการนี้เก็บเป็นแบบร่างในเครื่อง ไม่ยืนยันการเงินหรือสิทธิ์สมาชิก';
   aux.scrollIntoView({block:'start',behavior:'auto'});
@@ -122,6 +147,7 @@ export function mountExpenseView(cars,selectedCarId,onChange){
  document.querySelector('#expv1Back').onclick=()=>showFrame('expenses');
  aux.querySelector('#paExpenseAuxBack').onclick=()=>showFrame('expenses');
  bootApprovedExpense(formRoot,car,()=>{if(demo)return;const region=document.querySelector('#paExpenseHistory');if(region)region.innerHTML=historyMarkup(car);showFrame('expenses')});
+ formRoot.querySelector('#cancel')?.addEventListener('click',()=>showFrame('expenses'));
  if(demo){
    const save=formRoot.querySelector('#save');
    if(save){save.disabled=true;save.textContent='ตัวอย่างเท่านั้น · ไม่บันทึก';save.setAttribute('aria-label','ไม่สามารถบันทึกได้ในโหมดตัวอย่าง');}

@@ -41,3 +41,62 @@
 .pa-expense-page .pa-expense-aux-wrap .expv1-form-back{margin-bottom:12px;}
 .pa-expense-page .pa-expense-aux-wrap h2{font-size:19px;}
 .pa-expense-page .expv1-note .expv1-money{display:block;text-align:left;}
+
+/* Expense uses the SAME shared V2 Car full-screen dialog shell. R3.9.5 IDs,
+   calculations and LocalCarGroupStore stay unchanged. Presentation only. */
+.pa-expense-page .pa-expense-form-dialog[open] { z-index:1200; }
+.pa-expense-form-dialog.pa-dialog { color:var(--pa-text);background:var(--pa-surface); }
+.pa-expense-form-dialog .pa-dialog-heading {min-width:0;gap:12px;}
+.pa-expense-form-dialog .pa-dialog-heading>div {flex:1;min-width:0;}
+.pa-expense-form-dialog .pa-dialog-heading h2 {font-size:clamp(18px,4.5vw,22px);line-height:1.3;margin:0 0 2px;}
+.pa-expense-form-dialog .pa-dialog-heading small {display:block;font-size:12px;line-height:1.45;overflow-wrap:anywhere;}
+.pa-expense-form-dialog #expv1Back {flex:none;min-width:44px;min-height:44px;font-size:21px;}
+.pa-expense-form-dialog>.pa-dialog-scroll {flex:1;min-width:0;min-height:0;overflow-x:hidden;overscroll-behavior:contain;scroll-padding-block:14px 64px;}
+.pa-expense-form-dialog .pa-expense {--pa-expense-control-gap:12px;color:var(--pa-text);width:100%;min-width:0;}
+.pa-expense-form-dialog .pa-expense :is(.wrap,.card) {max-width:none;width:100%;min-width:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.pa-expense-form-dialog .pa-expense .screen-head {display:none;}
+.pa-expense-form-dialog .pa-expense .label {display:block;position:static;margin:14px 0 6px;font-size:14px;line-height:1.4;font-weight:650;color:var(--pa-text);}
+.pa-expense-form-dialog .pa-expense :is(.field,.pa-control) {max-width:100%;min-width:0;min-height:52px;font-size:16px;line-height:1.45;background:var(--pa-field-bg,var(--pa-bg));color:var(--pa-field-text,var(--pa-text));border:1.5px solid var(--pa-field-border,var(--pa-line-strong));border-radius:var(--pa-field-radius,var(--pa-control-radius));box-sizing:border-box;}
+.pa-expense-form-dialog .pa-expense textarea.field {min-height:84px;resize:vertical;}
+.pa-expense-form-dialog .pa-expense .row-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start;margin:12px 0;}
+.pa-expense-form-dialog .pa-expense .row-grid>div {display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:6px;min-width:0;max-width:100%;}
+.pa-expense-form-dialog .pa-expense .row-grid .label {margin:0;}
+.pa-expense-form-dialog .pa-expense .row {display:flex;align-items:stretch;gap:10px;min-width:0;flex-wrap:wrap;}
+.pa-expense-form-dialog .pa-expense .row>div {flex:1 1 140px;min-width:0;}
+.pa-expense-form-dialog .pa-expense .row>.calc-btn {flex:0 1 auto;max-width:100%;padding-inline:12px;border:1px solid var(--pa-line-strong);border-radius:var(--pa-control-radius);background:var(--pa-surface-alt);color:var(--pa-text);min-height:52px;font-size:14px;}
+.pa-expense-form-dialog .pa-expense .pa-date-field {height:52px;min-height:52px;width:100%;min-width:0;border-color:var(--pa-line-strong);background:var(--pa-bg);overflow:hidden;}
+.pa-expense-form-dialog .pa-expense .pa-date-field .pa-date-text {height:100%;min-height:0;border:0;background:transparent;border-radius:0;box-shadow:none;font-size:clamp(12px,3.65vw,16px);}
+.pa-expense-form-dialog .pa-expense .pa-date-field .pa-date-icon {height:100%;flex:none;}
+.pa-expense-form-dialog .pa-expense .pa-date-field .pa-date-native {position:absolute;inset:0 0 0 auto;width:33px;min-width:33px;height:100%;min-height:0;padding:0;border:0;opacity:0;z-index:1;}
+.pa-expense-form-dialog .pa-expense .total {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:14px;margin:14px 0;background:var(--pa-surface-alt);border:1px solid var(--pa-line);border-radius:var(--pa-panel-radius);font-size:16px;}
+.pa-expense-form-dialog .pa-expense .total .value {font-size:clamp(20px,5vw,26px);font-weight:750;font-variant-numeric:tabular-nums;}
+.pa-expense-form-dialog .pa-expense .group {display:grid;gap:12px;min-width:0;margin:20px 0 0;padding:15px 13px;border:1px solid var(--pa-line);border-radius:var(--pa-panel-radius);background:var(--pa-surface);}
+.pa-expense-form-dialog .pa-expense .group>h3,.pa-expense-form-dialog .pa-expense .group .counts>h3 {font-size:17px;line-height:1.4;margin:0;font-weight:750;}
+.pa-expense-form-dialog .pa-expense .pool,.pa-expense-form-dialog .pa-expense .summary,.pa-expense-form-dialog .pa-expense .callout {min-width:0;background:var(--pa-surface-alt);border:1px solid var(--pa-line);border-radius:var(--pa-control-radius);padding:12px;}
+.pa-expense-form-dialog .pa-expense .pool small {color:var(--pa-muted);}
+.pa-expense-form-dialog .pa-expense .check-row {display:flex;align-items:center;gap:10px;min-height:40px;}
+.pa-expense-form-dialog .pa-expense .member-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:0;}
+.pa-expense-form-dialog .pa-expense .member {min-width:0;display:flex;align-items:center;gap:8px;padding:12px 9px;border-radius:var(--pa-control-radius);border:1px solid var(--pa-line);background:var(--pa-surface-alt);overflow:hidden;}
+.pa-expense-form-dialog .pa-expense .member strong,.pa-expense-form-dialog .pa-expense .member small {display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pa-expense-form-dialog .pa-expense .member .avatar {flex:none;}
+.pa-expense-form-dialog .pa-expense .methods {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.pa-expense-form-dialog .pa-expense .method {min-width:0;min-height:48px;font-size:14px;border:1px solid var(--pa-line-strong);border-radius:var(--pa-control-radius);background:var(--pa-surface-alt);color:var(--pa-text);padding:8px 6px;}
+.pa-expense-form-dialog .pa-expense .method.active {background:var(--pa-soft);border-color:var(--pa-accent);color:var(--pa-text);}
+.pa-expense-form-dialog .pa-expense .line {display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-width:0;}
+.pa-expense-form-dialog .pa-expense .line>* {min-width:0;overflow-wrap:anywhere;}
+.pa-expense-form-dialog .pa-expense .btn {border:1px solid var(--pa-line-strong);border-radius:var(--pa-control-radius);padding:10px 12px;min-height:44px;background:var(--pa-surface-alt);color:var(--pa-text);font-size:14px;font-weight:700;}
+.pa-expense-form-dialog .pa-expense .btn.primary {background:#138b68;border-color:#138b68;color:#fff;}
+.pa-expense-form-dialog .pa-expense .btn.red {background:var(--pa-surface-alt);color:var(--pa-text);border-color:var(--pa-line-strong);}
+.pa-expense-form-dialog .pa-expense .foot-actions {display:flex;gap:10px;padding:16px 0 12px;margin:0;align-items:stretch;}
+.pa-expense-form-dialog .pa-expense .foot-actions .btn {flex:1;min-width:0;min-height:52px;font-size:16px;}
+.pa-expense-form-dialog .pa-expense .quiet,.pa-expense-form-dialog .pa-expense .hint {font-size:13px;line-height:1.55;color:var(--pa-muted);}
+.pa-expense-form-dialog .pa-expense .pin {font-size:12px;color:var(--pa-muted);}
+.pa-expense-form-dialog .pa-expense .fuel-reminder {background:var(--pa-surface-alt);border-color:var(--pa-line);color:var(--pa-text);overflow-wrap:anywhere;}
+.pa-expense-form-dialog .pa-expense .fuel-reminder :is(strong,.rule-current) {color:var(--pa-text);}
+@media (max-width:359px){
+ .pa-expense-form-dialog .pa-expense .row-grid {gap:8px;}
+ .pa-expense-form-dialog .pa-expense .row>.calc-btn {width:100%;flex:1 1 100%;}
+ .pa-expense-form-dialog .pa-expense .group {padding:12px 10px;}
+ .pa-expense-form-dialog .pa-expense .member-grid {gap:6px;}
+ .pa-expense-form-dialog .pa-expense .member {padding:9px 6px;}
+}
