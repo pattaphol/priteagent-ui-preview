@@ -1,0 +1,152 @@
+name: PriteAgent V2 Focused Mobile UI QA
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: 'Exact approved UI source commit (40 hex chars)'
+        required: true
+        default: 'ab477a534d4e600e4e82a47d03042c576c3cfbde'
+      target_url:
+        description: 'Approved public synthetic preview URL'
+        required: true
+        default: 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=ab477a5'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: focused-mobile-qa-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  mobile-qa:
+    if: github.repository == 'pattaphol/priteagent-ui-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      EXPECTED_SHA: ${{ inputs.expected_sha }}
+      TARGET_URL: ${{ inputs.target_url }}
+      CI: 'true'
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify approved commit and URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA" || { echo 'BASELINE_MISMATCH'; exit 1; }
+          test "$TARGET_URL" = 'https://pattaphol.github.io/priteagent-ui-preview/dashboard/?view=expenses&rev=ab477a5' || { echo 'TARGET_URL_MISMATCH'; exit 1; }
+          echo "HEAD=$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Tree=$(git rev-parse HEAD^{tree})" >> "$GITHUB_STEP_SUMMARY"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Playwright Chromium (runner only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pa-qa"
+          npm install --prefix "$RUNNER_TEMP/pa-qa" --no-save --no-package-lock playwright@1.58.2
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/pa-qa-browsers" "$RUNNER_TEMP/pa-qa/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Run focused hosted UI QA
+        shell: bash
+        run: |
+          mkdir -p qa-artifacts
+          cat > "$RUNNER_TEMP/pa-qa/run.cjs" <<'JS'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const { chromium } = require('playwright');
+          const out = path.join(process.cwd(), 'qa-artifacts');
+          fs.mkdirSync(out, { recursive: true });
+          const url = process.env.TARGET_URL;
+          const sha = process.env.EXPECTED_SHA;
+          const viewports = [[390,844],[320,700],[414,896]];
+          const results = [];
+          const log = (name, status, reason, extra={}) => results.push({name,status,reason,sha,url,...extra});
+          const safeName = s => s.replace(/[^a-z0-9_-]/gi,'_');
+          async function shot(page,name) { await page.screenshot({path:path.join(out, safeName(name)+'.png'), fullPage:true}); }
+          async function findVisible(page,selectors) {
+            for (const selector of selectors) {
+              try { const l=page.locator(selector).filter({visible:true}).first(); if (await l.count() && await l.isVisible()) return l; } catch(_) {}
+            }
+            return null;
+          }
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try {
+              for (const [width,height] of viewports) for (const theme of ['light','dark']) {
+                const context=await browser.newContext({viewport:{width,height},colorScheme:theme,locale:'th-TH',timezoneId:'Asia/Bangkok',serviceWorkers:'block'});
+                const page=await context.newPage();
+                const prefix=`${width}x${height}_${theme}`;
+                const errors=[];
+                page.on('pageerror',e=>errors.push({type:'pageerror',message:String(e)}));
+                page.on('console',m=>{if(m.type()==='error') errors.push({type:'console',message:m.text()});});
+                try {
+                  const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+                  await page.waitForTimeout(1500);
+                  const status=response?.status()??null;
+                  await shot(page,`${prefix}_dashboard`);
+                  log(`${prefix}:dashboard`,status && status<400?'PASS':'FAIL',`HTTP ${status}`,{viewport:{width,height},browser:'Chromium',theme});
+                  const overflow=await page.evaluate(()=>({documentScrollWidth:document.documentElement.scrollWidth,innerWidth:innerWidth}));
+                  log(`${prefix}:document-overflow`,overflow.documentScrollWidth>overflow.innerWidth+1?'FAIL':'PASS',JSON.stringify(overflow));
+                  const car=await findVisible(page,["a[href*='car-directory']","button:has-text('คันรถ')","a:has-text('คันรถ')"]);
+                  if(car){
+                    try {await car.click({timeout:5000}); await page.waitForTimeout(600); await shot(page,`${prefix}_car_entry`);log(`${prefix}:car-entry`,'PASS','Car entry clicked; screenshot captured');}
+                    catch(e){log(`${prefix}:car-entry`,'NOT_RUN',`Unable to navigate: ${String(e).slice(0,180)}`);}
+                  } else log(`${prefix}:car-entry`,'NOT_RUN','Car entry selector not grounded in live DOM');
+                  const carModal=await findVisible(page,['dialog.pa-dialog[open]','dialog[open]']);
+                  if(carModal){await shot(page,`${prefix}_car_modal`);log(`${prefix}:car-modal`,'PASS','Visible dialog screenshot');}
+                  else log(`${prefix}:car-modal`,'NOT_RUN','No Car dialog opened; cannot claim parity');
+                  await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+                  await page.waitForTimeout(700);
+                  const fab=await findVisible(page,["button[aria-label*='เพิ่ม']","button:has-text('เพิ่มค่าใช้จ่าย')","button:has-text('+')"]);
+                  if(fab){try{await fab.click({timeout:5000});await page.waitForTimeout(500);log(`${prefix}:fab-click`,'PASS','Visible add control clicked');}catch(e){log(`${prefix}:fab-click`,'FAIL',String(e).slice(0,180));}}
+                  else log(`${prefix}:fab-click`,'NOT_RUN','No grounded add/FAB selector visible (may require synthetic car)');
+                  const add=await findVisible(page,["button:has-text('เพิ่มค่าใช้จ่าย')","[role='menuitem']:has-text('เพิ่มค่าใช้จ่าย')"]);
+                  if(add){try{await add.click({timeout:5000});await page.waitForTimeout(500);}catch(_){}}
+                  const expenseModal=await findVisible(page,['dialog#paExpenseFormWrap[open]','dialog.pa-dialog[open]']);
+                  if(expenseModal){
+                    await shot(page,`${prefix}_expense_modal`);
+                    const geometry=await expenseModal.evaluate(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight};});
+                    log(`${prefix}:expense-modal`,'PASS','Visible real Dashboard modal screenshot',{geometry});
+                    log(`${prefix}:expense-modal-overflow`,geometry.x < -1 || geometry.x+geometry.width>width+1?'FAIL':'PASS',JSON.stringify(geometry));
+                    const dates=await expenseModal.locator('input[type="date"], input[data-pa-date], input[data-calendar], input[placeholder*="วันที่"]').count();
+                    log(`${prefix}:date-calendar`,'NOT_RUN',`Found ${dates} candidate date fields; icon/picker/BE behavior not exercised`);
+                    const close=await findVisible(page,['dialog#paExpenseFormWrap button[aria-label*="ปิด"]','dialog#paExpenseFormWrap button:has-text("ยกเลิก")']);
+                    if(close){await close.click({timeout:5000});log(`${prefix}:modal-close`,await expenseModal.isVisible()?'FAIL':'PASS','Close clicked; checked dialog visibility');}
+                    else log(`${prefix}:modal-close`,'NOT_RUN','No verified close selector');
+                  } else {
+                    log(`${prefix}:expense-modal`,'NOT_RUN','Expense dialog not reached via live app; no synthetic car seeded');
+                    log(`${prefix}:date-calendar`,'NOT_RUN','Expense dialog not reached');
+                    log(`${prefix}:modal-close`,'NOT_RUN','Expense dialog not reached');
+                  }
+                  log(`${prefix}:car-expense-parity`,'NOT_RUN','Requires BOTH visible Car and Expense modal captures with same theme/viewport');
+                  log(`${prefix}:keyboard-safe-area`,'NOT_RUN','Desktop Chromium emulation cannot establish iOS virtual keyboard/safe-area behavior');
+                  log(`${prefix}:synthetic-save-reload`,'NOT_RUN','No verified synthetic car/expense fixture; do not mutate unknown records');
+                  fs.writeFileSync(path.join(out,`${prefix}_console.json`),JSON.stringify(errors,null,2));
+                  log(`${prefix}:console`,errors.length?'FAIL':'PASS',`${errors.length} console/page errors (recorded in artifact)`);
+                } catch(e){log(`${prefix}:navigation`,'FAIL',String(e).slice(0,300));}
+                finally {await context.close();}
+              }
+            } finally {await browser.close();}
+            fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({sha,url,runner:'GitHub Actions ubuntu-24.04 Chromium',results},null,2));
+            const lines=['# Focused UI QA (Browser Emulation only)',`Commit: \`${sha}\``,`URL: ${url}`,'','| Case | Verdict | Reason |','|---|---|---|',...results.map(r=>`| ${r.name} | ${r.status} | ${String(r.reason).replace(/\|/g,'/').replace(/\n/g,' ')} |`)];
+            fs.writeFileSync(path.join(out,'summary.md'),lines.join('\n'));
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n')+'\n');
+            if(results.some(r=>r.status==='FAIL')) process.exitCode=1;
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+          NODE_PATH="$RUNNER_TEMP/pa-qa/node_modules" PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/pa-qa-browsers" node "$RUNNER_TEMP/pa-qa/run.cjs"
+      - name: Upload focused QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: focused-mobile-qa-${{ github.run_id }}
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 7
